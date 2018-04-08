@@ -3,6 +3,7 @@ import Phaser from 'phaser'
 import Player from '../sprites/Player'
 import LeverActionShotgun from '../weapons/LeverActionShotgun'
 import SemiAutoShotgun from '../weapons/SemiAutoShotgun'
+import AssaultRifle from '../weapons/AssaultRifle'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
 
 export default class extends Phaser.State {
@@ -16,7 +17,8 @@ export default class extends Phaser.State {
 
     this.weapons = [
       new LeverActionShotgun({ game: this.game }),
-      new SemiAutoShotgun({ game: this.game })
+      new SemiAutoShotgun({ game: this.game }),
+      new AssaultRifle({ game: this.game })
     ]
 
     this.player = new Player({
@@ -36,7 +38,8 @@ export default class extends Phaser.State {
       left: this.game.input.keyboard.addKey(Phaser.Keyboard.A),
       right: this.game.input.keyboard.addKey(Phaser.Keyboard.D),
       weaponOne: this.game.input.keyboard.addKey(Phaser.Keyboard.ONE),
-      weaponTwo: this.game.input.keyboard.addKey(Phaser.Keyboard.TWO)
+      weaponTwo: this.game.input.keyboard.addKey(Phaser.Keyboard.TWO),
+      weaponThree: this.game.input.keyboard.addKey(Phaser.Keyboard.THREE)
     }
 
     //  Notice that the sprite doesn't have any momentum at all,
@@ -66,6 +69,8 @@ export default class extends Phaser.State {
       this.player.armWeapon(this.weapons[0])
     } else if (this.cursors.weaponTwo.isDown) {
       this.player.armWeapon(this.weapons[1])
+    } else if (this.cursors.weaponThree.isDown) {
+      this.player.armWeapon(this.weapons[2])
     }
 
     if (this.game.input.mousePointer.isDown) {

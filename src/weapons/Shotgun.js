@@ -5,7 +5,7 @@ export default class Shotgun extends Phaser.Weapon {
   constructor ({ game, player }) {
     super(game, game.plugins)
 
-    this.fireSound = game.add.audio('shotgun_fire')
+    this.fireSound = game.add.audio('shotgun_fire_2')
 
     const bulletGraphics = game.add.graphics(0, 0)
     bulletGraphics.lineStyle(3, 0xff0000)
@@ -60,4 +60,4 @@ Shotgun.GUN_RANGE = 250
 Shotgun.GUN_ANGLE = 30
 Shotgun.BULLET_LENGTH = 10
 Shotgun.NUMBER_OF_BULLETS = 12
-Shotgun.FIRE_RATE = 600
+Shotgun.FIRE_RATE = 900

@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
-import Shotgun from '../weapons/Shotgun'
+import LeverActionShotgun from '../weapons/LeverActionShotgun'
 
 export default class Player extends Phaser.Sprite {
   constructor ({ game, x, y }) {
@@ -12,7 +12,7 @@ export default class Player extends Phaser.Sprite {
     playerGraphics.destroy()
     this.anchor.setTo(0.5)
 
-    this.shotgun = new Shotgun({ game, player: this })
+    this.shotgun = new LeverActionShotgun({ game, player: this })
     this.addChild(this.shotgun.firingCone)
   }
 

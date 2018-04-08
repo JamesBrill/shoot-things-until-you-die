@@ -21,14 +21,13 @@ export default class extends Phaser.State {
     //
     // load your assets
     //
-    this.load.image('mushroom', 'assets/images/mushroom2.png')
     this.load.audio(
       'shotgun_fire',
       'assets/audio/sound_effects/shotgun_fire.mp3'
     )
     this.load.audio(
-      'shotgun_fire_2',
-      'assets/audio/sound_effects/shotgun_fire2.wav'
+      'lever_action_shotgun_fire',
+      'assets/audio/sound_effects/lever_action_shotgun_fire.wav'
     )
   }
 

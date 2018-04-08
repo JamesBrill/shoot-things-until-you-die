@@ -31,7 +31,12 @@ export default class extends Phaser.State {
 
     this.player.body.fixedRotation = true
 
-    this.cursors = this.game.input.keyboard.createCursorKeys()
+    this.cursors = {
+      up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
+      down: this.game.input.keyboard.addKey(Phaser.Keyboard.S),
+      left: this.game.input.keyboard.addKey(Phaser.Keyboard.A),
+      right: this.game.input.keyboard.addKey(Phaser.Keyboard.D)
+    }
 
     //  Notice that the sprite doesn't have any momentum at all,
     //  it's all just set by the camera follow type.

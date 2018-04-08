@@ -16,18 +16,19 @@ export default class extends Phaser.Sprite {
     super(game, x, y, playerGraphics.generateTexture())
 
     const bulletGraphics = game.add.graphics(x, y)
-    bulletGraphics.beginFill(0xff0000, 1)
+    bulletGraphics.lineStyle(3, 0xff0000)
     bulletGraphics.moveTo(x, y)
     bulletGraphics.lineTo(x, y - BULLET_LENGTH)
     bulletGraphics.endFill()
     const bulletTexture = bulletGraphics.generateTexture()
     bulletGraphics.destroy()
 
-    this.shotgun = game.add.weapon(12, 'mushroom')
+    this.shotgun = game.add.weapon(12, bulletTexture)
     this.shotgun.bulletKillType = Phaser.Weapon.KILL_DISTANCE
     this.shotgun.bulletKillDistance = GUN_RANGE
+    this.shotgun.bulletAngleOffset = 90
     this.shotgun.bulletAngleVariance = 0.5 * GUN_ANGLE
-    this.shotgun.bulletSpeed = 2000
+    this.shotgun.bulletSpeed = 1500
     this.shotgun.fireRate = 0
     this.shotgun.trackSprite(this, 0, 0)
 

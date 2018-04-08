@@ -24,9 +24,7 @@ export default class extends Phaser.Sprite {
     firingCone.destroy()
   }
 
-  aimAt (x, y) {
-    const { angleBetween } = this.game.math
-    const aimAngle = angleBetween(this.world.x, this.world.y, x, y)
+  setAimAngle (aimAngle) {
     this.rotation =
       aimAngle + (this.NINETY_DEGREES_AS_RADIANS - 0.5 * this.gunAngleRadians)
   }

@@ -51,6 +51,10 @@ export default class extends Phaser.State {
     } else if (this.cursors.right.isDown) {
       this.player.move(RIGHT, 300)
     }
+
+    if (this.game.input.mousePointer.isDown) {
+      this.player.fire()
+    }
   }
 
   render () {}

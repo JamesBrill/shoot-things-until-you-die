@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
+import Shotgun from '../weapons/Shotgun'
 import FiringCone from './FiringCone'
 
 export default class extends Phaser.Sprite {
@@ -7,7 +8,6 @@ export default class extends Phaser.Sprite {
     const PLAYER_SIZE = 30
     const GUN_RANGE = 250
     const GUN_ANGLE = 30
-    const BULLET_LENGTH = 10
 
     const playerGraphics = game.add.graphics(x, y)
     playerGraphics.beginFill(0xff0000, 1)
@@ -15,22 +15,7 @@ export default class extends Phaser.Sprite {
     playerGraphics.endFill()
     super(game, x, y, playerGraphics.generateTexture())
 
-    const bulletGraphics = game.add.graphics(x, y)
-    bulletGraphics.lineStyle(3, 0xff0000)
-    bulletGraphics.moveTo(x, y)
-    bulletGraphics.lineTo(x, y - BULLET_LENGTH)
-    bulletGraphics.endFill()
-    const bulletTexture = bulletGraphics.generateTexture()
-    bulletGraphics.destroy()
-
-    this.shotgun = game.add.weapon(12, bulletTexture)
-    this.shotgun.bulletKillType = Phaser.Weapon.KILL_DISTANCE
-    this.shotgun.bulletKillDistance = GUN_RANGE - BULLET_LENGTH
-    this.shotgun.bulletAngleOffset = 90
-    this.shotgun.bulletAngleVariance = 0.5 * GUN_ANGLE
-    this.shotgun.bulletSpeed = 1500
-    this.shotgun.fireRate = 0
-    this.shotgun.trackSprite(this, 0, 0)
+    this.shotgun = new Shotgun({ game, player: this })
 
     this.anchor.setTo(0.5)
     this.firingCone = new FiringCone({
@@ -67,11 +52,5 @@ export default class extends Phaser.Sprite {
     } else if (direction === RIGHT) {
       this.body.velocity.setTo(distance, 0)
     }
-  }
-
-  update () {}
-
-  render () {
-    this.shotgun.debug()
   }
 }

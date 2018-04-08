@@ -1,24 +1,31 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
-import Mushroom from '../sprites/Mushroom'
+import Player from '../sprites/Player'
 
 export default class extends Phaser.State {
   init () {}
   preload () {}
 
   create () {
-    this.game.add.tileSprite(0, 0, 1920, 1920, 'background')
-
-    this.game.world.setBounds(0, 0, 1920, 1920)
+    this.game.world.setBounds(-1000000, -1000000, 2000000, 2000000)
 
     this.game.physics.startSystem(Phaser.Physics.P2JS)
 
-    this.player = new Mushroom({
+    const graphics = this.game.add.graphics(
+      this.world.centerX,
+      this.world.centerY
+    )
+    graphics.beginFill(0xff0000, 1)
+    graphics.drawCircle(300, 300, 100)
+    graphics.endFill()
+
+    this.player = new Player({
       game: this.game,
       x: this.world.centerX,
       y: this.world.centerY,
-      asset: 'mushroom'
+      asset: graphics.generateTexture()
     })
+    graphics.destroy()
     this.game.add.existing(this.player)
     this.game.physics.p2.enable(this.player)
 

@@ -25,7 +25,7 @@ export default class extends Phaser.Sprite {
 
     this.shotgun = game.add.weapon(12, bulletTexture)
     this.shotgun.bulletKillType = Phaser.Weapon.KILL_DISTANCE
-    this.shotgun.bulletKillDistance = GUN_RANGE
+    this.shotgun.bulletKillDistance = GUN_RANGE - BULLET_LENGTH
     this.shotgun.bulletAngleOffset = 90
     this.shotgun.bulletAngleVariance = 0.5 * GUN_ANGLE
     this.shotgun.bulletSpeed = 1500

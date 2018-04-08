@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import FiringCone from '../sprites/FiringCone'
 
 export default class Shotgun extends Phaser.Weapon {
   constructor ({ game, player }) {
@@ -21,6 +22,14 @@ export default class Shotgun extends Phaser.Weapon {
     this.fireRate = 0
     this.trackSprite(player, 0, 0)
 
+    this.firingCone = new FiringCone({
+      game,
+      x: 0,
+      y: 0,
+      gunRange: Shotgun.GUN_RANGE,
+      gunAngle: Shotgun.GUN_ANGLE
+    })
+
     this.loadingShell = false
   }
 
@@ -36,6 +45,11 @@ export default class Shotgun extends Phaser.Weapon {
       }
       setTimeout(this.loadNewShell.bind(this), Shotgun.FIRE_RATE)
     }
+  }
+
+  aimAt (x, y) {
+    const fireAngle = this.firingCone.updateFireAngle(x, y)
+    this.fireAngle = fireAngle
   }
 }
 

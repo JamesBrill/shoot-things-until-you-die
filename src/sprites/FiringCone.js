@@ -19,14 +19,18 @@ export default class extends Phaser.Sprite {
     super(game, x, y, firingCone.generateTexture())
     this.NINETY_DEGREES_AS_RADIANS = game.math.degToRad(90)
     this.gunAngleRadians = gunAngleRadians
+    this.game = game
 
     this.anchor.setTo(0, 1)
     firingCone.destroy()
   }
 
-  setAimAngle (aimAngle) {
+  updateFireAngle (x, y) {
+    const { angleBetween, radToDeg } = this.game.math
+    const aimAngle = angleBetween(this.world.x, this.world.y, x, y)
     this.rotation =
       aimAngle + (this.NINETY_DEGREES_AS_RADIANS - 0.5 * this.gunAngleRadians)
+    return radToDeg(aimAngle)
   }
 
   update () {}

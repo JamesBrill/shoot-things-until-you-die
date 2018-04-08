@@ -5,6 +5,8 @@ export default class Shotgun extends Phaser.Weapon {
   constructor ({ game, player }) {
     super(game, game.plugins)
 
+    this.fireSound = game.add.audio('shotgun_fire')
+
     const bulletGraphics = game.add.graphics(0, 0)
     bulletGraphics.lineStyle(3, 0xff0000)
     bulletGraphics.moveTo(0, 0)
@@ -40,6 +42,7 @@ export default class Shotgun extends Phaser.Weapon {
   fire () {
     if (!this.loadingShell) {
       this.loadingShell = true
+      this.fireSound.play()
       for (let i = 0; i < 12; i++) {
         super.fire()
       }

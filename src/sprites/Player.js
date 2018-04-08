@@ -25,9 +25,10 @@ export default class extends Phaser.Sprite {
 
     this.shotgun = game.add.weapon(12, 'mushroom')
     this.shotgun.bulletKillType = Phaser.Weapon.KILL_DISTANCE
-    this.shotgun.bulletKillDistance = 1000
+    this.shotgun.bulletKillDistance = GUN_RANGE
     this.shotgun.bulletAngleVariance = 0.5 * GUN_ANGLE
-    this.shotgun.bulletSpeed = 400
+    this.shotgun.bulletSpeed = 2000
+    this.shotgun.fireRate = 0
     this.shotgun.trackSprite(this, 0, 0)
 
     this.anchor.setTo(0.5)
@@ -50,7 +51,9 @@ export default class extends Phaser.Sprite {
   }
 
   fire () {
-    this.shotgun.fire()
+    for (let i = 0; i < 12; i++) {
+      this.shotgun.fire()
+    }
   }
 
   move (direction, distance) {

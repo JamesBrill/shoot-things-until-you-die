@@ -27,16 +27,22 @@ export default class extends Phaser.State {
     )
     text.anchor.setTo(0.5, 0.5)
 
-    this.load.image('loaderBg', './assets/images/loader-bg.png')
-    this.load.image('loaderBar', './assets/images/loader-bar.png')
+    this.load.audio(
+      'semi_auto_shotgun_fire',
+      'assets/audio/sound_effects/semi_auto_shotgun_fire.wav'
+    )
+    this.load.audio(
+      'lever_action_shotgun_fire',
+      'assets/audio/sound_effects/lever_action_shotgun_fire.wav'
+    )
   }
 
   render () {
     if (config.webfonts.length && this.fontsReady) {
-      this.state.start('Splash')
+      this.state.start('Game')
     }
     if (!config.webfonts.length) {
-      this.state.start('Splash')
+      this.state.start('Game')
     }
   }
 

@@ -16,30 +16,40 @@ export default class extends Phaser.Sprite {
     this.gunAngleRadians = game.math.degToRad(GUN_ANGLE)
     this.NINETY_DEGREES_AS_RADIANS = game.math.degToRad(90)
     this.anchor.setTo(0.5)
-    const aimLine = game.add.graphics(x, y)
-    aimLine.lineStyle(1, 0xff0000)
-    aimLine.moveTo(x, y)
-    aimLine.lineTo(x, y - GUN_RANGE)
-    aimLine.moveTo(x, y)
+    this.createFiringCone(GUN_RANGE)
+    playerGraphics.destroy()
+  }
+
+  createFiringCone (gunRange) {
+    const { x, y, game } = this
+    const firingCone = game.add.graphics(x, y)
+    firingCone.lineStyle(1, 0xff0000)
+    firingCone.moveTo(x, y)
+    firingCone.lineTo(x, y - gunRange)
+    firingCone.moveTo(x, y)
     const rotatedAimLinePoint = Phaser.Point.rotate(
-      new Phaser.Point(x, y - GUN_RANGE),
+      new Phaser.Point(x, y - gunRange),
       x,
       y,
       this.gunAngleRadians
     )
-    aimLine.lineTo(rotatedAimLinePoint.x, rotatedAimLinePoint.y)
-    aimLine.endFill()
-    this.aimLine = new Phaser.Sprite(game, 0, 0, aimLine.generateTexture())
-    this.aimLine.anchor.setTo(0, 1)
-    this.addChild(this.aimLine)
-    playerGraphics.destroy()
-    aimLine.destroy()
+    firingCone.lineTo(rotatedAimLinePoint.x, rotatedAimLinePoint.y)
+    firingCone.endFill()
+    this.firingCone = new Phaser.Sprite(
+      game,
+      0,
+      0,
+      firingCone.generateTexture()
+    )
+    this.firingCone.anchor.setTo(0, 1)
+    this.addChild(this.firingCone)
+    firingCone.destroy()
   }
 
   aimAt (x, y) {
     const { angleBetween } = this.game.math
     const aimAngle = angleBetween(this.world.x, this.world.y, x, y)
-    this.aimLine.rotation =
+    this.firingCone.rotation =
       aimAngle + (this.NINETY_DEGREES_AS_RADIANS - 0.5 * this.gunAngleRadians)
   }
 

@@ -5,7 +5,7 @@ export default class extends Phaser.Sprite {
   constructor ({ game, x, y }) {
     const PLAYER_SIZE = 30
     const GUN_RANGE = 150
-    const GUN_RADIUS = 60
+    const GUN_ANGLE = 60
 
     const playerGraphics = game.add.graphics(x, y)
     playerGraphics.beginFill(0xff0000, 1)
@@ -13,7 +13,7 @@ export default class extends Phaser.Sprite {
     playerGraphics.endFill()
     super(game, x, y, playerGraphics.generateTexture())
 
-    this.gunRadiusRadians = game.math.degToRad(GUN_RADIUS)
+    this.gunAngleRadians = game.math.degToRad(GUN_ANGLE)
     this.NINETY_DEGREES_AS_RADIANS = game.math.degToRad(90)
     this.anchor.setTo(0.5)
     const aimLine = game.add.graphics(x, y)
@@ -25,7 +25,7 @@ export default class extends Phaser.Sprite {
       new Phaser.Point(x, y - GUN_RANGE),
       x,
       y,
-      this.gunRadiusRadians
+      this.gunAngleRadians
     )
     aimLine.lineTo(rotatedAimLinePoint.x, rotatedAimLinePoint.y)
     aimLine.endFill()
@@ -40,7 +40,7 @@ export default class extends Phaser.Sprite {
     const { angleBetween } = this.game.math
     const aimAngle = angleBetween(this.world.x, this.world.y, x, y)
     this.aimLine.rotation =
-      aimAngle + (this.NINETY_DEGREES_AS_RADIANS - 0.5 * this.gunRadiusRadians)
+      aimAngle + (this.NINETY_DEGREES_AS_RADIANS - 0.5 * this.gunAngleRadians)
   }
 
   move (direction, distance) {

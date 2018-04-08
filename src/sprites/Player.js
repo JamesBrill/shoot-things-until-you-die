@@ -24,13 +24,13 @@ export default class Player extends Phaser.Sprite {
 
   move (direction, distance) {
     if (direction === UP) {
-      this.body.velocity.setTo(0, -distance)
+      this.body.velocity.add(0, -distance)
     } else if (direction === DOWN) {
-      this.body.velocity.setTo(0, distance)
+      this.body.velocity.add(0, distance)
     } else if (direction === LEFT) {
-      this.body.velocity.setTo(-distance, 0)
+      this.body.velocity.add(-distance, 0)
     } else if (direction === RIGHT) {
-      this.body.velocity.setTo(distance, 0)
+      this.body.velocity.add(distance, 0)
     }
   }
 

@@ -49,7 +49,7 @@ export default class extends Phaser.State {
   update () {
     this.player.body.velocity.setTo(0, 0)
     const { x, y, worldX, worldY } = this.game.input.mousePointer
-    this.player.aimAt(x, y)
+    this.player.aimAt(worldX, worldY)
     if (this.cursors.up.isDown) {
       this.player.move(UP, 300)
     } else if (this.cursors.down.isDown) {

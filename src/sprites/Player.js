@@ -37,9 +37,7 @@ export default class extends Phaser.Sprite {
   }
 
   fire () {
-    for (let i = 0; i < 12; i++) {
-      this.shotgun.fire()
-    }
+    this.shotgun.fire()
   }
 
   move (direction, distance) {

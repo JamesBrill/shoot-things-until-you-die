@@ -2,13 +2,11 @@ import Phaser from 'phaser'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
 import Shotgun from '../weapons/Shotgun'
 
-export default class extends Phaser.Sprite {
+export default class Player extends Phaser.Sprite {
   constructor ({ game, x, y }) {
-    const PLAYER_SIZE = 30
-
     const playerGraphics = game.add.graphics(x, y)
     playerGraphics.beginFill(0xff0000, 1)
-    playerGraphics.drawCircle(x, y, PLAYER_SIZE)
+    playerGraphics.drawCircle(x, y, Player.PLAYER_SIZE)
     playerGraphics.endFill()
     super(game, x, y, playerGraphics.generateTexture())
     playerGraphics.destroy()
@@ -38,3 +36,5 @@ export default class extends Phaser.Sprite {
     }
   }
 }
+
+Player.PLAYER_SIZE = 30

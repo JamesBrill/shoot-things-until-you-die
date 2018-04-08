@@ -12,21 +12,11 @@ export default class extends Phaser.State {
 
     this.game.physics.startSystem(Phaser.Physics.ARCADE)
 
-    const graphics = this.game.add.graphics(
-      this.world.centerX,
-      this.world.centerY
-    )
-    graphics.beginFill(0xff0000, 1)
-    graphics.drawCircle(300, 300, 100)
-    graphics.endFill()
-
     this.player = new Player({
       game: this.game,
       x: this.world.centerX,
-      y: this.world.centerY,
-      asset: graphics.generateTexture()
+      y: this.world.centerY
     })
-    graphics.destroy()
     this.game.add.existing(this.player)
     this.game.physics.arcade.enable(this.player)
 
@@ -48,7 +38,7 @@ export default class extends Phaser.State {
 
   update () {
     this.player.body.velocity.setTo(0, 0)
-    const { x, y, worldX, worldY } = this.game.input.mousePointer
+    const { worldX, worldY } = this.game.input.mousePointer
     this.player.aimAt(worldX, worldY)
     if (this.cursors.up.isDown) {
       this.player.move(UP, 300)

@@ -2,8 +2,12 @@ import Phaser from 'phaser'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
 
 export default class extends Phaser.Sprite {
-  constructor ({ game, x, y, asset }) {
-    super(game, x, y, asset)
+  constructor ({ game, x, y }) {
+    const playerGraphics = game.add.graphics(x, y)
+    playerGraphics.beginFill(0xff0000, 1)
+    playerGraphics.drawCircle(300, 300, 100)
+    playerGraphics.endFill()
+    super(game, x, y, playerGraphics.generateTexture())
     this.NINETY_DEGREES_IN_RADIANS = game.math.degToRad(90)
 
     this.anchor.setTo(0.5)
@@ -14,6 +18,7 @@ export default class extends Phaser.Sprite {
     aimLine.endFill()
     this.aimLine = new Phaser.Sprite(game, 0, 0, aimLine.generateTexture())
     this.addChild(this.aimLine)
+    playerGraphics.destroy()
     aimLine.destroy()
   }
 

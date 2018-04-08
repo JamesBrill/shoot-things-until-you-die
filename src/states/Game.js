@@ -1,6 +1,7 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
 import Player from '../sprites/Player'
+import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
 
 export default class extends Phaser.State {
   init () {}
@@ -9,7 +10,7 @@ export default class extends Phaser.State {
   create () {
     this.game.world.setBounds(-1000000, -1000000, 2000000, 2000000)
 
-    this.game.physics.startSystem(Phaser.Physics.P2JS)
+    this.game.physics.startSystem(Phaser.Physics.ARCADE)
 
     const graphics = this.game.add.graphics(
       this.world.centerX,
@@ -27,7 +28,7 @@ export default class extends Phaser.State {
     })
     graphics.destroy()
     this.game.add.existing(this.player)
-    this.game.physics.p2.enable(this.player)
+    this.game.physics.arcade.enable(this.player)
 
     this.player.body.fixedRotation = true
 
@@ -46,18 +47,19 @@ export default class extends Phaser.State {
   }
 
   update () {
-    this.player.body.setZeroVelocity()
-
+    this.player.body.velocity.setTo(0, 0)
+    const { x, y, worldX, worldY } = this.game.input.mousePointer
+    this.player.aimAt(x, y)
     if (this.cursors.up.isDown) {
-      this.player.body.moveUp(300)
+      this.player.move(UP, 300)
     } else if (this.cursors.down.isDown) {
-      this.player.body.moveDown(300)
+      this.player.move(DOWN, 300)
     }
 
     if (this.cursors.left.isDown) {
-      this.player.body.velocity.x = -300
+      this.player.move(LEFT, 300)
     } else if (this.cursors.right.isDown) {
-      this.player.body.moveRight(300)
+      this.player.move(RIGHT, 300)
     }
   }
 

@@ -21,7 +21,7 @@ export default class SemiAutoShotgun extends Phaser.Weapon {
       SemiAutoShotgun.GUN_RANGE - SemiAutoShotgun.BULLET_LENGTH
     this.bulletAngleOffset = 90
     this.bulletAngleVariance = 0.5 * SemiAutoShotgun.GUN_ANGLE
-    this.bulletSpeed = 1500
+    this.bulletSpeed = SemiAutoShotgun.BULLET_SPEED
     this.fireRate = 0
 
     this.firingCone = new FiringCone({
@@ -68,4 +68,5 @@ SemiAutoShotgun.GUN_RANGE = 200
 SemiAutoShotgun.GUN_ANGLE = 45
 SemiAutoShotgun.BULLET_LENGTH = 10
 SemiAutoShotgun.NUMBER_OF_BULLETS = 12
-SemiAutoShotgun.FIRE_RATE = 300
+SemiAutoShotgun.FIRE_RATE = 600
+SemiAutoShotgun.BULLET_SPEED = 1500

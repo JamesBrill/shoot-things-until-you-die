@@ -1,9 +1,8 @@
 import Phaser from 'phaser'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
-import LeverActionShotgun from '../weapons/LeverActionShotgun'
 
 export default class Player extends Phaser.Sprite {
-  constructor ({ game, x, y }) {
+  constructor ({ game, x, y, weapon }) {
     const playerGraphics = game.add.graphics(x, y)
     playerGraphics.beginFill(0xff0000, 1)
     playerGraphics.drawCircle(x, y, Player.PLAYER_SIZE)
@@ -11,17 +10,16 @@ export default class Player extends Phaser.Sprite {
     super(game, x, y, playerGraphics.generateTexture())
     playerGraphics.destroy()
     this.anchor.setTo(0.5)
-
-    this.shotgun = new LeverActionShotgun({ game, player: this })
-    this.addChild(this.shotgun.firingCone)
+    this.game = game
+    this.armWeapon(weapon)
   }
 
   aimAt (x, y) {
-    this.shotgun.aimAt(x, y)
+    this.weapon.aimAt(x, y)
   }
 
   fire () {
-    this.shotgun.fire()
+    this.weapon.fire()
   }
 
   move (direction, distance) {
@@ -34,6 +32,16 @@ export default class Player extends Phaser.Sprite {
     } else if (direction === RIGHT) {
       this.body.velocity.setTo(distance, 0)
     }
+  }
+
+  armWeapon (weapon) {
+    if (this.weapon) {
+      this.weapon.disarm()
+      this.removeChild(this.weapon.firingCone)
+    }
+    this.weapon = weapon
+    weapon.arm(this)
+    this.addChild(this.weapon.firingCone)
   }
 }
 

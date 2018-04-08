@@ -1,6 +1,8 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
 import Player from '../sprites/Player'
+import LeverActionShotgun from '../weapons/LeverActionShotgun'
+import SemiAutoShotgun from '../weapons/SemiAutoShotgun'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
 
 export default class extends Phaser.State {
@@ -12,10 +14,16 @@ export default class extends Phaser.State {
 
     this.game.physics.startSystem(Phaser.Physics.ARCADE)
 
+    this.weapons = [
+      new LeverActionShotgun({ game: this.game }),
+      new SemiAutoShotgun({ game: this.game })
+    ]
+
     this.player = new Player({
       game: this.game,
       x: this.world.centerX,
-      y: this.world.centerY
+      y: this.world.centerY,
+      weapon: this.weapons[0]
     })
     this.game.add.existing(this.player)
     this.game.physics.arcade.enable(this.player)
@@ -26,7 +34,9 @@ export default class extends Phaser.State {
       up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
       down: this.game.input.keyboard.addKey(Phaser.Keyboard.S),
       left: this.game.input.keyboard.addKey(Phaser.Keyboard.A),
-      right: this.game.input.keyboard.addKey(Phaser.Keyboard.D)
+      right: this.game.input.keyboard.addKey(Phaser.Keyboard.D),
+      weaponOne: this.game.input.keyboard.addKey(Phaser.Keyboard.ONE),
+      weaponTwo: this.game.input.keyboard.addKey(Phaser.Keyboard.TWO)
     }
 
     //  Notice that the sprite doesn't have any momentum at all,
@@ -50,6 +60,12 @@ export default class extends Phaser.State {
       this.player.move(LEFT, 300)
     } else if (this.cursors.right.isDown) {
       this.player.move(RIGHT, 300)
+    }
+
+    if (this.cursors.weaponOne.isDown) {
+      this.player.armWeapon(this.weapons[0])
+    } else if (this.cursors.weaponTwo.isDown) {
+      this.player.armWeapon(this.weapons[1])
     }
 
     if (this.game.input.mousePointer.isDown) {

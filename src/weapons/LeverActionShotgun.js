@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 import FiringCone from '../sprites/FiringCone'
 
 export default class LeverActionShotgun extends Phaser.Weapon {
-  constructor ({ game, player }) {
+  constructor ({ game }) {
     super(game, game.plugins)
 
     this.fireSound = game.add.audio('lever_action_shotgun_fire')
@@ -23,7 +23,6 @@ export default class LeverActionShotgun extends Phaser.Weapon {
     this.bulletAngleVariance = 0.5 * LeverActionShotgun.GUN_ANGLE
     this.bulletSpeed = 1500
     this.fireRate = 0
-    this.trackSprite(player, 0, 0)
 
     this.firingCone = new FiringCone({
       game,
@@ -34,6 +33,14 @@ export default class LeverActionShotgun extends Phaser.Weapon {
     })
 
     this.loadingShell = false
+  }
+
+  arm (player) {
+    this.trackSprite(player, 0, 0)
+  }
+
+  disarm () {
+    this.trackSprite(null)
   }
 
   loadNewShell () {

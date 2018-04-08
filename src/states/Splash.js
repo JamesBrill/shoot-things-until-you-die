@@ -22,8 +22,8 @@ export default class extends Phaser.State {
     // load your assets
     //
     this.load.audio(
-      'shotgun_fire',
-      'assets/audio/sound_effects/shotgun_fire.mp3'
+      'semi_auto_shotgun_fire',
+      'assets/audio/sound_effects/semi_auto_shotgun_fire.wav'
     )
     this.load.audio(
       'lever_action_shotgun_fire',

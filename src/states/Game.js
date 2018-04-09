@@ -1,6 +1,7 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
 import Player from '../sprites/Player'
+import Zombie from '../sprites/enemies/Zombie'
 import LeverActionShotgun from '../weapons/LeverActionShotgun'
 import SemiAutoShotgun from '../weapons/SemiAutoShotgun'
 import AssaultRifle from '../weapons/AssaultRifle'
@@ -21,6 +22,19 @@ export default class extends Phaser.State {
       new AssaultRifle({ game: this.game })
     ]
 
+    this.enemies = [
+      new Zombie({
+        game: this.game,
+        x: this.world.centerX + 200,
+        y: this.world.centerY + 200
+      })
+    ]
+
+    for (let i = 0; i < this.enemies.length; i++) {
+      this.game.add.existing(this.enemies[i])
+      this.game.physics.arcade.enable(this.enemies[i])
+    }
+
     this.player = new Player({
       game: this.game,
       x: this.world.centerX,
@@ -29,8 +43,6 @@ export default class extends Phaser.State {
     })
     this.game.add.existing(this.player)
     this.game.physics.arcade.enable(this.player)
-
-    this.player.body.fixedRotation = true
 
     this.cursors = {
       up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),

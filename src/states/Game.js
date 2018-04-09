@@ -22,6 +22,15 @@ export default class extends Phaser.State {
       new AssaultRifle({ game: this.game })
     ]
 
+    this.player = new Player({
+      game: this.game,
+      x: this.world.centerX,
+      y: this.world.centerY,
+      weapon: this.weapons[0]
+    })
+    this.game.add.existing(this.player)
+    this.game.physics.arcade.enable(this.player)
+
     this.enemies = this.game.add.group()
     this.enemies.enableBody = true
     this.enemies.physicsBodyType = Phaser.Physics.ARCADE
@@ -31,19 +40,11 @@ export default class extends Phaser.State {
         new Zombie({
           game: this.game,
           x: this.world.centerX + i * 100,
-          y: this.world.centerY + i * 100
+          y: this.world.centerY + i * 100,
+          player: this.player
         })
       )
     }
-
-    this.player = new Player({
-      game: this.game,
-      x: this.world.centerX,
-      y: this.world.centerY,
-      weapon: this.weapons[0]
-    })
-    this.game.add.existing(this.player)
-    this.game.physics.arcade.enable(this.player)
 
     this.cursors = {
       up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
@@ -75,6 +76,8 @@ export default class extends Phaser.State {
       null,
       this
     )
+
+    this.enemies.forEach(enemy => enemy.move())
 
     this.player.body.velocity.setTo(0, 0)
     const { worldX, worldY } = this.game.input.mousePointer

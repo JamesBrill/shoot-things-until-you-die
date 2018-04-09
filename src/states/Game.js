@@ -59,6 +59,8 @@ export default class extends Phaser.State {
   hitCallback (bullet, enemy) {
     bullet.kill()
     enemy.kill()
+    this.enemies.removeChild(enemy)
+    this.enemies.add(Zombie.createRandom(this.game, this.player, this.world))
   }
 
   update () {

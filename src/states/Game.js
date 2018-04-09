@@ -30,6 +30,7 @@ export default class extends Phaser.State {
     })
     this.game.add.existing(this.player)
     this.game.physics.arcade.enable(this.player)
+    this.player.body.collideWorldBounds = true
 
     this.enemies = this.game.add.group()
     this.enemies.enableBody = true

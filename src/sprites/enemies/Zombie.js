@@ -19,10 +19,10 @@ export default class Zombie extends Phaser.Sprite {
   }
 }
 
-Zombie.createRandom = (game, player, world) => {
+Zombie.createRandom = (game, player, world, maxSpeed) => {
   const randomX = Math.random() * 10000 - 5000
   const randomY = Math.random() * 10000 - 5000
-  const randomSpeed = Math.random() * 200 + 30
+  const randomSpeed = Math.random() * (maxSpeed || 200) + 30
   return new Zombie({
     game,
     x: world.centerX + randomX,

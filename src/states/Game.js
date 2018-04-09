@@ -34,9 +34,17 @@ export default class extends Phaser.State {
     this.enemies = this.game.add.group()
     this.enemies.enableBody = true
     this.enemies.physicsBodyType = Phaser.Physics.ARCADE
+    this.maxZombieSpeed = 200
 
     for (let i = 0; i < 100; i++) {
-      this.enemies.add(Zombie.createRandom(this.game, this.player, this.world))
+      this.enemies.add(
+        Zombie.createRandom(
+          this.game,
+          this.player,
+          this.world,
+          this.maxZombieSpeed
+        )
+      )
     }
 
     this.cursors = {
@@ -60,7 +68,15 @@ export default class extends Phaser.State {
     bullet.kill()
     enemy.kill()
     this.enemies.removeChild(enemy)
-    this.enemies.add(Zombie.createRandom(this.game, this.player, this.world))
+    this.maxZombieSpeed += 1
+    this.enemies.add(
+      Zombie.createRandom(
+        this.game,
+        this.player,
+        this.world,
+        this.maxZombieSpeed
+      )
+    )
   }
 
   update () {

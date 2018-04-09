@@ -35,9 +35,9 @@ export default class extends Phaser.State {
     this.enemies.enableBody = true
     this.enemies.physicsBodyType = Phaser.Physics.ARCADE
 
-    for (let i = 0; i < 10; i++) {
-      const randomX = Math.random() * 1000 - 500
-      const randomY = Math.random() * 1000 - 500
+    for (let i = 0; i < 100; i++) {
+      const randomX = Math.random() * 10000 - 5000
+      const randomY = Math.random() * 10000 - 5000
       this.enemies.add(
         new Zombie({
           game: this.game,

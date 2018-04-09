@@ -22,17 +22,18 @@ export default class extends Phaser.State {
       new AssaultRifle({ game: this.game })
     ]
 
-    this.enemies = [
-      new Zombie({
-        game: this.game,
-        x: this.world.centerX + 200,
-        y: this.world.centerY + 200
-      })
-    ]
+    this.enemies = this.game.add.group()
+    this.enemies.enableBody = true
+    this.enemies.physicsBodyType = Phaser.Physics.ARCADE
 
-    for (let i = 0; i < this.enemies.length; i++) {
-      this.game.add.existing(this.enemies[i])
-      this.game.physics.arcade.enable(this.enemies[i])
+    for (let i = 0; i < 10; i++) {
+      this.enemies.add(
+        new Zombie({
+          game: this.game,
+          x: this.world.centerX + i * 100,
+          y: this.world.centerY + i * 100
+        })
+      )
     }
 
     this.player = new Player({
@@ -61,7 +62,20 @@ export default class extends Phaser.State {
     this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)
   }
 
+  hitCallback (bullet, enemy) {
+    bullet.kill()
+    enemy.kill()
+  }
+
   update () {
+    this.game.physics.arcade.overlap(
+      this.player.weapon.bullets,
+      this.enemies,
+      this.hitCallback,
+      null,
+      this
+    )
+
     this.player.body.velocity.setTo(0, 0)
     const { worldX, worldY } = this.game.input.mousePointer
     this.player.aimAt(worldX, worldY)

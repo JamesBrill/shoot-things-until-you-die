@@ -38,12 +38,14 @@ export default class extends Phaser.State {
     for (let i = 0; i < 100; i++) {
       const randomX = Math.random() * 10000 - 5000
       const randomY = Math.random() * 10000 - 5000
+      const randomSpeed = Math.random() * 200 + 30
       this.enemies.add(
         new Zombie({
           game: this.game,
           x: this.world.centerX + randomX,
           y: this.world.centerY + randomY,
-          player: this.player
+          player: this.player,
+          speed: randomSpeed
         })
       )
     }

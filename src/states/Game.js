@@ -83,6 +83,13 @@ export default class extends Phaser.State {
       null,
       this
     )
+    this.game.physics.arcade.collide(
+      this.player,
+      this.enemies,
+      () => this.player.kill(),
+      null,
+      this
+    )
 
     this.enemies.forEach(enemy => enemy.move())
 

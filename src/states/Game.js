@@ -36,6 +36,7 @@ export default class extends Phaser.State {
     this.enemies.enableBody = true
     this.enemies.physicsBodyType = Phaser.Physics.ARCADE
     this.maxZombieSpeed = 200
+    this.healthMultiplier = 1
 
     for (let i = 0; i < 100; i++) {
       this.enemies.add(
@@ -71,12 +72,14 @@ export default class extends Phaser.State {
     if (isEnemyKilled) {
       this.enemies.removeChild(enemy)
       this.maxZombieSpeed = Math.min(this.maxZombieSpeed + 1, 350)
+      this.healthMultiplier += 0.001
       this.enemies.add(
         Zombie.createRandom(
           this.game,
           this.player,
           this.world,
-          this.maxZombieSpeed
+          this.maxZombieSpeed,
+          this.healthMultiplier
         )
       )
     }

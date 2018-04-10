@@ -12,7 +12,9 @@ export default class Zombie extends Phaser.Sprite {
     this.anchor.setTo(0.5)
     this.game = game
     this.player = player
-    this.sizeModifier = size / Zombie.NORMAL_SIZE
+    this.sizeModifier =
+      size / Zombie.NORMAL_SIZE +
+      (size - Zombie.NORMAL_SIZE) / Zombie.NORMAL_SIZE
     this.speed = speed
     this.attackDamage = 3
     this.maxHealth = 100 * this.sizeModifier

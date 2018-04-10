@@ -72,7 +72,7 @@ export default class LeverActionShotgun extends Phaser.Weapon {
 LeverActionShotgun.GUN_RANGE = 350
 LeverActionShotgun.GUN_ANGLE = 20
 LeverActionShotgun.BULLET_LENGTH = 20
-LeverActionShotgun.NUMBER_OF_BULLETS = 6
+LeverActionShotgun.NUMBER_OF_BULLETS = 10
 LeverActionShotgun.FIRE_RATE = 1250
 LeverActionShotgun.BULLET_SPEED = 3000
 LeverActionShotgun.ATTACK_DAMAGE = 100

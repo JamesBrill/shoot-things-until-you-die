@@ -26,6 +26,16 @@ export default class Zombie extends Phaser.Sprite {
   move () {
     this.game.physics.arcade.moveToObject(this, this.player, this.speed)
   }
+
+  takeDamage (weapon) {
+    this.health -= weapon.attackDamage
+    if (this.health <= 0) {
+      this.kill()
+      return true
+    }
+    this.healthBar.setHealth(this.health)
+    return false
+  }
 }
 
 Zombie.createRandom = (game, player, world, maxSpeed) => {

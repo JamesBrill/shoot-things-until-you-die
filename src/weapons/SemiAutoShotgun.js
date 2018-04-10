@@ -23,6 +23,7 @@ export default class SemiAutoShotgun extends Phaser.Weapon {
     this.bulletAngleVariance = 0.5 * SemiAutoShotgun.GUN_ANGLE
     this.bulletSpeed = SemiAutoShotgun.BULLET_SPEED
     this.fireRate = 0
+    this.attackDamage = SemiAutoShotgun.ATTACK_DAMAGE
 
     this.firingCone = new FiringCone({
       game,
@@ -70,3 +71,4 @@ SemiAutoShotgun.BULLET_LENGTH = 10
 SemiAutoShotgun.NUMBER_OF_BULLETS = 12
 SemiAutoShotgun.FIRE_RATE = 600
 SemiAutoShotgun.BULLET_SPEED = 1500
+SemiAutoShotgun.ATTACK_DAMAGE = 30

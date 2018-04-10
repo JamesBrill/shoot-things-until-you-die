@@ -67,17 +67,19 @@ export default class extends Phaser.State {
 
   hitCallback (bullet, enemy) {
     bullet.kill()
-    enemy.kill()
-    this.enemies.removeChild(enemy)
-    this.maxZombieSpeed += 1
-    this.enemies.add(
-      Zombie.createRandom(
-        this.game,
-        this.player,
-        this.world,
-        this.maxZombieSpeed
+    const isEnemyKilled = enemy.takeDamage(this.player.weapon)
+    if (isEnemyKilled) {
+      this.enemies.removeChild(enemy)
+      this.maxZombieSpeed += 1
+      this.enemies.add(
+        Zombie.createRandom(
+          this.game,
+          this.player,
+          this.world,
+          this.maxZombieSpeed
+        )
       )
-    )
+    }
   }
 
   handlePlayerDamage (player, enemy) {

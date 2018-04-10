@@ -23,6 +23,7 @@ export default class LeverActionShotgun extends Phaser.Weapon {
     this.bulletAngleVariance = 0.5 * LeverActionShotgun.GUN_ANGLE
     this.bulletSpeed = LeverActionShotgun.BULLET_SPEED
     this.fireRate = 0
+    this.attackDamage = LeverActionShotgun.ATTACK_DAMAGE
 
     this.firingCone = new FiringCone({
       game,
@@ -70,3 +71,4 @@ LeverActionShotgun.BULLET_LENGTH = 20
 LeverActionShotgun.NUMBER_OF_BULLETS = 6
 LeverActionShotgun.FIRE_RATE = 1250
 LeverActionShotgun.BULLET_SPEED = 3000
+LeverActionShotgun.ATTACK_DAMAGE = 100

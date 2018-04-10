@@ -70,7 +70,7 @@ export default class extends Phaser.State {
     const isEnemyKilled = enemy.takeDamage(this.player.weapon)
     if (isEnemyKilled) {
       this.enemies.removeChild(enemy)
-      this.maxZombieSpeed += 1
+      this.maxZombieSpeed = Math.min(this.maxZombieSpeed + 1, 350)
       this.enemies.add(
         Zombie.createRandom(
           this.game,

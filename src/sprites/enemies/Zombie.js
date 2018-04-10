@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import HealthBar from '../HealthBar'
 
 export default class Zombie extends Phaser.Sprite {
   constructor ({ game, x, y, player, speed }) {
@@ -13,6 +14,13 @@ export default class Zombie extends Phaser.Sprite {
     this.player = player
     this.speed = speed
     this.attackDamage = 3
+    this.health = 100
+    this.healthBar = new HealthBar({
+      game,
+      x: -0.5 * HealthBar.WIDTH,
+      y: -Zombie.ENEMY_SIZE
+    })
+    this.addChild(this.healthBar)
   }
 
   move () {

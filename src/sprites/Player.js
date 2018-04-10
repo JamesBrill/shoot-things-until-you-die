@@ -17,7 +17,7 @@ export default class Player extends Phaser.Sprite {
     this.healthBar = new HealthBar({
       game,
       x: x - 0.5 * HealthBar.WIDTH,
-      y: y - 1 * Player.PLAYER_SIZE - 10
+      y: y - 1 * Player.PLAYER_SIZE
     })
     this.addChild(this.healthBar)
   }

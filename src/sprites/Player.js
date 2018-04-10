@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import HealthBar from './HealthBar'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
 
 export default class Player extends Phaser.Sprite {
@@ -12,6 +13,12 @@ export default class Player extends Phaser.Sprite {
     this.anchor.setTo(0.5)
     this.game = game
     this.armWeapon(weapon)
+    this.healthBar = new HealthBar({
+      game,
+      x: x - 0.5 * HealthBar.WIDTH,
+      y: y - 1 * Player.PLAYER_SIZE - 10
+    })
+    this.addChild(this.healthBar)
   }
 
   aimAt (x, y) {

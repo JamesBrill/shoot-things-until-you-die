@@ -15,10 +15,18 @@ export default class HealthBar extends Phaser.Sprite {
   }
 
   setHealth (health) {
+    let healthBarColour
+    if (health > 66) {
+      healthBarColour = 0x00ff00
+    } else if (health > 33) {
+      healthBarColour = 0xffff00
+    } else {
+      healthBarColour = 0xff0000
+    }
     const healthContentsWidth = HealthBar.WIDTH * (health / 100)
     this.removeChild(this.healthBarContents)
     const healthBarContents = this.game.add.graphics(0, 0)
-    healthBarContents.beginFill(0x00ff00)
+    healthBarContents.beginFill(healthBarColour)
     healthBarContents.lineTo(0, HealthBar.HEIGHT)
     healthBarContents.lineTo(healthContentsWidth, HealthBar.HEIGHT)
     healthBarContents.lineTo(healthContentsWidth, 0)

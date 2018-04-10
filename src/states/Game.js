@@ -83,7 +83,10 @@ export default class extends Phaser.State {
   }
 
   handlePlayerDamage (player, enemy) {
-    player.takeDamage(enemy)
+    const isPlayerKilled = player.takeDamage(enemy)
+    if (isPlayerKilled) {
+      this.game.paused = true
+    }
   }
 
   update () {

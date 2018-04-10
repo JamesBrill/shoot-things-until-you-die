@@ -26,8 +26,10 @@ export default class Player extends Phaser.Sprite {
     this.health -= enemy.attackDamage
     if (this.health <= 0) {
       this.kill()
+      return true
     }
     this.healthBar.setHealth(this.health)
+    return false
   }
 
   aimAt (x, y) {

@@ -66,7 +66,7 @@ export default class extends Phaser.State {
   }
 
   hitCallback (bullet, enemy) {
-    bullet.kill()
+    this.player.weapon.hitTarget(bullet)
     const isEnemyKilled = enemy.takeDamage(this.player.weapon)
     if (isEnemyKilled) {
       this.enemies.removeChild(enemy)

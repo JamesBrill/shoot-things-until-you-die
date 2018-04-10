@@ -61,6 +61,10 @@ export default class AssaultRifle extends Phaser.Weapon {
     const fireAngle = this.firingCone.updateFireAngle(x, y)
     this.fireAngle = fireAngle
   }
+
+  hitTarget (bullet) {
+    bullet.kill()
+  }
 }
 
 AssaultRifle.GUN_RANGE = 700

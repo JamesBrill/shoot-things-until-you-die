@@ -63,6 +63,10 @@ export default class SemiAutoShotgun extends Phaser.Weapon {
     const fireAngle = this.firingCone.updateFireAngle(x, y)
     this.fireAngle = fireAngle
   }
+
+  hitTarget (bullet) {
+    bullet.kill()
+  }
 }
 
 SemiAutoShotgun.GUN_RANGE = 200

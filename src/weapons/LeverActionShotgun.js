@@ -63,6 +63,10 @@ export default class LeverActionShotgun extends Phaser.Weapon {
     const fireAngle = this.firingCone.updateFireAngle(x, y)
     this.fireAngle = fireAngle
   }
+
+  hitTarget () {
+    // Lever action shotgun bullets cut through everything
+  }
 }
 
 LeverActionShotgun.GUN_RANGE = 350

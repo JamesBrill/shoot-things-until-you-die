@@ -48,9 +48,9 @@ Zombie.createRandom = (game, player, world, maxSpeed) => {
   const randomSpeed = Math.random() * (maxSpeed || 200) + 30
   const zombieSizePicker = Math.random()
   let zombieSize
-  if (zombieSizePicker < 0.1) {
+  if (zombieSizePicker < 0.05) {
     zombieSize = Zombie.XLARGE_SIZE
-  } else if (zombieSizePicker < 0.8) {
+  } else if (zombieSizePicker < 0.15) {
     zombieSize = Zombie.LARGE_SIZE
   } else {
     zombieSize = Zombie.NORMAL_SIZE

@@ -24,7 +24,6 @@ export default class Player extends Phaser.Sprite {
 
   takeDamage (enemy) {
     this.health -= enemy.attackDamage
-    console.log(this.health)
     if (this.health <= 0) {
       this.kill()
     }

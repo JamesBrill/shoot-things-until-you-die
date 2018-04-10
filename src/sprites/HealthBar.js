@@ -15,6 +15,7 @@ export default class HealthBar extends Phaser.Sprite {
   }
 
   setHealth (health) {
+    this.removeChild(this.healthBarContents)
     const healthBarContents = this.game.add.graphics(0, 0)
     healthBarContents.beginFill(0x00ff00)
     healthBarContents.lineTo(0, 20)
@@ -22,9 +23,13 @@ export default class HealthBar extends Phaser.Sprite {
     healthBarContents.lineTo(health, 0)
     healthBarContents.lineTo(0, 0)
     healthBarContents.endFill()
-    this.addChild(
-      new Phaser.Sprite(this.game, 1, 1, healthBarContents.generateTexture())
+    this.healthBarContents = new Phaser.Sprite(
+      this.game,
+      1,
+      1,
+      healthBarContents.generateTexture()
     )
+    this.addChild(this.healthBarContents)
     healthBarContents.destroy()
   }
 }

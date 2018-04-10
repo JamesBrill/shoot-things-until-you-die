@@ -80,6 +80,10 @@ export default class extends Phaser.State {
     )
   }
 
+  handlePlayerDamage (player, enemy) {
+    player.takeDamage(enemy)
+  }
+
   update () {
     this.game.physics.arcade.overlap(
       this.player.weapon.bullets,
@@ -98,7 +102,7 @@ export default class extends Phaser.State {
     this.game.physics.arcade.collide(
       this.player,
       this.enemies,
-      () => this.player.kill(),
+      this.handlePlayerDamage,
       null,
       this
     )

@@ -13,12 +13,22 @@ export default class Player extends Phaser.Sprite {
     this.anchor.setTo(0.5)
     this.game = game
     this.armWeapon(weapon)
+    this.health = 100
     this.healthBar = new HealthBar({
       game,
       x: x - 0.5 * HealthBar.WIDTH,
       y: y - 1 * Player.PLAYER_SIZE - 10
     })
     this.addChild(this.healthBar)
+  }
+
+  takeDamage (enemy) {
+    this.health -= enemy.attackDamage
+    console.log(this.health)
+    if (this.health <= 0) {
+      this.kill()
+    }
+    this.healthBar.setHealth(this.health)
   }
 
   aimAt (x, y) {

@@ -12,6 +12,7 @@ export default class Zombie extends Phaser.Sprite {
     this.game = game
     this.player = player
     this.speed = speed
+    this.attackDamage = 1
   }
 
   move () {

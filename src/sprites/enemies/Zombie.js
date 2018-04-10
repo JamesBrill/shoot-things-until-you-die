@@ -69,4 +69,4 @@ Zombie.createRandom = (game, player, world, maxSpeed) => {
 
 Zombie.NORMAL_SIZE = 30
 Zombie.LARGE_SIZE = 60
-Zombie.XLARGE_SIZE = 90
+Zombie.XLARGE_SIZE = 120

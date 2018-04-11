@@ -72,5 +72,5 @@ AssaultRifle.GUN_ANGLE = 5
 AssaultRifle.BULLET_LENGTH = 20
 AssaultRifle.NUMBER_OF_BULLETS = 30
 AssaultRifle.FIRE_RATE = 100
-AssaultRifle.BULLET_SPEED = 3000
+AssaultRifle.BULLET_SPEED = 2000
 AssaultRifle.ATTACK_DAMAGE = 34

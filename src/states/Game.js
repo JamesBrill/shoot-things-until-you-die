@@ -55,6 +55,7 @@ export default class extends Phaser.State {
       down: this.game.input.keyboard.addKey(Phaser.Keyboard.S),
       left: this.game.input.keyboard.addKey(Phaser.Keyboard.A),
       right: this.game.input.keyboard.addKey(Phaser.Keyboard.D),
+      reload: this.game.input.keyboard.addKey(Phaser.Keyboard.R),
       weaponOne: this.game.input.keyboard.addKey(Phaser.Keyboard.ONE),
       weaponTwo: this.game.input.keyboard.addKey(Phaser.Keyboard.TWO),
       weaponThree: this.game.input.keyboard.addKey(Phaser.Keyboard.THREE)
@@ -139,6 +140,10 @@ export default class extends Phaser.State {
       this.player.armWeapon(this.weapons[1])
     } else if (this.cursors.weaponThree.isDown) {
       this.player.armWeapon(this.weapons[2])
+    }
+
+    if (this.cursors.reload.isDown) {
+      this.player.weapon.reload()
     }
 
     if (this.game.input.mousePointer.isDown) {

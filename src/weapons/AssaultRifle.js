@@ -62,8 +62,11 @@ export default class AssaultRifle extends Phaser.Weapon {
   }
 
   reload () {
-    if (this.ammoReserves > 0) {
-      const bulletsToLoad = Math.min(this.ammoReserves, this.maxBullets)
+    if (this.ammoReserves > 0 && !this.reloading) {
+      const bulletsToLoad = Math.min(
+        this.ammoReserves,
+        this.maxBullets - this.currentAmmo
+      )
       const callback = () => {
         this.ammoReserves -= bulletsToLoad
         this.currentAmmo += bulletsToLoad

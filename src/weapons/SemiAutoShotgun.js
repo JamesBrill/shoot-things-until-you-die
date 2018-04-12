@@ -27,13 +27,14 @@ export default class SemiAutoShotgun extends Phaser.Weapon {
     this.attackDamage = SemiAutoShotgun.ATTACK_DAMAGE
     this.maxBullets = 12
     this.currentAmmo = this.maxBullets
+    this.ammoReserves = 80
     this.weaponDisplay = new WeaponDisplay({
       game,
       x: 0,
       y: 50,
       displayName: 'Shotgun',
       currentAmmo: this.currentAmmo,
-      ammoReserves: 80
+      ammoReserves: this.ammoReserves
     })
 
     this.firingCone = new FiringCone({

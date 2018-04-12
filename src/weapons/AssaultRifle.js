@@ -27,13 +27,14 @@ export default class AssaultRifle extends Phaser.Weapon {
     this.attackDamage = AssaultRifle.ATTACK_DAMAGE
     this.maxBullets = 60
     this.currentAmmo = this.maxBullets
+    this.ammoReserves = 100
     this.weaponDisplay = new WeaponDisplay({
       game,
       x: 0,
       y: 100,
       displayName: 'Assault Rifle',
       currentAmmo: this.currentAmmo,
-      ammoReserves: 100
+      ammoReserves: this.ammoReserves
     })
 
     this.firingCone = new FiringCone({

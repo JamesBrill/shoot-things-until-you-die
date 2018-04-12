@@ -27,13 +27,14 @@ export default class LeverActionShotgun extends Phaser.Weapon {
     this.attackDamage = LeverActionShotgun.ATTACK_DAMAGE
     this.maxBullets = 8
     this.currentAmmo = this.maxBullets
+    this.ammoReserves = 64
     this.weaponDisplay = new WeaponDisplay({
       game,
       x: 0,
       y: 0,
       displayName: 'Model 1887',
       currentAmmo: this.currentAmmo,
-      ammoReserves: 64
+      ammoReserves: this.ammoReserves
     })
 
     this.firingCone = new FiringCone({

@@ -18,7 +18,8 @@ export default class Shotgun extends Weapon {
     if (
       this.ammoReserves > 0 &&
       this.currentAmmo < this.maxBullets &&
-      !this.reloading
+      !this.reloading &&
+      !this.loadingShell
     ) {
       const callback = () => {
         this.ammoReserves -= 1

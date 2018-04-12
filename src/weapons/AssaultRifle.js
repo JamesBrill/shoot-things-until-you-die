@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import FiringCone from '../sprites/FiringCone'
+import WeaponDisplay from '../ui/WeaponDisplay'
 
 export default class AssaultRifle extends Phaser.Weapon {
   constructor ({ game }) {
@@ -24,7 +25,16 @@ export default class AssaultRifle extends Phaser.Weapon {
     this.bulletSpeed = AssaultRifle.BULLET_SPEED
     this.fireRate = 0
     this.attackDamage = AssaultRifle.ATTACK_DAMAGE
-    this.displayName = 'Assault Rifle'
+    this.maxBullets = 60
+    this.currentAmmo = this.maxBullets
+    this.weaponDisplay = new WeaponDisplay({
+      game,
+      x: 0,
+      y: 100,
+      displayName: 'Assault Rifle',
+      currentAmmo: this.currentAmmo,
+      ammoReserves: 100
+    })
 
     this.firingCone = new FiringCone({
       game,
@@ -54,6 +64,10 @@ export default class AssaultRifle extends Phaser.Weapon {
       this.loadingBullet = true
       this.fireSound.play()
       super.fire()
+      this.currentAmmo -= 1
+      if (this.currentAmmo >= 0) {
+        this.weaponDisplay.setCurrentAmmo(this.currentAmmo)
+      }
       setTimeout(this.loadNewBullet.bind(this), AssaultRifle.FIRE_RATE)
     }
   }

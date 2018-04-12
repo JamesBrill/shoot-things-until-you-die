@@ -1,8 +1,10 @@
 export default class WeaponDisplay {
-  constructor ({ game, x, y, weapon }) {
-    this.weaponDisplayName = weapon.displayName
+  constructor ({ game, x, y, displayName, currentAmmo, ammoReserves }) {
+    this.displayName = displayName
+    this.currentAmmo = currentAmmo
+    this.ammoReserves = ammoReserves
     this.game = game
-    this.weaponNameText = this.game.add.text(x, y, this.weaponDisplayName, {
+    this.weaponNameText = this.game.add.text(x, y, displayName, {
       font: '16px Arial',
       fill: 'red',
       align: 'center'
@@ -10,7 +12,7 @@ export default class WeaponDisplay {
     this.weaponNameText.fixedToCamera = true
     this.weaponNameText.cameraOffset.setTo(x, y)
 
-    this.weaponCurrentAmmoText = this.game.add.text(x, y, '10', {
+    this.weaponCurrentAmmoText = this.game.add.text(x, y, currentAmmo, {
       font: '16px Arial',
       fill: 'red',
       align: 'center'
@@ -18,12 +20,17 @@ export default class WeaponDisplay {
     this.weaponCurrentAmmoText.fixedToCamera = true
     this.weaponCurrentAmmoText.cameraOffset.setTo(x, y + 20)
 
-    this.weaponAmmoReserveText = this.game.add.text(x, y, '100', {
+    this.weaponAmmoReserveText = this.game.add.text(x, y, ammoReserves, {
       font: '16px Arial',
       fill: 'red',
       align: 'center'
     })
     this.weaponAmmoReserveText.fixedToCamera = true
     this.weaponAmmoReserveText.cameraOffset.setTo(x + 30, y + 20)
+  }
+
+  setCurrentAmmo (currentAmmo) {
+    this.currentAmmo = currentAmmo
+    this.weaponCurrentAmmoText.setText(this.currentAmmo)
   }
 }

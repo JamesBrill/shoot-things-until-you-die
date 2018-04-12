@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import FiringCone from '../sprites/FiringCone'
+import WeaponDisplay from '../ui/WeaponDisplay'
 
 export default class LeverActionShotgun extends Phaser.Weapon {
   constructor ({ game }) {
@@ -24,7 +25,16 @@ export default class LeverActionShotgun extends Phaser.Weapon {
     this.bulletSpeed = LeverActionShotgun.BULLET_SPEED
     this.fireRate = 0
     this.attackDamage = LeverActionShotgun.ATTACK_DAMAGE
-    this.displayName = 'Model 1887'
+    this.maxBullets = 8
+    this.currentAmmo = this.maxBullets
+    this.weaponDisplay = new WeaponDisplay({
+      game,
+      x: 0,
+      y: 0,
+      displayName: 'Model 1887',
+      currentAmmo: this.currentAmmo,
+      ammoReserves: 64
+    })
 
     this.firingCone = new FiringCone({
       game,
@@ -55,6 +65,10 @@ export default class LeverActionShotgun extends Phaser.Weapon {
       this.fireSound.play()
       for (let i = 0; i < 12; i++) {
         super.fire()
+      }
+      this.currentAmmo -= 1
+      if (this.currentAmmo >= 0) {
+        this.weaponDisplay.setCurrentAmmo(this.currentAmmo)
       }
       setTimeout(this.loadNewShell.bind(this), LeverActionShotgun.FIRE_RATE)
     }

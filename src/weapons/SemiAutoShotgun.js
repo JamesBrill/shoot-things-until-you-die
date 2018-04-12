@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import FiringCone from '../sprites/FiringCone'
+import WeaponDisplay from '../ui/WeaponDisplay'
 
 export default class SemiAutoShotgun extends Phaser.Weapon {
   constructor ({ game }) {
@@ -24,7 +25,16 @@ export default class SemiAutoShotgun extends Phaser.Weapon {
     this.bulletSpeed = SemiAutoShotgun.BULLET_SPEED
     this.fireRate = 0
     this.attackDamage = SemiAutoShotgun.ATTACK_DAMAGE
-    this.displayName = 'Shotgun'
+    this.maxBullets = 12
+    this.currentAmmo = this.maxBullets
+    this.weaponDisplay = new WeaponDisplay({
+      game,
+      x: 0,
+      y: 50,
+      displayName: 'Shotgun',
+      currentAmmo: this.currentAmmo,
+      ammoReserves: 80
+    })
 
     this.firingCone = new FiringCone({
       game,
@@ -55,6 +65,10 @@ export default class SemiAutoShotgun extends Phaser.Weapon {
       this.fireSound.play()
       for (let i = 0; i < 12; i++) {
         super.fire()
+      }
+      this.currentAmmo -= 1
+      if (this.currentAmmo >= 0) {
+        this.weaponDisplay.setCurrentAmmo(this.currentAmmo)
       }
       setTimeout(this.loadNewShell.bind(this), SemiAutoShotgun.FIRE_RATE)
     }

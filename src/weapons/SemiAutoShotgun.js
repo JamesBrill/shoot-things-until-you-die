@@ -7,6 +7,8 @@ export default class SemiAutoShotgun extends Phaser.Weapon {
     super(game, game.plugins)
 
     this.fireSound = game.add.audio('semi_auto_shotgun_fire')
+    this.loadSound = game.add.audio('semi_auto_shotgun_load')
+    this.reloadTimeout = null
 
     const bulletGraphics = game.add.graphics(0, 0)
     bulletGraphics.lineStyle(3, 0xff0000)
@@ -62,24 +64,41 @@ export default class SemiAutoShotgun extends Phaser.Weapon {
   }
 
   reload () {
-    if (this.ammoReserves > 0 && !this.reloading) {
-      const bulletsToLoad = Math.min(
-        this.ammoReserves,
-        this.maxBullets - this.currentAmmo
-      )
+    if (
+      this.ammoReserves > 0 &&
+      this.currentAmmo < this.maxBullets &&
+      !this.reloading
+    ) {
       const callback = () => {
-        this.ammoReserves -= bulletsToLoad
-        this.currentAmmo += bulletsToLoad
+        this.ammoReserves -= 1
+        this.currentAmmo += 1
         this.weaponDisplay.setAmmoReserves(this.ammoReserves)
         this.weaponDisplay.setCurrentAmmo(this.currentAmmo)
-        this.reloading = false
+        if (this.currentAmmo < this.maxBullets) {
+          this.loadSound.play()
+          this.reloadTimeout = setTimeout(
+            callback.bind(this),
+            SemiAutoShotgun.RELOAD_TIME
+          )
+        } else {
+          this.reloading = false
+        }
       }
       this.reloading = true
-      setTimeout(callback.bind(this), SemiAutoShotgun.RELOAD_TIME)
+      this.loadSound.play()
+      this.reloadTimeout = setTimeout(
+        callback.bind(this),
+        SemiAutoShotgun.RELOAD_TIME
+      )
     }
   }
 
   fire () {
+    if (this.currentAmmo > 0 && this.reloading && this.reloadTimeout !== null) {
+      clearTimeout(this.reloadTimeout)
+      this.reloading = false
+    }
+
     if (this.currentAmmo === 0 && !this.reloading) {
       this.reload()
     } else if (!this.loadingShell && !this.reloading) {
@@ -113,4 +132,4 @@ SemiAutoShotgun.NUMBER_OF_BULLETS = 12
 SemiAutoShotgun.FIRE_RATE = 600
 SemiAutoShotgun.BULLET_SPEED = 1500
 SemiAutoShotgun.ATTACK_DAMAGE = 30
-SemiAutoShotgun.RELOAD_TIME = 1000
+SemiAutoShotgun.RELOAD_TIME = 231

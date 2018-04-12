@@ -5,6 +5,7 @@ import Zombie from '../sprites/enemies/Zombie'
 import LeverActionShotgun from '../weapons/LeverActionShotgun'
 import SemiAutoShotgun from '../weapons/SemiAutoShotgun'
 import AssaultRifle from '../weapons/AssaultRifle'
+import WeaponDisplay from '../ui/WeaponDisplay'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
 
 export default class extends Phaser.State {
@@ -64,6 +65,13 @@ export default class extends Phaser.State {
     //  0.1 is the amount of linear interpolation to use.
     //  The smaller the value, the smooth the camera (and the longer it takes to catch up)
     this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)
+
+    this.weaponDisplay = new WeaponDisplay({
+      game: this.game,
+      x: 0,
+      y: 0,
+      weapon: this.player.weapon
+    })
   }
 
   hitCallback (bullet, enemy) {

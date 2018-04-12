@@ -24,6 +24,7 @@ export default class AssaultRifle extends Phaser.Weapon {
     this.bulletSpeed = AssaultRifle.BULLET_SPEED
     this.fireRate = 0
     this.attackDamage = AssaultRifle.ATTACK_DAMAGE
+    this.displayName = 'Assault Rifle'
 
     this.firingCone = new FiringCone({
       game,

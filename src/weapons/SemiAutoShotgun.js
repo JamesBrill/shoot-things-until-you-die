@@ -24,6 +24,7 @@ export default class SemiAutoShotgun extends Phaser.Weapon {
     this.bulletSpeed = SemiAutoShotgun.BULLET_SPEED
     this.fireRate = 0
     this.attackDamage = SemiAutoShotgun.ATTACK_DAMAGE
+    this.displayName = 'Shotgun'
 
     this.firingCone = new FiringCone({
       game,

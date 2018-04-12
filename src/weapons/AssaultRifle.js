@@ -7,6 +7,7 @@ export default class AssaultRifle extends Phaser.Weapon {
     super(game, game.plugins)
 
     this.fireSound = game.add.audio('assault_rifle_fire')
+    this.reloadSound = game.add.audio('assault_rifle_reload')
 
     const bulletGraphics = game.add.graphics(0, 0)
     bulletGraphics.lineStyle(3, 0xff0000)
@@ -75,6 +76,7 @@ export default class AssaultRifle extends Phaser.Weapon {
         this.reloading = false
       }
       this.reloading = true
+      this.reloadSound.play()
       setTimeout(callback.bind(this), AssaultRifle.RELOAD_TIME)
     }
   }
@@ -111,4 +113,4 @@ AssaultRifle.NUMBER_OF_BULLETS = 30
 AssaultRifle.FIRE_RATE = 100
 AssaultRifle.BULLET_SPEED = 2000
 AssaultRifle.ATTACK_DAMAGE = 34
-AssaultRifle.RELOAD_TIME = 500
+AssaultRifle.RELOAD_TIME = 1830

@@ -5,7 +5,6 @@ import Zombie from '../sprites/enemies/Zombie'
 import LeverActionShotgun from '../weapons/LeverActionShotgun'
 import SemiAutoShotgun from '../weapons/SemiAutoShotgun'
 import AssaultRifle from '../weapons/AssaultRifle'
-import WeaponDisplay from '../ui/WeaponDisplay'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
 
 export default class extends Phaser.State {

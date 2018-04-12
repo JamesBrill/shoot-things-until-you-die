@@ -134,4 +134,4 @@ LeverActionShotgun.NUMBER_OF_BULLETS = 10
 LeverActionShotgun.FIRE_RATE = 1250
 LeverActionShotgun.BULLET_SPEED = 2000
 LeverActionShotgun.ATTACK_DAMAGE = 100
-LeverActionShotgun.RELOAD_TIME = 505
+LeverActionShotgun.RELOAD_TIME = 436

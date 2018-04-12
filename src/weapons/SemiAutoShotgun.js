@@ -8,6 +8,7 @@ export default class SemiAutoShotgun extends Phaser.Weapon {
 
     this.fireSound = game.add.audio('semi_auto_shotgun_fire')
     this.loadSound = game.add.audio('semi_auto_shotgun_load')
+    this.cockSound = game.add.audio('semi_auto_shotgun_cock')
     this.reloadTimeout = null
 
     const bulletGraphics = game.add.graphics(0, 0)
@@ -81,6 +82,7 @@ export default class SemiAutoShotgun extends Phaser.Weapon {
             SemiAutoShotgun.RELOAD_TIME
           )
         } else {
+          this.cockSound.play()
           this.reloading = false
         }
       }

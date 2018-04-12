@@ -55,6 +55,10 @@ export default class extends Phaser.State {
       'semi_auto_shotgun_load',
       'assets/audio/sound_effects/semi_auto_shotgun_load.wav'
     )
+    this.load.audio(
+      'semi_auto_shotgun_cock',
+      'assets/audio/sound_effects/semi_auto_shotgun_cock.wav'
+    )
   }
 
   render () {

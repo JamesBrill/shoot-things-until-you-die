@@ -46,6 +46,7 @@ export default class LeverActionShotgun extends Phaser.Weapon {
     })
 
     this.loadingShell = false
+    this.reloading = false
   }
 
   arm (player) {
@@ -60,8 +61,25 @@ export default class LeverActionShotgun extends Phaser.Weapon {
     this.loadingShell = false
   }
 
+  reload () {
+    if (this.ammoReserves > 0) {
+      const bulletsToLoad = Math.min(this.ammoReserves, this.maxBullets)
+      const callback = () => {
+        this.ammoReserves -= bulletsToLoad
+        this.currentAmmo += bulletsToLoad
+        this.weaponDisplay.setAmmoReserves(this.ammoReserves)
+        this.weaponDisplay.setCurrentAmmo(this.currentAmmo)
+        this.reloading = false
+      }
+      this.reloading = true
+      setTimeout(callback.bind(this), LeverActionShotgun.RELOAD_TIME)
+    }
+  }
+
   fire () {
-    if (!this.loadingShell) {
+    if (this.currentAmmo === 0 && !this.reloading) {
+      this.reload()
+    } else if (!this.loadingShell && !this.reloading) {
       this.loadingShell = true
       this.fireSound.play()
       for (let i = 0; i < 12; i++) {
@@ -92,3 +110,4 @@ LeverActionShotgun.NUMBER_OF_BULLETS = 10
 LeverActionShotgun.FIRE_RATE = 1250
 LeverActionShotgun.BULLET_SPEED = 2000
 LeverActionShotgun.ATTACK_DAMAGE = 100
+LeverActionShotgun.RELOAD_TIME = 3000

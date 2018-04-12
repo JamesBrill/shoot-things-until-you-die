@@ -20,13 +20,18 @@ export default class WeaponDisplay {
     this.weaponCurrentAmmoText.fixedToCamera = true
     this.weaponCurrentAmmoText.cameraOffset.setTo(x, y + 20)
 
-    this.weaponAmmoReserveText = this.game.add.text(x, y, ammoReserves, {
+    this.weaponAmmoReservesText = this.game.add.text(x, y, ammoReserves, {
       font: '16px Arial',
       fill: 'red',
       align: 'center'
     })
-    this.weaponAmmoReserveText.fixedToCamera = true
-    this.weaponAmmoReserveText.cameraOffset.setTo(x + 30, y + 20)
+    this.weaponAmmoReservesText.fixedToCamera = true
+    this.weaponAmmoReservesText.cameraOffset.setTo(x + 30, y + 20)
+  }
+
+  setAmmoReserves (ammoReserves) {
+    this.ammoReserves = ammoReserves
+    this.weaponAmmoReservesText.setText(this.ammoReserves)
   }
 
   setCurrentAmmo (currentAmmo) {

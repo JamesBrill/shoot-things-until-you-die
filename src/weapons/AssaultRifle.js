@@ -46,6 +46,7 @@ export default class AssaultRifle extends Phaser.Weapon {
     })
 
     this.loadingBullet = false
+    this.reloading = false
   }
 
   arm (player) {
@@ -60,8 +61,25 @@ export default class AssaultRifle extends Phaser.Weapon {
     this.loadingBullet = false
   }
 
+  reload () {
+    if (this.ammoReserves > 0) {
+      const bulletsToLoad = Math.min(this.ammoReserves, this.maxBullets)
+      const callback = () => {
+        this.ammoReserves -= bulletsToLoad
+        this.currentAmmo += bulletsToLoad
+        this.weaponDisplay.setAmmoReserves(this.ammoReserves)
+        this.weaponDisplay.setCurrentAmmo(this.currentAmmo)
+        this.reloading = false
+      }
+      this.reloading = true
+      setTimeout(callback.bind(this), AssaultRifle.RELOAD_TIME)
+    }
+  }
+
   fire () {
-    if (!this.loadingBullet) {
+    if (this.currentAmmo === 0 && !this.reloading) {
+      this.reload()
+    } else if (!this.loadingBullet && !this.reloading) {
       this.loadingBullet = true
       this.fireSound.play()
       super.fire()
@@ -90,3 +108,4 @@ AssaultRifle.NUMBER_OF_BULLETS = 30
 AssaultRifle.FIRE_RATE = 100
 AssaultRifle.BULLET_SPEED = 2000
 AssaultRifle.ATTACK_DAMAGE = 34
+AssaultRifle.RELOAD_TIME = 500

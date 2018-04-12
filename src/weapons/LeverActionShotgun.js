@@ -7,6 +7,9 @@ export default class LeverActionShotgun extends Phaser.Weapon {
     super(game, game.plugins)
 
     this.fireSound = game.add.audio('lever_action_shotgun_fire')
+    this.loadSound = game.add.audio('lever_action_shotgun_load')
+    this.cockSound = game.add.audio('lever_action_shotgun_cock')
+    this.reloadTimeout = null
 
     const bulletGraphics = game.add.graphics(0, 0)
     bulletGraphics.lineStyle(3, 0xff0000)
@@ -62,24 +65,42 @@ export default class LeverActionShotgun extends Phaser.Weapon {
   }
 
   reload () {
-    if (this.ammoReserves > 0 && !this.reloading) {
-      const bulletsToLoad = Math.min(
-        this.ammoReserves,
-        this.maxBullets - this.currentAmmo
-      )
+    if (
+      this.ammoReserves > 0 &&
+      this.currentAmmo < this.maxBullets &&
+      !this.reloading
+    ) {
       const callback = () => {
-        this.ammoReserves -= bulletsToLoad
-        this.currentAmmo += bulletsToLoad
+        this.ammoReserves -= 1
+        this.currentAmmo += 1
         this.weaponDisplay.setAmmoReserves(this.ammoReserves)
         this.weaponDisplay.setCurrentAmmo(this.currentAmmo)
-        this.reloading = false
+        if (this.currentAmmo < this.maxBullets) {
+          this.loadSound.play()
+          this.reloadTimeout = setTimeout(
+            callback.bind(this),
+            LeverActionShotgun.RELOAD_TIME
+          )
+        } else {
+          this.cockSound.play()
+          this.reloading = false
+        }
       }
       this.reloading = true
-      setTimeout(callback.bind(this), LeverActionShotgun.RELOAD_TIME)
+      this.loadSound.play()
+      this.reloadTimeout = setTimeout(
+        callback.bind(this),
+        LeverActionShotgun.RELOAD_TIME
+      )
     }
   }
 
   fire () {
+    if (this.currentAmmo > 0 && this.reloading && this.reloadTimeout !== null) {
+      clearTimeout(this.reloadTimeout)
+      this.reloading = false
+    }
+
     if (this.currentAmmo === 0 && !this.reloading) {
       this.reload()
     } else if (!this.loadingShell && !this.reloading) {
@@ -113,4 +134,4 @@ LeverActionShotgun.NUMBER_OF_BULLETS = 10
 LeverActionShotgun.FIRE_RATE = 1250
 LeverActionShotgun.BULLET_SPEED = 2000
 LeverActionShotgun.ATTACK_DAMAGE = 100
-LeverActionShotgun.RELOAD_TIME = 3000
+LeverActionShotgun.RELOAD_TIME = 505

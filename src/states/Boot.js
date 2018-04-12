@@ -43,6 +43,18 @@ export default class extends Phaser.State {
       'assault_rifle_reload',
       'assets/audio/sound_effects/assault_rifle_reload.wav'
     )
+    this.load.audio(
+      'lever_action_shotgun_load',
+      'assets/audio/sound_effects/lever_action_shotgun_load.wav'
+    )
+    this.load.audio(
+      'lever_action_shotgun_cock',
+      'assets/audio/sound_effects/lever_action_shotgun_cock.wav'
+    )
+    this.load.audio(
+      'semi_auto_shotgun_load',
+      'assets/audio/sound_effects/semi_auto_shotgun_load.wav'
+    )
   }
 
   render () {

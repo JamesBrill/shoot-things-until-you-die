@@ -1,129 +1,25 @@
-import Phaser from 'phaser'
-import FiringCone from '../sprites/FiringCone'
-import WeaponDisplay from '../ui/WeaponDisplay'
+import Shotgun from './Shotgun'
 
-export default class SemiAutoShotgun extends Phaser.Weapon {
+export default class SemiAutoShotgun extends Shotgun {
   constructor ({ game }) {
-    super(game, game.plugins)
-
-    this.fireSound = game.add.audio('semi_auto_shotgun_fire')
-    this.loadSound = game.add.audio('semi_auto_shotgun_load')
-    this.cockSound = game.add.audio('semi_auto_shotgun_cock')
-    this.reloadTimeout = null
-
-    const bulletGraphics = game.add.graphics(0, 0)
-    bulletGraphics.lineStyle(3, 0xff0000)
-    bulletGraphics.moveTo(0, 0)
-    bulletGraphics.lineTo(0, SemiAutoShotgun.BULLET_LENGTH)
-    bulletGraphics.endFill()
-    const bulletTexture = bulletGraphics.generateTexture()
-    bulletGraphics.destroy()
-
-    this.createBullets(SemiAutoShotgun.NUMBER_OF_BULLETS, bulletTexture)
-    this.bulletKillType = Phaser.Weapon.KILL_DISTANCE
-    this.bulletKillDistance =
-      SemiAutoShotgun.GUN_RANGE - SemiAutoShotgun.BULLET_LENGTH
-    this.bulletAngleOffset = 90
-    this.bulletAngleVariance = 0.5 * SemiAutoShotgun.GUN_ANGLE
-    this.bulletSpeed = SemiAutoShotgun.BULLET_SPEED
-    this.fireRate = 0
-    this.attackDamage = SemiAutoShotgun.ATTACK_DAMAGE
-    this.maxBullets = 12
-    this.currentAmmo = this.maxBullets
-    this.ammoReserves = 80
-    this.weaponDisplay = new WeaponDisplay({
+    super({
       game,
-      x: 0,
-      y: 50,
-      displayName: 'Shotgun',
-      currentAmmo: this.currentAmmo,
-      ammoReserves: this.ammoReserves
-    })
-
-    this.firingCone = new FiringCone({
-      game,
-      x: 0,
-      y: 0,
+      fireSound: game.add.audio('semi_auto_shotgun_fire'),
+      loadSound: game.add.audio('semi_auto_shotgun_load'),
+      cockSound: game.add.audio('semi_auto_shotgun_cock'),
+      bulletLength: SemiAutoShotgun.BULLET_LENGTH,
+      numberOfBullets: SemiAutoShotgun.NUMBER_OF_BULLETS,
       gunRange: SemiAutoShotgun.GUN_RANGE,
-      gunAngle: SemiAutoShotgun.GUN_ANGLE
+      gunAngle: SemiAutoShotgun.GUN_ANGLE,
+      bulletSpeed: SemiAutoShotgun.BULLET_SPEED,
+      attackDamage: SemiAutoShotgun.ATTACK_DAMAGE,
+      reloadTime: SemiAutoShotgun.RELOAD_TIME,
+      fireRate: SemiAutoShotgun.FIRE_RATE,
+      maxBullets: SemiAutoShotgun.MAX_BULLETS,
+      ammoReserves: SemiAutoShotgun.AMMO_RESERVES,
+      displayName: SemiAutoShotgun.DISPLAY_NAME,
+      displayY: SemiAutoShotgun.DISPLAY_Y
     })
-
-    this.loadingShell = false
-    this.reloading = false
-  }
-
-  arm (player) {
-    this.trackSprite(player, 0, 0)
-  }
-
-  disarm () {
-    this.trackSprite(null)
-  }
-
-  loadNewShell () {
-    this.loadingShell = false
-  }
-
-  reload () {
-    if (
-      this.ammoReserves > 0 &&
-      this.currentAmmo < this.maxBullets &&
-      !this.reloading
-    ) {
-      const callback = () => {
-        this.ammoReserves -= 1
-        this.currentAmmo += 1
-        this.weaponDisplay.setAmmoReserves(this.ammoReserves)
-        this.weaponDisplay.setCurrentAmmo(this.currentAmmo)
-        if (this.currentAmmo < this.maxBullets) {
-          this.loadSound.play()
-          this.reloadTimeout = setTimeout(
-            callback.bind(this),
-            SemiAutoShotgun.RELOAD_TIME
-          )
-        } else {
-          this.cockSound.play()
-          this.reloading = false
-        }
-      }
-      this.reloading = true
-      this.loadSound.play()
-      this.reloadTimeout = setTimeout(
-        callback.bind(this),
-        SemiAutoShotgun.RELOAD_TIME
-      )
-    }
-  }
-
-  fire () {
-    if (this.currentAmmo > 0 && this.reloading && this.reloadTimeout !== null) {
-      clearTimeout(this.reloadTimeout)
-      this.reloading = false
-    }
-
-    if (this.currentAmmo === 0 && !this.reloading) {
-      this.reload()
-    } else if (!this.loadingShell && !this.reloading) {
-      this.loadingShell = true
-      this.fireSound.play()
-      for (let i = 0; i < SemiAutoShotgun.NUMBER_OF_BULLETS; i++) {
-        super.fire()
-      }
-      this.currentAmmo -= 1
-      if (this.currentAmmo >= 0) {
-        this.weaponDisplay.setCurrentAmmo(this.currentAmmo)
-      }
-      setTimeout(this.loadNewShell.bind(this), SemiAutoShotgun.FIRE_RATE)
-    }
-  }
-
-  aimAt (x, y) {
-    const fireAngle = this.firingCone.updateFireAngle(x, y)
-    this.fireAngle = fireAngle
-  }
-
-  hitTarget (bullet) {
-    bullet.kill()
   }
 }
 
@@ -135,3 +31,7 @@ SemiAutoShotgun.FIRE_RATE = 600
 SemiAutoShotgun.BULLET_SPEED = 1500
 SemiAutoShotgun.ATTACK_DAMAGE = 30
 SemiAutoShotgun.RELOAD_TIME = 231
+SemiAutoShotgun.MAX_BULLETS = 10
+SemiAutoShotgun.AMMO_RESERVES = 80
+SemiAutoShotgun.DISPLAY_NAME = 'Shotgun'
+SemiAutoShotgun.DISPLAY_Y = 50

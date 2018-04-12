@@ -106,7 +106,7 @@ export default class SemiAutoShotgun extends Phaser.Weapon {
     } else if (!this.loadingShell && !this.reloading) {
       this.loadingShell = true
       this.fireSound.play()
-      for (let i = 0; i < 12; i++) {
+      for (let i = 0; i < SemiAutoShotgun.NUMBER_OF_BULLETS; i++) {
         super.fire()
       }
       this.currentAmmo -= 1

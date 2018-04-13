@@ -33,4 +33,4 @@ AssaultRifle.RELOAD_TIME = 1830
 AssaultRifle.MAX_BULLETS = 60
 AssaultRifle.AMMO_RESERVES = 100
 AssaultRifle.DISPLAY_NAME = 'Assault Rifle'
-AssaultRifle.DISPLAY_Y = 100
+AssaultRifle.DISPLAY_Y = 150

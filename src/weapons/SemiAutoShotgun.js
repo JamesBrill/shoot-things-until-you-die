@@ -34,4 +34,4 @@ SemiAutoShotgun.RELOAD_TIME = 400
 SemiAutoShotgun.MAX_BULLETS = 10
 SemiAutoShotgun.AMMO_RESERVES = 80
 SemiAutoShotgun.DISPLAY_NAME = 'Shotgun'
-SemiAutoShotgun.DISPLAY_Y = 50
+SemiAutoShotgun.DISPLAY_Y = 100

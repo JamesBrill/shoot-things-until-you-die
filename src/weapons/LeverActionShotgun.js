@@ -38,4 +38,4 @@ LeverActionShotgun.RELOAD_TIME = 600
 LeverActionShotgun.MAX_BULLETS = 8
 LeverActionShotgun.AMMO_RESERVES = 64
 LeverActionShotgun.DISPLAY_NAME = 'Model 1887'
-LeverActionShotgun.DISPLAY_Y = 0
+LeverActionShotgun.DISPLAY_Y = 50

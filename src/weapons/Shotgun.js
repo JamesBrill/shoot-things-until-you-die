@@ -47,7 +47,11 @@ export default class Shotgun extends Weapon {
     }
 
     if (this.currentAmmo === 0 && !this.reloading) {
-      this.reload()
+      if (this.ammoReserves === 0) {
+        this.playDryFireSound()
+      } else {
+        this.reload()
+      }
     } else if (!this.loadingShell && !this.reloading) {
       this.loadingShell = true
       this.fireSound.play()

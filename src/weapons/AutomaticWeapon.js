@@ -33,7 +33,11 @@ export default class AutomaticWeapon extends Weapon {
 
   fire () {
     if (this.currentAmmo === 0 && !this.reloading) {
-      this.reload()
+      if (this.ammoReserves === 0) {
+        this.playDryFireSound()
+      } else {
+        this.reload()
+      }
     } else if (!this.loadingBullet && !this.reloading) {
       this.loadingBullet = true
       this.fireSound.play()

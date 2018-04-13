@@ -21,6 +21,9 @@ export default class Weapon extends Phaser.Weapon {
   }) {
     super(game, game.plugins)
 
+    this.dryFireSound = game.add.audio('dry_fire')
+    this.canPlayDryFireSound = true
+
     this.game = game
     this.fireSound = fireSound
     this.bulletLength = bulletLength
@@ -87,5 +90,16 @@ export default class Weapon extends Phaser.Weapon {
 
   hitTarget (bullet) {
     bullet.kill()
+  }
+
+  playDryFireSound () {
+    if (this.canPlayDryFireSound) {
+      this.dryFireSound.play()
+      this.canPlayDryFireSound = false
+      const enableDryFireSound = () => {
+        this.canPlayDryFireSound = true
+      }
+      setTimeout(enableDryFireSound, 1000)
+    }
   }
 }

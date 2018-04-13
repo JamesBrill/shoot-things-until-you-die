@@ -59,6 +59,7 @@ export default class extends Phaser.State {
       'semi_auto_shotgun_cock',
       'assets/audio/sound_effects/semi_auto_shotgun_cock.wav'
     )
+    this.load.audio('dry_fire', 'assets/audio/sound_effects/dry_fire.wav')
   }
 
   render () {

@@ -2,6 +2,7 @@
 import Phaser from 'phaser'
 import Player from '../sprites/Player'
 import Zombie from '../sprites/enemies/Zombie'
+import AmmoDrop from '../sprites/ammoDrops/AmmoDrop'
 import Pistol from '../weapons/Pistol'
 import LeverActionShotgun from '../weapons/LeverActionShotgun'
 import SemiAutoShotgun from '../weapons/SemiAutoShotgun'
@@ -17,18 +18,18 @@ export default class extends Phaser.State {
 
     this.game.physics.startSystem(Phaser.Physics.ARCADE)
 
-    this.weapons = [
-      new Pistol({ game: this.game }),
-      new LeverActionShotgun({ game: this.game }),
-      new SemiAutoShotgun({ game: this.game }),
-      new AssaultRifle({ game: this.game })
-    ]
+    this.weapons = {
+      pistol: new Pistol({ game: this.game }),
+      leverActionShotgun: new LeverActionShotgun({ game: this.game }),
+      semiAutoShotgun: new SemiAutoShotgun({ game: this.game }),
+      assaultRifle: new AssaultRifle({ game: this.game })
+    }
 
     this.player = new Player({
       game: this.game,
       x: this.world.centerX,
       y: this.world.centerY,
-      weapon: this.weapons[0]
+      weapon: this.weapons.pistol
     })
     this.game.add.existing(this.player)
     this.game.physics.arcade.enable(this.player)
@@ -49,6 +50,14 @@ export default class extends Phaser.State {
           this.maxZombieSpeed
         )
       )
+    }
+
+    this.ammoDrops = this.game.add.group()
+    this.ammoDrops.enableBody = true
+    this.ammoDrops.physicsBodyType = Phaser.Physics.ARCADE
+
+    for (let i = 0; i < 8; i++) {
+      this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.world))
     }
 
     this.cursors = {
@@ -96,6 +105,13 @@ export default class extends Phaser.State {
     }
   }
 
+  handleAmmoPickUp (player, ammoDrop) {
+    AmmoDrop.addAmmo(this.weapons, ammoDrop)
+    ammoDrop.kill()
+    this.ammoDrops.removeChild(ammoDrop)
+    this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.world))
+  }
+
   update () {
     this.game.physics.arcade.overlap(
       this.player.weapon.bullets,
@@ -118,6 +134,13 @@ export default class extends Phaser.State {
       null,
       this
     )
+    this.game.physics.arcade.overlap(
+      this.player,
+      this.ammoDrops,
+      this.handleAmmoPickUp,
+      null,
+      this
+    )
 
     this.enemies.forEach(enemy => enemy.move())
 
@@ -137,13 +160,13 @@ export default class extends Phaser.State {
     }
 
     if (this.cursors.weaponOne.isDown) {
-      this.player.armWeapon(this.weapons[0])
+      this.player.armWeapon(this.weapons.pistol)
     } else if (this.cursors.weaponTwo.isDown) {
-      this.player.armWeapon(this.weapons[1])
+      this.player.armWeapon(this.weapons.leverActionShotgun)
     } else if (this.cursors.weaponThree.isDown) {
-      this.player.armWeapon(this.weapons[2])
+      this.player.armWeapon(this.weapons.semiAutoShotgun)
     } else if (this.cursors.weaponFour.isDown) {
-      this.player.armWeapon(this.weapons[3])
+      this.player.armWeapon(this.weapons.assaultRifle)
     }
 
     if (this.cursors.reload.isDown) {

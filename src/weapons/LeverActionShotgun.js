@@ -1,5 +1,4 @@
 import Shotgun from './Shotgun'
-
 export default class LeverActionShotgun extends Shotgun {
   constructor ({ game }) {
     super({

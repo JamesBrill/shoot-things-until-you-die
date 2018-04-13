@@ -102,4 +102,9 @@ export default class Weapon extends Phaser.Weapon {
       setTimeout(enableDryFireSound, 1000)
     }
   }
+
+  pickUpAmmo (bullets) {
+    this.ammoReserves += bullets
+    this.weaponDisplay.setAmmoReserves(this.ammoReserves)
+  }
 }

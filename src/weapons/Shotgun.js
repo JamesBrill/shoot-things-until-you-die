@@ -26,7 +26,7 @@ export default class Shotgun extends Weapon {
         this.currentAmmo += 1
         this.weaponDisplay.setAmmoReserves(this.ammoReserves)
         this.weaponDisplay.setCurrentAmmo(this.currentAmmo)
-        if (this.currentAmmo < this.maxBullets) {
+        if (this.currentAmmo < this.maxBullets && this.ammoReserves > 0) {
           this.loadSound.play()
           this.reloadTimeout = setTimeout(callback.bind(this), this.reloadTime)
         } else {

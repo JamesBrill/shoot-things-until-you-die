@@ -55,6 +55,7 @@ export default class extends Phaser.State {
     this.ammoDrops = this.game.add.group()
     this.ammoDrops.enableBody = true
     this.ammoDrops.physicsBodyType = Phaser.Physics.ARCADE
+    this.pickUpAmmoSound = this.game.add.audio('pick_up_ammo')
 
     for (let i = 0; i < 8; i++) {
       this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.world))
@@ -107,6 +108,7 @@ export default class extends Phaser.State {
 
   handleAmmoPickUp (player, ammoDrop) {
     AmmoDrop.addAmmo(this.weapons, ammoDrop)
+    this.pickUpAmmoSound.play()
     ammoDrop.kill()
     this.ammoDrops.removeChild(ammoDrop)
     this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.world))

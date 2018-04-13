@@ -35,6 +35,6 @@ LeverActionShotgun.BULLET_SPEED = 2000
 LeverActionShotgun.ATTACK_DAMAGE = 100
 LeverActionShotgun.RELOAD_TIME = 600
 LeverActionShotgun.MAX_BULLETS = 8
-LeverActionShotgun.AMMO_RESERVES = 64
+LeverActionShotgun.AMMO_RESERVES = 32
 LeverActionShotgun.DISPLAY_NAME = 'Model 1887'
 LeverActionShotgun.DISPLAY_Y = 50

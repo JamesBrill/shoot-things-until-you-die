@@ -32,6 +32,6 @@ SemiAutoShotgun.BULLET_SPEED = 1500
 SemiAutoShotgun.ATTACK_DAMAGE = 30
 SemiAutoShotgun.RELOAD_TIME = 400
 SemiAutoShotgun.MAX_BULLETS = 10
-SemiAutoShotgun.AMMO_RESERVES = 80
+SemiAutoShotgun.AMMO_RESERVES = 30
 SemiAutoShotgun.DISPLAY_NAME = 'Shotgun'
 SemiAutoShotgun.DISPLAY_Y = 100

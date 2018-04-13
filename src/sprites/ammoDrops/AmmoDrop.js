@@ -30,7 +30,7 @@ AmmoDrop.createRandom = (game, world) => {
   } else if (ammoTypePicker < 0.8) {
     ammoType = AmmoDrop.SEMI_AUTO_SHOTGUN_AMMO_SPRITE
     weaponName = 'semiAutoShotgun'
-    bullets = 40
+    bullets = 20
   } else {
     ammoType = AmmoDrop.ASSAULT_RIFLE_AMMO_SPRITE
     weaponName = 'assaultRifle'

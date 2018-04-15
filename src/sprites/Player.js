@@ -13,11 +13,12 @@ export default class Player extends Phaser.Sprite {
     this.anchor.setTo(0.5)
     this.game = game
     this.armWeapon(weapon)
-    this.health = 100
+    this.health = 250
     this.healthBar = new HealthBar({
       game,
       x: -0.5 * HealthBar.WIDTH,
-      y: -Player.PLAYER_SIZE
+      y: -Player.PLAYER_SIZE,
+      maxHealth: this.health
     })
     this.addChild(this.healthBar)
   }

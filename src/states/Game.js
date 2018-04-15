@@ -3,6 +3,7 @@ import Phaser from 'phaser'
 import Player from '../sprites/Player'
 import Zombie from '../sprites/enemies/Zombie'
 import AmmoDrop from '../sprites/ammoDrops/AmmoDrop'
+import Director from '../ai/Director'
 import Pistol from '../weapons/Pistol'
 import LeverActionShotgun from '../weapons/LeverActionShotgun'
 import SemiAutoShotgun from '../weapons/SemiAutoShotgun'
@@ -38,19 +39,13 @@ export default class extends Phaser.State {
     this.enemies = this.game.add.group()
     this.enemies.enableBody = true
     this.enemies.physicsBodyType = Phaser.Physics.ARCADE
-    this.maxZombieSpeed = 200
-    this.healthMultiplier = 1
 
-    for (let i = 0; i < 100; i++) {
-      this.enemies.add(
-        Zombie.createRandom(
-          this.game,
-          this.player,
-          this.world,
-          this.maxZombieSpeed
-        )
-      )
-    }
+    this.director = new Director({
+      game: this.game,
+      player: this.player,
+      enemies: this.enemies
+    })
+    this.director.initialiseZombies()
 
     this.ammoDrops = this.game.add.group()
     this.ammoDrops.enableBody = true
@@ -84,18 +79,7 @@ export default class extends Phaser.State {
     this.player.weapon.hitTarget(bullet)
     const isEnemyKilled = enemy.takeDamage(this.player.weapon)
     if (isEnemyKilled) {
-      this.enemies.removeChild(enemy)
-      this.maxZombieSpeed = Math.min(this.maxZombieSpeed + 1, 270)
-      this.healthMultiplier += 0.001
-      this.enemies.add(
-        Zombie.createRandom(
-          this.game,
-          this.player,
-          this.world,
-          this.maxZombieSpeed,
-          this.healthMultiplier
-        )
-      )
+      this.director.replaceZombie(enemy)
     }
   }
 

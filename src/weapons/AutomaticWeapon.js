@@ -13,7 +13,11 @@ export default class AutomaticWeapon extends Weapon {
   }
 
   reload () {
-    if (this.ammoReserves > 0 && !this.reloading) {
+    if (
+      this.ammoReserves > 0 &&
+      !this.reloading &&
+      this.currentAmmo !== this.maxBullets
+    ) {
       const bulletsToLoad = Math.min(
         this.ammoReserves,
         this.maxBullets - this.currentAmmo

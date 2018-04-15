@@ -22,7 +22,7 @@ export default class AssaultRifle extends AutomaticWeapon {
   }
 }
 
-AssaultRifle.GUN_RANGE = 700
+AssaultRifle.GUN_RANGE = 1000
 AssaultRifle.GUN_ANGLE = 5
 AssaultRifle.BULLET_LENGTH = 20
 AssaultRifle.NUMBER_OF_BULLETS = 30

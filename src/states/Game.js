@@ -78,7 +78,7 @@ export default class extends Phaser.State {
     this.player.weapon.hitTarget(bullet)
     const isEnemyKilled = enemy.takeDamage(this.player.weapon)
     if (isEnemyKilled) {
-      this.director.replaceZombie(enemy)
+      this.director.replaceZombie(enemy, true)
     }
   }
 

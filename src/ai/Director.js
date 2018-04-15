@@ -14,9 +14,9 @@ export default class Director {
   }
 
   increaseIntensity () {
-    this.intensityCounter += 0.1
+    this.intensityCounter += 0.25
     if (this.intensity > 50) {
-      this.intensityCounter += 4
+      this.intensityCounter += 2
     }
     this.intensity = this.getIntensity()
     setTimeout(this.increaseIntensity.bind(this), 1000)
@@ -64,9 +64,11 @@ export default class Director {
     }
   }
 
-  replaceZombie (enemy) {
+  replaceZombie (enemy, increaseZombieHealth) {
     this.enemies.remove(enemy, true)
-    this.healthMultiplier += 0.001
+    if (increaseZombieHealth) {
+      this.healthMultiplier += 0.001
+    }
     const randomPosition = getPositionAtDistanceRangeFromPlayer(
       this.game.world,
       this.player,
@@ -86,7 +88,7 @@ export default class Director {
   }
 
   getMaxZombieSpeed () {
-    return Math.max(30, 3 * this.intensity)
+    return Math.max(30, 2.5 * this.intensity)
   }
 
   getMinEnemyDistanceFromPlayer () {

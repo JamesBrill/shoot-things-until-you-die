@@ -1,7 +1,6 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
 import Player from '../sprites/Player'
-import Zombie from '../sprites/enemies/Zombie'
 import AmmoDrop from '../sprites/ammoDrops/AmmoDrop'
 import Director from '../ai/Director'
 import Pistol from '../weapons/Pistol'

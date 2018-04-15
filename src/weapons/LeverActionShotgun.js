@@ -26,8 +26,8 @@ export default class LeverActionShotgun extends Shotgun {
   }
 }
 
-LeverActionShotgun.GUN_RANGE = 350
-LeverActionShotgun.GUN_ANGLE = 20
+LeverActionShotgun.GUN_RANGE = 300
+LeverActionShotgun.GUN_ANGLE = 15
 LeverActionShotgun.BULLET_LENGTH = 20
 LeverActionShotgun.NUMBER_OF_BULLETS = 10
 LeverActionShotgun.FIRE_RATE = 1250

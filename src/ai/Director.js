@@ -15,8 +15,8 @@ export default class Director {
 
   increaseIntensity () {
     this.intensityCounter += 0.1
-    if (this.intensity > 60) {
-      this.intensityCounter += 3
+    if (this.intensity > 50) {
+      this.intensityCounter += 4
     }
     this.intensity = this.getIntensity()
     setTimeout(this.increaseIntensity.bind(this), 1000)

@@ -58,7 +58,7 @@ export default class Director {
   }
 
   replaceZombie (enemy) {
-    this.enemies.removeChild(enemy)
+    this.enemies.remove(enemy, true)
     this.healthMultiplier += 0.001
     const randomPosition = getPositionAtDistanceRangeFromPlayer(
       this.game.world,

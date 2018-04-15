@@ -35,7 +35,6 @@ export default class Zombie extends Phaser.Sprite {
   takeDamage (weapon) {
     this.health -= weapon.attackDamage
     if (this.health <= 0) {
-      this.kill()
       return true
     }
     this.healthBar.setHealth(this.health)

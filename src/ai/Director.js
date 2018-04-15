@@ -7,14 +7,14 @@ export default class Director {
     this.player = player
     this.enemies = enemies
     this.healthMultiplier = 1
-    this.intensity = 0
-    setTimeout(this.increaseIntensity.bind(this), 3000)
+    this.intensity = 1
+    setTimeout(this.increaseIntensity.bind(this), 2000)
   }
 
   increaseIntensity () {
     this.intensity += 1
     if (this.intensity < 100) {
-      setTimeout(this.increaseIntensity.bind(this), 3000)
+      setTimeout(this.increaseIntensity.bind(this), 2000)
     }
   }
 

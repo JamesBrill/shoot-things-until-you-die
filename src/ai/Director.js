@@ -9,6 +9,7 @@ export default class Director {
     this.healthMultiplier = 1
     this.intensity = 1
     setTimeout(this.increaseIntensity.bind(this), 2000)
+    setTimeout(this.moveDistantZombies.bind(this), 1000)
   }
 
   increaseIntensity () {
@@ -16,6 +17,23 @@ export default class Director {
     if (this.intensity < 100) {
       setTimeout(this.increaseIntensity.bind(this), 2000)
     }
+  }
+
+  moveDistantZombies () {
+    const maxEnemyDistanceFromPlayer = this.getMaxEnemyDistanceFromPlayer()
+    const playerX = this.player.x
+    const playerY = this.player.y
+    for (let i = 0; i < this.enemies.children.length; i++) {
+      const zombie = this.enemies.children[i]
+      const distanceToPlayer = Math.sqrt(
+        (playerX - zombie.x) ** 2 + (playerY - zombie.y) ** 2
+      )
+      if (distanceToPlayer > maxEnemyDistanceFromPlayer) {
+        zombie.kill()
+        this.replaceZombie(zombie)
+      }
+    }
+    setTimeout(this.moveDistantZombies.bind(this), 1000)
   }
 
   initialiseZombies () {

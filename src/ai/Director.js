@@ -15,8 +15,8 @@ export default class Director {
 
   increaseIntensity () {
     this.intensityCounter += 0.25
-    if (this.intensity > 50) {
-      this.intensityCounter += 2
+    if (this.intensity > 40) {
+      this.intensityCounter += 1
     }
     this.intensity = this.getIntensity()
     setTimeout(this.increaseIntensity.bind(this), 1000)
@@ -92,7 +92,7 @@ export default class Director {
   }
 
   getMinEnemyDistanceFromPlayer () {
-    return 800 + (100 - this.intensity) * 15
+    return 1000 + (100 - this.intensity) * 15
   }
 
   getMaxEnemyDistanceFromPlayer () {

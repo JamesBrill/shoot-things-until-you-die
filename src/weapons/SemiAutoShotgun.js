@@ -23,13 +23,13 @@ export default class SemiAutoShotgun extends Shotgun {
   }
 }
 
-SemiAutoShotgun.GUN_RANGE = 200
+SemiAutoShotgun.GUN_RANGE = 250
 SemiAutoShotgun.GUN_ANGLE = 45
 SemiAutoShotgun.BULLET_LENGTH = 10
 SemiAutoShotgun.NUMBER_OF_BULLETS = 12
 SemiAutoShotgun.FIRE_RATE = 600
 SemiAutoShotgun.BULLET_SPEED = 1500
-SemiAutoShotgun.ATTACK_DAMAGE = 30
+SemiAutoShotgun.ATTACK_DAMAGE = 60
 SemiAutoShotgun.RELOAD_TIME = 400
 SemiAutoShotgun.MAX_BULLETS = 10
 SemiAutoShotgun.AMMO_RESERVES = 30

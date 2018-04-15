@@ -6,7 +6,6 @@ export default class Director {
     this.game = game
     this.player = player
     this.enemies = enemies
-    this.maxZombieSpeed = 200
     this.healthMultiplier = 1
     this.intensity = 0
     setTimeout(this.increaseIntensity.bind(this), 3000)
@@ -34,7 +33,7 @@ export default class Director {
           randomPosition,
           this.player,
           this.game.world,
-          this.maxZombieSpeed
+          this.getMaxZombieSpeed()
         )
       )
     }
@@ -42,7 +41,6 @@ export default class Director {
 
   replaceZombie (enemy) {
     this.enemies.removeChild(enemy)
-    this.maxZombieSpeed = Math.min(this.maxZombieSpeed + 1, 270)
     this.healthMultiplier += 0.001
     const randomPosition = getPositionAtDistanceRangeFromPlayer(
       this.game.world,
@@ -56,10 +54,14 @@ export default class Director {
         randomPosition,
         this.player,
         this.game.world,
-        this.maxZombieSpeed,
+        this.getMaxZombieSpeed(),
         this.healthMultiplier
       )
     )
+  }
+
+  getMaxZombieSpeed () {
+    return Math.max(30, 3 * this.intensity)
   }
 
   getMinEnemyDistanceFromPlayer () {

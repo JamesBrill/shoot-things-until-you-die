@@ -54,7 +54,7 @@ export default class extends Phaser.State {
     this.ammoDrops.physicsBodyType = Phaser.Physics.ARCADE
     this.pickUpAmmoSound = this.game.add.audio('pick_up_ammo')
 
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 10; i++) {
       this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.world))
     }
 

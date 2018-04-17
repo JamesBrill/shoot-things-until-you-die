@@ -27,6 +27,7 @@ export default class extends Phaser.State {
     )
     text.anchor.setTo(0.5, 0.5)
 
+    // LOAD AUDIO
     this.load.audio(
       'semi_auto_shotgun_fire',
       'assets/audio/sound_effects/semi_auto_shotgun_fire.wav'
@@ -69,6 +70,15 @@ export default class extends Phaser.State {
       'pick_up_ammo',
       'assets/audio/sound_effects/pick_up_ammo.wav'
     )
+
+    // LOAD IMAGES
+    this.load.image(
+      'assault_rifle_ammo',
+      'assets/images/assault_rifle_ammo.png'
+    )
+    this.load.image('model_1887_ammo', 'assets/images/model_1887_ammo.png')
+    this.load.image('pistol_ammo', 'assets/images/pistol_ammo.png')
+    this.load.image('shotgun_ammo', 'assets/images/shotgun_ammo.png')
   }
 
   render () {

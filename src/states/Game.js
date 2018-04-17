@@ -3,6 +3,7 @@ import Phaser from 'phaser'
 import Player from '../sprites/Player'
 import AmmoDrop from '../sprites/ammoDrops/AmmoDrop'
 import Director from '../ai/Director'
+import ScoreManager from '../ai/ScoreManager'
 import Pistol from '../weapons/Pistol'
 import LeverActionShotgun from '../weapons/LeverActionShotgun'
 import SemiAutoShotgun from '../weapons/SemiAutoShotgun'
@@ -46,6 +47,8 @@ export default class extends Phaser.State {
     })
     this.director.initialiseZombies()
 
+    this.scoreManager = new ScoreManager({ game: this.game })
+
     this.ammoDrops = this.game.add.group()
     this.ammoDrops.enableBody = true
     this.ammoDrops.physicsBodyType = Phaser.Physics.ARCADE
@@ -76,6 +79,7 @@ export default class extends Phaser.State {
 
   hitCallback (bullet, enemy) {
     this.player.weapon.hitTarget(bullet)
+    this.scoreManager.registerHit()
     const isEnemyKilled = enemy.takeDamage(this.player.weapon)
     if (isEnemyKilled) {
       this.director.replaceZombie(enemy, true)

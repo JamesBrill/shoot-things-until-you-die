@@ -11,6 +11,12 @@ export default class ScoreManager {
     this.score += ScoreManager.HIT_VALUE
     this.scoreDisplay.setScore(this.score)
   }
+
+  registerKill () {
+    this.score += ScoreManager.KILL_VALUE
+    this.scoreDisplay.setScore(this.score)
+  }
 }
 
 ScoreManager.HIT_VALUE = 10
+ScoreManager.KILL_VALUE = 100

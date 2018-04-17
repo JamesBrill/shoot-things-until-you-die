@@ -82,6 +82,7 @@ export default class extends Phaser.State {
     this.scoreManager.registerHit()
     const isEnemyKilled = enemy.takeDamage(this.player.weapon)
     if (isEnemyKilled) {
+      this.scoreManager.registerKill()
       this.director.replaceZombie(enemy, true)
     }
   }

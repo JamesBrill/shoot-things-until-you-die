@@ -20,6 +20,8 @@ export default class extends Phaser.State {
 
     this.game.physics.startSystem(Phaser.Physics.ARCADE)
 
+    this.bloodSplatters = this.game.add.group()
+
     this.weapons = {
       pistol: new Pistol({ game: this.game }),
       leverActionShotgun: new LeverActionShotgun({ game: this.game }),
@@ -86,7 +88,7 @@ export default class extends Phaser.State {
       const { angleBetween, radToDeg } = this.game.math
       this.scoreManager.registerKill()
       this.director.replaceZombie(enemy, true)
-      this.bloodSplatter = new BloodSplatter({
+      const bloodSplatter = new BloodSplatter({
         game: this.game,
         enemy,
         size: enemy.size,
@@ -95,7 +97,7 @@ export default class extends Phaser.State {
             angleBetween(this.player.x, this.player.y, enemy.x, enemy.y)
           ) - 45
       })
-      this.game.add.existing(this.bloodSplatter)
+      this.bloodSplatters.add(bloodSplatter)
     }
   }
 

@@ -55,8 +55,8 @@ export default class Weapon extends Phaser.Weapon {
     this.currentAmmo = this.maxBullets
     this.weaponDisplay = new WeaponDisplay({
       game,
-      x: 0,
-      y: displayY,
+      x: 8,
+      y: displayY + 8,
       displayName,
       currentAmmo: this.currentAmmo,
       ammoReserves: ammoReserves

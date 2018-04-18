@@ -5,7 +5,7 @@ import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
 export default class Player extends Phaser.Sprite {
   constructor ({ game, x, y, weapon }) {
     const playerGraphics = game.add.graphics(x, y)
-    playerGraphics.beginFill(0xff0000, 1)
+    playerGraphics.beginFill(0x000000, 1)
     playerGraphics.drawCircle(x, y, Player.PLAYER_SIZE)
     playerGraphics.endFill()
     super(game, x, y, playerGraphics.generateTexture())

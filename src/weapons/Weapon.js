@@ -38,7 +38,7 @@ export default class Weapon extends Phaser.Weapon {
     this.ammoReserves = ammoReserves
 
     const bulletGraphics = game.add.graphics(0, 0)
-    bulletGraphics.lineStyle(3, 0xff0000)
+    bulletGraphics.lineStyle(3, 0x000000)
     bulletGraphics.moveTo(0, 0)
     bulletGraphics.lineTo(0, bulletLength)
     bulletGraphics.endFill()

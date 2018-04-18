@@ -3,7 +3,7 @@ export default class ScoreDisplay {
     this.game = game
     this.scoreText = this.game.add.text(0, 0, `${score} (x${multiplier})`, {
       font: '32px Arial',
-      fill: 'red',
+      fill: 'black',
       boundsAlignH: 'center'
     })
     this.scoreText.fixedToCamera = true

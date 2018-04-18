@@ -6,7 +6,7 @@ export default class WeaponDisplay {
     this.game = game
     this.weaponNameText = this.game.add.text(x, y, displayName, {
       font: '16px Arial',
-      fill: 'red',
+      fill: 'black',
       align: 'center'
     })
     this.weaponNameText.fixedToCamera = true
@@ -14,7 +14,7 @@ export default class WeaponDisplay {
 
     this.weaponCurrentAmmoText = this.game.add.text(x, y, currentAmmo, {
       font: '16px Arial',
-      fill: 'red',
+      fill: 'black',
       align: 'center'
     })
     this.weaponCurrentAmmoText.fixedToCamera = true
@@ -22,7 +22,7 @@ export default class WeaponDisplay {
 
     this.weaponAmmoReservesText = this.game.add.text(x, y, ammoReserves, {
       font: '16px Arial',
-      fill: 'red',
+      fill: 'black',
       align: 'center'
     })
     this.weaponAmmoReservesText.fixedToCamera = true

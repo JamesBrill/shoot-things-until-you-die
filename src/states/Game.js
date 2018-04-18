@@ -5,6 +5,7 @@ import BloodSplatter from '../sprites/BloodSplatter'
 import AmmoDrop from '../sprites/ammoDrops/AmmoDrop'
 import Director from '../ai/Director'
 import ScoreManager from '../ai/ScoreManager'
+import AudioManager from '../ai/AudioManager'
 import Pistol from '../weapons/Pistol'
 import LeverActionShotgun from '../weapons/LeverActionShotgun'
 import SemiAutoShotgun from '../weapons/SemiAutoShotgun'
@@ -52,6 +53,8 @@ export default class extends Phaser.State {
 
     this.scoreManager = new ScoreManager({ game: this.game })
 
+    this.audioManager = new AudioManager({ game: this.game })
+
     this.ammoDrops = this.game.add.group()
     this.ammoDrops.enableBody = true
     this.ammoDrops.physicsBodyType = Phaser.Physics.ARCADE
@@ -88,6 +91,7 @@ export default class extends Phaser.State {
       const { angleBetween, radToDeg } = this.game.math
       this.scoreManager.registerKill()
       this.director.replaceZombie(enemy, true)
+      this.audioManager.playBloodSpatterSound(enemy)
       const bloodSplatter = new BloodSplatter({
         game: this.game,
         enemy,

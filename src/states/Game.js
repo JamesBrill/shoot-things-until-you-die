@@ -1,6 +1,7 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
 import Player from '../sprites/Player'
+import BloodSplatter from '../sprites/BloodSplatter'
 import AmmoDrop from '../sprites/ammoDrops/AmmoDrop'
 import Director from '../ai/Director'
 import ScoreManager from '../ai/ScoreManager'
@@ -82,8 +83,19 @@ export default class extends Phaser.State {
     this.scoreManager.registerHit()
     const isEnemyKilled = enemy.takeDamage(this.player.weapon)
     if (isEnemyKilled) {
+      const { angleBetween, radToDeg } = this.game.math
       this.scoreManager.registerKill()
       this.director.replaceZombie(enemy, true)
+      this.bloodSplatter = new BloodSplatter({
+        game: this.game,
+        enemy,
+        size: enemy.size,
+        angle:
+          radToDeg(
+            angleBetween(this.player.x, this.player.y, enemy.x, enemy.y)
+          ) - 45
+      })
+      this.game.add.existing(this.bloodSplatter)
     }
   }
 

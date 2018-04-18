@@ -11,6 +11,7 @@ export default class Zombie extends Phaser.Sprite {
     enemyGraphics.destroy()
     this.anchor.setTo(0.5)
     this.game = game
+    this.size = size
     this.player = player
     this.damageModifier = size / Zombie.NORMAL_SIZE
     this.sizeModifier =

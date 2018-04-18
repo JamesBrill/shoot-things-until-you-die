@@ -22,6 +22,10 @@ export default class BloodSplatter extends Phaser.Sprite {
     this.y += 0.5 * size
     this.angle = angle
   }
+
+  update () {
+    this.alpha = Math.max(0, this.alpha - 0.0005)
+  }
 }
 
 BloodSplatter.drawBloodSpike = (graphics, size) => {

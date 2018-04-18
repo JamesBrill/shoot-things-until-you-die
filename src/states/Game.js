@@ -98,6 +98,10 @@ export default class extends Phaser.State {
           ) - 45
       })
       this.bloodSplatters.add(bloodSplatter)
+      if (this.bloodSplatters.children.length > 100) {
+        const firstBloodSplatter = this.bloodSplatters.children[0]
+        this.bloodSplatters.remove(firstBloodSplatter)
+      }
     }
   }
 

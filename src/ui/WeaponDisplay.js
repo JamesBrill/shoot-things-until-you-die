@@ -29,6 +29,12 @@ export default class WeaponDisplay {
     this.weaponAmmoReservesText.cameraOffset.setTo(x + 30, y + 20)
   }
 
+  bringToTop () {
+    this.weaponNameText.bringToTop()
+    this.weaponCurrentAmmoText.bringToTop()
+    this.weaponAmmoReservesText.bringToTop()
+  }
+
   setAmmoReserves (ammoReserves) {
     this.ammoReserves = ammoReserves
     this.weaponAmmoReservesText.setText(this.ammoReserves)

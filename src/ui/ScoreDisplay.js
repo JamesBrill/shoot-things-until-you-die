@@ -7,6 +7,7 @@ export default class ScoreDisplay {
       boundsAlignH: 'center'
     })
     this.scoreText.fixedToCamera = true
+    this.scoreText.bringToTop()
     this.scoreText.setTextBounds(0, 0, this.game.width, this.game.height)
   }
 

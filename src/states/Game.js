@@ -51,10 +51,6 @@ export default class extends Phaser.State {
     })
     this.director.initialiseZombies()
 
-    this.scoreManager = new ScoreManager({ game: this.game })
-
-    this.audioManager = new AudioManager({ game: this.game })
-
     this.ammoDrops = this.game.add.group()
     this.ammoDrops.enableBody = true
     this.ammoDrops.physicsBodyType = Phaser.Physics.ARCADE
@@ -63,6 +59,9 @@ export default class extends Phaser.State {
     for (let i = 0; i < 10; i++) {
       this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.world))
     }
+
+    this.audioManager = new AudioManager({ game: this.game })
+    this.scoreManager = new ScoreManager({ game: this.game })
 
     this.cursors = {
       up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
@@ -81,6 +80,10 @@ export default class extends Phaser.State {
     //  0.1 is the amount of linear interpolation to use.
     //  The smaller the value, the smooth the camera (and the longer it takes to catch up)
     this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)
+
+    Object.keys(this.weapons).forEach(weapon =>
+      this.weapons[weapon].weaponDisplay.bringToTop()
+    )
   }
 
   hitCallback (bullet, enemy) {

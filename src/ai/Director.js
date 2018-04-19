@@ -14,9 +14,9 @@ export default class Director {
   }
 
   increaseIntensity () {
-    this.intensityCounter += 0.25
+    this.intensityCounter += 0.3
     if (this.intensity > 40) {
-      this.intensityCounter += 1
+      this.intensityCounter += 0.8
     }
     this.intensity = this.getIntensity()
     setTimeout(this.increaseIntensity.bind(this), 1000)
@@ -88,7 +88,7 @@ export default class Director {
   }
 
   getMaxZombieSpeed () {
-    return Math.max(30, 2.5 * this.intensity)
+    return Math.max(30, 2.1 * this.intensity)
   }
 
   getMinEnemyDistanceFromPlayer () {

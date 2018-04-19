@@ -23,7 +23,7 @@ export default class Zombie extends Phaser.Sprite {
     this.healthBar = new HealthBar({
       game,
       x: -0.5 * HealthBar.WIDTH,
-      y: -size,
+      y: -(0.7 * size + 10),
       maxHealth: this.maxHealth
     })
     this.addChild(this.healthBar)

@@ -36,9 +36,6 @@ export default class extends Phaser.State {
       y: this.world.centerY,
       weapon: this.weapons.pistol
     })
-    this.game.add.existing(this.player)
-    this.game.physics.arcade.enable(this.player)
-    this.player.body.collideWorldBounds = true
 
     this.enemies = this.game.add.group()
     this.enemies.enableBody = true
@@ -59,6 +56,10 @@ export default class extends Phaser.State {
     for (let i = 0; i < 10; i++) {
       this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.world))
     }
+
+    this.game.add.existing(this.player)
+    this.game.physics.arcade.enable(this.player)
+    this.player.body.collideWorldBounds = true
 
     this.audioManager = new AudioManager({ game: this.game })
     this.scoreManager = new ScoreManager({ game: this.game })

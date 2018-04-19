@@ -22,12 +22,12 @@ AmmoDrop.createRandom = (game, world) => {
   } else if (ammoTypePicker < 0.5) {
     ammoType = AmmoDrop.LEVER_ACTION_SHOTGUN_AMMO_SPRITE
     weaponName = 'leverActionShotgun'
-    bullets = 32
+    bullets = 24
     spriteName = 'model_1887_ammo'
   } else if (ammoTypePicker < 0.75) {
     ammoType = AmmoDrop.SEMI_AUTO_SHOTGUN_AMMO_SPRITE
     weaponName = 'semiAutoShotgun'
-    bullets = 20
+    bullets = 30
     spriteName = 'shotgun_ammo'
   } else {
     ammoType = AmmoDrop.ASSAULT_RIFLE_AMMO_SPRITE

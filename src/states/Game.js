@@ -129,6 +129,7 @@ export default class extends Phaser.State {
     const isPlayerKilled = player.takeDamage(enemy)
     if (isPlayerKilled) {
       this.player.disabled = true
+      this.scoreManager.submitScore()
       this.audioManager.playDeathSound()
       this.deathDisplay.showDeathScreen()
       setTimeout(this.restartGame.bind(this), 7000)

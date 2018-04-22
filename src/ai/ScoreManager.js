@@ -1,5 +1,9 @@
 import ScoreDisplay from '../ui/ScoreDisplay'
-import { getAllScores } from '../utils/leaderboard'
+import {
+  getAllScores,
+  getScoreForPlayer,
+  submitScore as submitScoreToFirebase
+} from '../utils/leaderboard'
 
 export default class ScoreManager {
   constructor ({ game }) {
@@ -17,6 +21,7 @@ export default class ScoreManager {
       multiplier: this.multiplier
     })
     this.scores = await getAllScores()
+    this.currentScore = await getScoreForPlayer('James')
     this.nextScoreIndex = 0
     this.scoreDisplay.setNextBestScore(this.scores[this.nextScoreIndex])
   }
@@ -38,6 +43,12 @@ export default class ScoreManager {
       } else {
         this.scoreDisplay.setNextBestScore(this.scores[this.nextScoreIndex])
       }
+    }
+  }
+
+  submitScore () {
+    if (this.score > this.currentScore) {
+      submitScoreToFirebase('James', this.score)
     }
   }
 

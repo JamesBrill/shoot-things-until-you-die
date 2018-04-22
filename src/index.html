@@ -17,10 +17,30 @@
             margin: 0;
             padding: 0;
         }
+
+        #nameForm {
+          width: 100vw;
+          height: 100vh;
+          position: fixed;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .hidden {
+          display: none !important;
+        }
     </style>
 </head>
 
 <body>
+    <form id='nameForm' class='hidden'>
+      <label for='nameField'>Name</label>
+      <input id='nameInput' type='text'/>
+      <button type='submit' form='nameForm' value='Start game'>
+        Start game
+      </button>
+    </form>
 
     <div id="content"></div>
     <!-- uncomment the line bellow for cordova feature -->

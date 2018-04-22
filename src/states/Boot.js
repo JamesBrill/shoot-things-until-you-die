@@ -1,8 +1,10 @@
 import Phaser from 'phaser'
+import config from '../config'
 
 export default class extends Phaser.State {
   init () {
     this.stage.backgroundColor = '#EDEEC9'
+    this.nameProvided = false
   }
 
   preload () {
@@ -73,9 +75,32 @@ export default class extends Phaser.State {
     this.load.image('model_1887_ammo', 'assets/images/model_1887_ammo.png')
     this.load.image('pistol_ammo', 'assets/images/pistol_ammo.png')
     this.load.image('shotgun_ammo', 'assets/images/shotgun_ammo.png')
+
+    if (window.localStorage.getItem(config.localStorageName) === null) {
+      const nameForm = document.getElementById('nameForm')
+      nameForm.classList.remove('hidden')
+      nameForm.addEventListener('submit', this.onSubmitName.bind(this))
+    } else {
+      this.nameProvided = true
+    }
+  }
+
+  onSubmitName (e) {
+    e.preventDefault()
+    const nameForm = document.getElementById('nameForm')
+    const nameInput = document.getElementById('nameInput')
+    const name =
+      !nameInput.value || nameInput.value.length === 0
+        ? 'Guest'
+        : nameInput.value
+    window.localStorage.setItem(config.localStorageName, name)
+    nameForm.classList.add('hidden')
+    this.nameProvided = true
   }
 
   render () {
-    this.state.start('Game')
+    if (this.nameProvided) {
+      this.state.start('Game')
+    }
   }
 }

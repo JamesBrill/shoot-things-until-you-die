@@ -4,6 +4,7 @@ import {
   getScoreForPlayer,
   submitScore as submitScoreToFirebase
 } from '../utils/leaderboard'
+import config from '../config'
 
 export default class ScoreManager {
   constructor ({ game }) {
@@ -12,6 +13,7 @@ export default class ScoreManager {
 
   async init (game) {
     this.game = game
+    this.playerName = window.localStorage.getItem(config.localStorageName)
     this.decreaseMultiplierTimeout = null
     this.score = 0
     this.multiplier = 1
@@ -21,7 +23,7 @@ export default class ScoreManager {
       multiplier: this.multiplier
     })
     this.scores = await getAllScores()
-    this.currentScore = await getScoreForPlayer('James')
+    this.currentScore = await getScoreForPlayer(this.playerName)
     this.nextScoreIndex = 0
     this.scoreDisplay.setNextBestScore(this.scores[this.nextScoreIndex])
   }
@@ -48,7 +50,7 @@ export default class ScoreManager {
 
   submitScore () {
     if (this.score > this.currentScore) {
-      submitScoreToFirebase('James', this.score)
+      submitScoreToFirebase(this.playerName, this.score)
     }
   }
 

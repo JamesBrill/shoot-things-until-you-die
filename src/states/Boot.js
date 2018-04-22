@@ -4,6 +4,7 @@ import config from '../config'
 export default class extends Phaser.State {
   init () {
     this.stage.backgroundColor = '#EDEEC9'
+    this.name = 'Guest'
     this.nameProvided = false
   }
 
@@ -78,23 +79,27 @@ export default class extends Phaser.State {
 
     if (window.localStorage.getItem(config.localStorageName) === null) {
       const nameForm = document.getElementById('nameForm')
+      const nameInput = document.getElementById('nameInput')
       nameForm.classList.remove('hidden')
       nameForm.addEventListener('submit', this.onSubmitName.bind(this))
+      nameInput.addEventListener('input', this.onChangeName.bind(this))
     } else {
       this.nameProvided = true
     }
   }
 
+  onChangeName (e) {
+    const nameInput = document.getElementById('nameInput')
+    const nameFormButton = document.getElementById('nameFormButton')
+    this.name = nameInput.value && nameInput.value.trim()
+    nameFormButton.disabled = !this.name || this.name.length === 0
+  }
+
   onSubmitName (e) {
     e.preventDefault()
     const nameForm = document.getElementById('nameForm')
-    const nameInput = document.getElementById('nameInput')
-    const name =
-      !nameInput.value || nameInput.value.length === 0
-        ? 'Guest'
-        : nameInput.value
-    window.localStorage.setItem(config.localStorageName, name)
     nameForm.classList.add('hidden')
+    window.localStorage.setItem(config.localStorageName, this.name)
     this.nameProvided = true
   }
 

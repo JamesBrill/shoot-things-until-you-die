@@ -29,11 +29,11 @@ export default class ScoreDisplay {
     this.scoreText.setText(`${score} (x${multiplier})`)
   }
 
-  setNextBestScore ({ name, score }) {
-    this.nextBestScoreText.setText(`Next: ${score} (${name})`)
+  setNextBestScore ({ name, score, rank }) {
+    this.nextBestScoreText.setText(`#${rank + 1} (next: ${score} - ${name})`)
   }
 
   setWorldRecord () {
-    this.nextBestScoreText.setText('World Record!')
+    this.nextBestScoreText.setText('#1: World Record!')
   }
 }

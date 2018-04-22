@@ -12,5 +12,8 @@ const db = firebase.firestore()
 export async function getAllScores () {
   const querySnapshot = await db.collection('scores').get()
   const scores = querySnapshot.docs.map(doc => doc.data())
-  return scores.sort((a, b) => a.score - b.score)
+  const sortedScores = scores.sort((a, b) => a.score - b.score)
+  return sortedScores.map((x, i) => {
+    return { ...x, rank: sortedScores.length - i }
+  })
 }

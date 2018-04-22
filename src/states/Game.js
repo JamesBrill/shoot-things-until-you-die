@@ -61,6 +61,7 @@ export default class extends Phaser.State {
     this.game.add.existing(this.player)
     this.game.physics.arcade.enable(this.player)
     this.player.body.collideWorldBounds = true
+    this.player.disabled = false
 
     this.audioManager = new AudioManager({ game: this.game })
     this.scoreManager = new ScoreManager({
@@ -127,6 +128,7 @@ export default class extends Phaser.State {
   handlePlayerDamage (player, enemy) {
     const isPlayerKilled = player.takeDamage(enemy)
     if (isPlayerKilled) {
+      this.player.disabled = true
       this.audioManager.playDeathSound()
       this.deathDisplay.showDeathScreen()
       setTimeout(this.restartGame.bind(this), 7000)
@@ -173,40 +175,42 @@ export default class extends Phaser.State {
 
     this.enemies.forEach(enemy => enemy.move())
 
-    this.player.body.velocity.setTo(0, 0)
-    const { worldX, worldY } = this.game.input.mousePointer
-    this.player.aimAt(worldX, worldY)
-    if (this.cursors.up.isDown) {
-      this.player.move(UP, 300)
-    } else if (this.cursors.down.isDown) {
-      this.player.move(DOWN, 300)
-    }
+    if (!this.player.disabled) {
+      this.player.body.velocity.setTo(0, 0)
+      const { worldX, worldY } = this.game.input.mousePointer
+      this.player.aimAt(worldX, worldY)
+      if (this.cursors.up.isDown) {
+        this.player.move(UP, 300)
+      } else if (this.cursors.down.isDown) {
+        this.player.move(DOWN, 300)
+      }
 
-    if (this.cursors.left.isDown) {
-      this.player.move(LEFT, 300)
-    } else if (this.cursors.right.isDown) {
-      this.player.move(RIGHT, 300)
-    }
+      if (this.cursors.left.isDown) {
+        this.player.move(LEFT, 300)
+      } else if (this.cursors.right.isDown) {
+        this.player.move(RIGHT, 300)
+      }
 
-    if (this.cursors.weaponOne.isDown) {
-      this.player.armWeapon(this.weapons.pistol)
-    } else if (this.cursors.weaponTwo.isDown) {
-      this.player.armWeapon(this.weapons.leverActionShotgun)
-    } else if (this.cursors.weaponThree.isDown) {
-      this.player.armWeapon(this.weapons.semiAutoShotgun)
-    } else if (this.cursors.weaponFour.isDown) {
-      this.player.armWeapon(this.weapons.assaultRifle)
-    }
+      if (this.cursors.weaponOne.isDown) {
+        this.player.armWeapon(this.weapons.pistol)
+      } else if (this.cursors.weaponTwo.isDown) {
+        this.player.armWeapon(this.weapons.leverActionShotgun)
+      } else if (this.cursors.weaponThree.isDown) {
+        this.player.armWeapon(this.weapons.semiAutoShotgun)
+      } else if (this.cursors.weaponFour.isDown) {
+        this.player.armWeapon(this.weapons.assaultRifle)
+      }
 
-    if (this.cursors.reload.isDown) {
-      this.player.weapon.reload()
-    }
+      if (this.cursors.reload.isDown) {
+        this.player.weapon.reload()
+      }
 
-    if (this.game.input.mousePointer.isDown) {
-      this.player.fire()
-      Pistol.disableFiring()
-    } else {
-      Pistol.enableFiring()
+      if (this.game.input.mousePointer.isDown) {
+        this.player.fire()
+        Pistol.disableFiring()
+      } else {
+        Pistol.enableFiring()
+      }
     }
   }
 

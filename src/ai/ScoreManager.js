@@ -49,7 +49,7 @@ export default class ScoreManager {
   }
 
   submitScore () {
-    if (this.score > this.currentScore) {
+    if (this.score > this.currentScore && this.score !== 0) {
       submitScoreToFirebase(this.playerName, this.score)
     }
   }

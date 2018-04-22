@@ -3,6 +3,7 @@ import Zombie from '../sprites/enemies/Zombie'
 export default class AudioManager {
   constructor ({ game }) {
     this.game = game
+    this.deathSound = this.game.add.audio('death')
     this.bloodSplatterSounds = []
     for (let i = 1; i <= 4; i++) {
       const bloodSplatterSound = this.game.add.audio(`blood_splatter_${i}`)
@@ -19,5 +20,9 @@ export default class AudioManager {
       const randomSoundIndex = Math.floor(Math.random() * 2) + 2
       this.bloodSplatterSounds[randomSoundIndex].play()
     }
+  }
+
+  playDeathSound () {
+    this.deathSound.play()
   }
 }

@@ -6,6 +6,7 @@ import AmmoDrop from '../sprites/ammoDrops/AmmoDrop'
 import Director from '../ai/Director'
 import ScoreManager from '../ai/ScoreManager'
 import AudioManager from '../ai/AudioManager'
+import DeathDisplay from '../ui/DeathDisplay'
 import Pistol from '../weapons/Pistol'
 import LeverActionShotgun from '../weapons/LeverActionShotgun'
 import SemiAutoShotgun from '../weapons/SemiAutoShotgun'
@@ -88,6 +89,13 @@ export default class extends Phaser.State {
     Object.keys(this.weapons).forEach(weapon =>
       this.weapons[weapon].weaponDisplay.bringToTop()
     )
+
+    this.deathDisplay = new DeathDisplay({ game: this.game })
+  }
+
+  restartGame () {
+    this.deathDisplay.hideDeathScreen()
+    this.state.start('Game')
   }
 
   hitCallback (bullet, enemy) {
@@ -119,7 +127,9 @@ export default class extends Phaser.State {
   handlePlayerDamage (player, enemy) {
     const isPlayerKilled = player.takeDamage(enemy)
     if (isPlayerKilled) {
-      this.game.paused = true
+      this.audioManager.playDeathSound()
+      this.deathDisplay.showDeathScreen()
+      setTimeout(this.restartGame.bind(this), 7000)
     }
   }
 

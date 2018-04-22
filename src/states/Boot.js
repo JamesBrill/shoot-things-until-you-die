@@ -59,6 +59,7 @@ export default class extends Phaser.State {
       'pick_up_ammo',
       'assets/audio/sound_effects/pick_up_ammo.wav'
     )
+    this.load.audio('death', 'assets/audio/sound_effects/death.wav')
     for (let i = 1; i <= 4; i++) {
       this.load.audio(
         `blood_splatter_${i}`,

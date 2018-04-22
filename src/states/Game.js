@@ -62,7 +62,10 @@ export default class extends Phaser.State {
     this.player.body.collideWorldBounds = true
 
     this.audioManager = new AudioManager({ game: this.game })
-    this.scoreManager = new ScoreManager({ game: this.game })
+    this.scoreManager = new ScoreManager({
+      game: this.game,
+      scores: this.scores
+    })
 
     this.cursors = {
       up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),

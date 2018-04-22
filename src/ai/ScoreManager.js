@@ -1,16 +1,44 @@
 import ScoreDisplay from '../ui/ScoreDisplay'
+import { getAllScores } from '../utils/leaderboard'
 
 export default class ScoreManager {
   constructor ({ game }) {
+    this.init(game)
+  }
+
+  async init (game) {
+    this.game = game
+    this.decreaseMultiplierTimeout = null
     this.score = 0
     this.multiplier = 1
     this.scoreDisplay = new ScoreDisplay({
-      game,
+      game: this.game,
       score: this.score,
       multiplier: this.multiplier
     })
-    this.game = game
-    this.decreaseMultiplierTimeout = null
+    this.scores = await getAllScores()
+    this.nextScoreIndex = 0
+    this.scoreDisplay.setNextBestScore(this.scores[this.nextScoreIndex])
+  }
+
+  increaseScore (value) {
+    this.score += value * this.multiplier
+    if (
+      this.nextScoreIndex < this.scores.length &&
+      this.score >= this.scores[this.nextScoreIndex].score
+    ) {
+      while (
+        this.nextScoreIndex < this.scores.length &&
+        this.score >= this.scores[this.nextScoreIndex].score
+      ) {
+        this.nextScoreIndex++
+      }
+      if (this.nextScoreIndex === this.scores.length) {
+        this.scoreDisplay.setWorldRecord()
+      } else {
+        this.scoreDisplay.setNextBestScore(this.scores[this.nextScoreIndex])
+      }
+    }
   }
 
   decreaseMultiplier () {
@@ -25,12 +53,12 @@ export default class ScoreManager {
   }
 
   registerHit () {
-    this.score += ScoreManager.HIT_VALUE * this.multiplier
+    this.increaseScore(ScoreManager.HIT_VALUE)
     this.scoreDisplay.setScore(this.score, this.multiplier)
   }
 
   registerKill () {
-    this.score += ScoreManager.KILL_VALUE * this.multiplier
+    this.increaseScore(ScoreManager.KILL_VALUE)
     this.multiplier = Number((this.multiplier + 0.1).toFixed(1))
     this.scoreDisplay.setScore(this.score, this.multiplier)
     if (this.decreaseMultiplierTimeout !== null) {

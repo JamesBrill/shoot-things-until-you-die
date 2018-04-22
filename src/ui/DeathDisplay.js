@@ -32,6 +32,7 @@ export default class DeathDisplay {
   hideDeathScreen () {
     if (this.deathText) {
       this.fontSize = 128
+      this.deathBar.destroy()
       this.deathText.destroy()
     }
   }

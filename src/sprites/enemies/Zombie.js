@@ -29,7 +29,7 @@ export default class Zombie extends Phaser.Sprite {
     this.addChild(this.healthBar)
 
     this.nameText = this.game.add.text(0, 0, Zombie.getEnemyName(size), {
-      font: '14px Arial',
+      font: `${size === Zombie.XLARGE_SIZE ? 18 : 14}px Arial`,
       fill: 'black',
       boundsAlignH: 'center'
     })

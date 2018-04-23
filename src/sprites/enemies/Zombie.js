@@ -28,13 +28,13 @@ export default class Zombie extends Phaser.Sprite {
     })
     this.addChild(this.healthBar)
 
-    this.nameText = this.game.add.text(0, 0, 'Zombie', {
+    this.nameText = this.game.add.text(0, 0, Zombie.getEnemyName(size), {
       font: '14px Arial',
-      fill: 'white',
+      fill: 'black',
       boundsAlignH: 'center'
     })
     this.nameText.bringToTop()
-    this.nameText.setTextBounds(-50, -50, 100, 100)
+    Zombie.setTextBounds(this.nameText, size)
     this.addChild(this.nameText)
   }
 
@@ -85,3 +85,28 @@ Zombie.createRandom = (
 Zombie.NORMAL_SIZE = 30
 Zombie.LARGE_SIZE = 60
 Zombie.XLARGE_SIZE = 120
+
+const normalTasks = [
+  'Put TVs in meeting rooms',
+  'Fireside chat',
+  'Arrange tech talk',
+  'Buy lunch'
+]
+const largeTasks = ['Fix the f***ing Wi-Fi', 'Empty email inbox']
+
+Zombie.getEnemyName = function (enemySize) {
+  if (enemySize === Zombie.XLARGE_SIZE) {
+    return largeTasks[Math.floor(Math.random() * largeTasks.length)]
+  }
+  return normalTasks[Math.floor(Math.random() * normalTasks.length)]
+}
+
+Zombie.setTextBounds = function (nameText, enemySize) {
+  if (enemySize === Zombie.XLARGE_SIZE) {
+    nameText.setTextBounds(-50, -115, 100, 100)
+  } else if (enemySize === Zombie.LARGE_SIZE) {
+    nameText.setTextBounds(-50, -70, 100, 100)
+  } else {
+    nameText.setTextBounds(-50, -50, 100, 100)
+  }
+}

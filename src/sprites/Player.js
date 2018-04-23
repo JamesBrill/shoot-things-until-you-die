@@ -19,7 +19,7 @@ export default class Player extends Phaser.Sprite {
 
     this.nameText = this.game.add.text(0, 0, 'Paul', {
       font: '14px Arial',
-      fill: 'white',
+      fill: 'black',
       boundsAlignH: 'center'
     })
     this.nameText.bringToTop()

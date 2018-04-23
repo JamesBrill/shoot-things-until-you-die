@@ -3,7 +3,7 @@ import config from '../config'
 
 export default class extends Phaser.State {
   init () {
-    this.stage.backgroundColor = '#EDEEC9'
+    this.stage.backgroundColor = '#fceb30'
     this.name = 'Guest'
     this.nameProvided = false
   }

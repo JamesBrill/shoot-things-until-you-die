@@ -16,6 +16,15 @@ export default class Player extends Phaser.Sprite {
       maxHealth: this.health
     })
     this.addChild(this.healthBar)
+
+    this.nameText = this.game.add.text(0, 0, 'Paul', {
+      font: '14px Arial',
+      fill: 'white',
+      boundsAlignH: 'center'
+    })
+    this.nameText.bringToTop()
+    this.nameText.setTextBounds(-50, -60, 100, 100)
+    this.addChild(this.nameText)
   }
 
   takeDamage (enemy) {

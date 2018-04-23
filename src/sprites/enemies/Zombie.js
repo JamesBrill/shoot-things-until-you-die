@@ -27,6 +27,15 @@ export default class Zombie extends Phaser.Sprite {
       maxHealth: this.maxHealth
     })
     this.addChild(this.healthBar)
+
+    this.nameText = this.game.add.text(0, 0, 'Zombie', {
+      font: '14px Arial',
+      fill: 'white',
+      boundsAlignH: 'center'
+    })
+    this.nameText.bringToTop()
+    this.nameText.setTextBounds(-50, -50, 100, 100)
+    this.addChild(this.nameText)
   }
 
   move () {

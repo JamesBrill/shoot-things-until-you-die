@@ -6,15 +6,23 @@ export default class extends Phaser.Sprite {
     const firingCone = game.add.graphics(x, y)
     firingCone.lineStyle(1, 0x000000)
     firingCone.moveTo(x, y)
+    firingCone.lineTo(x, y)
+    firingCone.moveTo(x, y - 22)
     firingCone.lineTo(x, y - gunRange)
-    firingCone.moveTo(x, y)
     const rotatedAimLinePoint = Phaser.Point.rotate(
+      new Phaser.Point(x, y - 22),
+      x,
+      y,
+      gunAngleRadians
+    )
+    firingCone.moveTo(rotatedAimLinePoint.x, rotatedAimLinePoint.y)
+    const rotatedAimLinePoint2 = Phaser.Point.rotate(
       new Phaser.Point(x, y - gunRange),
       x,
       y,
       gunAngleRadians
     )
-    firingCone.lineTo(rotatedAimLinePoint.x, rotatedAimLinePoint.y)
+    firingCone.lineTo(rotatedAimLinePoint2.x, rotatedAimLinePoint2.y)
     firingCone.endFill()
     super(game, x, y, firingCone.generateTexture())
     this.NINETY_DEGREES_AS_RADIANS = game.math.degToRad(90)

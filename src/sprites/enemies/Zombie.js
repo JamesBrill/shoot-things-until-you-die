@@ -87,12 +87,28 @@ Zombie.LARGE_SIZE = 60
 Zombie.XLARGE_SIZE = 120
 
 const normalTasks = [
-  'Put TVs in meeting rooms',
-  'Fireside chat',
+  'Mount TVs',
+  'Arrange fireside chat',
   'Arrange tech talk',
-  'Buy lunch'
+  'Buy lunch',
+  "Review James' code",
+  'Write Python script',
+  'Interview job candidate',
+  'Wire up office phones',
+  'Do the washing up',
+  'Give a one-to-one',
+  'Write job description',
+  'Incubation retro',
+  'Admin announcements',
+  'Talk with person X about Y',
+  'Arrange React Dojo',
+  'Rethink incubation model'
 ]
-const largeTasks = ['Fix the f***ing Wi-Fi', 'Empty email inbox']
+const largeTasks = [
+  'Fix the f***ing Wi-Fi',
+  'Empty email inbox',
+  'Build 60 businesses'
+]
 
 Zombie.getEnemyName = function (enemySize) {
   if (enemySize === Zombie.XLARGE_SIZE) {

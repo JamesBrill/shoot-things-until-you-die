@@ -102,7 +102,10 @@ const normalTasks = [
   'Admin announcements',
   'Talk with person X about Y',
   'Arrange React Dojo',
-  'Rethink incubation model'
+  'Rethink incubation model',
+  'Tell submarine story',
+  'Rearrange seating plan',
+  'Change job title'
 ]
 const largeTasks = [
   'Fix the f***ing Wi-Fi',

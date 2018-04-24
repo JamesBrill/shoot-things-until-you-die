@@ -30,7 +30,9 @@ export default class ScoreDisplay {
   }
 
   setNextBestScore ({ name, score, rank }) {
-    this.nextBestScoreText.setText(`#${rank + 1} (next: ${score} - ${name})`)
+    this.nextBestScoreText.setText(
+      `#${rank + 1} (next: ${score} - ${name.slice(0, 16)})`
+    )
   }
 
   setWorldRecord () {

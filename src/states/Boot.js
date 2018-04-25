@@ -77,6 +77,7 @@ export default class extends Phaser.State {
     this.load.image('pistol_ammo', 'assets/images/pistol_ammo.png')
     this.load.image('shotgun_ammo', 'assets/images/shotgun_ammo.png')
     this.load.image('paul', 'assets/images/paul.png')
+    this.load.image('splash', 'assets/images/splash.png')
 
     if (window.localStorage.getItem(config.localStorageName) === null) {
       const nameForm = document.getElementById('nameForm')
@@ -106,7 +107,7 @@ export default class extends Phaser.State {
 
   render () {
     if (this.nameProvided) {
-      this.state.start('Game')
+      this.state.start('Splash')
     }
   }
 }

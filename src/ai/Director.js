@@ -30,15 +30,20 @@ export default class Director {
     const maxEnemyDistanceFromPlayer = this.getMaxEnemyDistanceFromPlayer()
     const playerX = this.player.x
     const playerY = this.player.y
+    const enemiesToKill = []
     for (let i = 0; i < this.enemies.children.length; i++) {
       const zombie = this.enemies.children[i]
       const distanceToPlayer = Math.sqrt(
         (playerX - zombie.x) ** 2 + (playerY - zombie.y) ** 2
       )
       if (distanceToPlayer > maxEnemyDistanceFromPlayer) {
-        zombie.kill()
-        this.replaceZombie(zombie)
+        enemiesToKill.push(zombie)
       }
+    }
+    for (let i = 0; i < enemiesToKill.length; i++) {
+      const zombie = enemiesToKill[i]
+      zombie.kill()
+      this.replaceZombie(zombie)
     }
     setTimeout(this.moveDistantZombies.bind(this), 1000)
   }

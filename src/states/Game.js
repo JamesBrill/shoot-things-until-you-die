@@ -36,7 +36,7 @@ export default class extends Phaser.State {
       game: this.game,
       x: this.world.centerX,
       y: this.world.centerY,
-      weapon: this.weapons.pistol
+      weapon: this.weapons.leverActionShotgun
     })
 
     this.enemies = this.game.add.group()

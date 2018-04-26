@@ -2,6 +2,7 @@
 import Phaser from 'phaser'
 import Player from '../sprites/Player'
 import BloodSplatter from '../sprites/BloodSplatter'
+import MomentumMeter from '../sprites/MomentumMeter'
 import AmmoDrop from '../sprites/ammoDrops/AmmoDrop'
 import Director from '../ai/Director'
 import ScoreManager from '../ai/ScoreManager'
@@ -92,6 +93,9 @@ export default class extends Phaser.State {
     )
 
     this.deathDisplay = new DeathDisplay({ game: this.game })
+
+    this.momentumMeter = new MomentumMeter({ game: this.game })
+    this.game.add.existing(this.momentumMeter)
   }
 
   restartGame () {
@@ -105,6 +109,7 @@ export default class extends Phaser.State {
     const isEnemyKilled = enemy.takeDamage(this.player.weapon)
     if (isEnemyKilled) {
       const { angleBetween, radToDeg } = this.game.math
+      this.momentumMeter.increaseMomentum()
       this.scoreManager.registerKill()
       this.director.replaceZombie(enemy, true)
       this.audioManager.playBloodSpatterSound(enemy)

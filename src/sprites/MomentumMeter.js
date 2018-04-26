@@ -18,6 +18,30 @@ export default class MomentumMeter extends Phaser.Sprite {
     this.maxMomentum = 100
     this.momentum = this.maxMomentum
     momentumMeter.destroy()
+
+    this.momentumText = this.game.add.text(-25, -20, 'Momentum', {
+      font: '16px Arial',
+      fill: 'black'
+    })
+    this.momentumText.bringToTop()
+    this.momentumText.setTextBounds(0, 0, 100, 50)
+
+    this.addChild(this.momentumText)
+
+    this.perfectionText = this.game.add.text(
+      -20,
+      MomentumMeter.HEIGHT + 5,
+      'Perfection',
+      {
+        font: '16px Arial',
+        fill: 'black'
+      }
+    )
+    this.perfectionText.bringToTop()
+    this.perfectionText.setTextBounds(0, 0, 100, 50)
+
+    this.addChild(this.perfectionText)
+
     this.setMomentum(this.maxMomentum)
     this.fixedToCamera = true
     this.reduceMomentum()

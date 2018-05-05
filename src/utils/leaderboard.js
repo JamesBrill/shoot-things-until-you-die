@@ -2,9 +2,9 @@ import firebase from 'firebase'
 import 'firebase/firestore'
 
 firebase.initializeApp({
-  apiKey: 'AIzaSyBji9o7iyFajjN5FHavIXaL1NNoi2HqvP0',
-  authDomain: 'shoot-things-until-you-die-1.firebaseapp.com',
-  projectId: 'shoot-things-until-you-die-1'
+  apiKey: 'AIzaSyD9nw3EAy1TdH1OMrEH8I9BjuT_lMqner4',
+  authDomain: 'shoot-things-until-you-die-2.firebaseapp.com',
+  projectId: 'shoot-things-until-you-die-2'
 })
 
 const db = firebase.firestore()

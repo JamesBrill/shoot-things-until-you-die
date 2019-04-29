@@ -61,6 +61,10 @@
         .hidden {
           display: none !important;
         }
+
+        .padded {
+          padding-left: 16px;
+        }
     </style>
 </head>
 
@@ -72,6 +76,11 @@
         Start game
       </button>
     </form>
+
+    <div id='incompatibilityWarning' class='hidden padded'>
+      <p>Paul's Todo List is only playable on desktop Chrome.</p>
+      <a href='http://jamesbrill.co.uk'>Return to homepage</a>
+    </div>
 
     <div id="content"></div>
     <!-- uncomment the line bellow for cordova feature -->

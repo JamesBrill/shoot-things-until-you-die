@@ -24,7 +24,7 @@ export default class Director {
           randomPosition,
           this.player,
           this.game.world,
-          this.getMaxZombieSpeed()
+          this.getRandomZombieSpeed()
         )
       )
     }
@@ -47,21 +47,22 @@ export default class Director {
         randomPosition,
         this.player,
         this.game.world,
-        this.getMaxZombieSpeed(),
+        this.getRandomZombieSpeed(),
         this.healthMultiplier
       )
     )
   }
 
-  getMaxZombieSpeed () {
-    return 15
+  getRandomZombieSpeed () {
+    return 50 * Math.min(1, Math.random() * 3)
   }
 
   getMinEnemyDistanceFromPlayer () {
-    return 3000
+    return 1000
   }
 
   getMaxEnemyDistanceFromPlayer () {
-    return 6000
+    const { width } = this.game.world
+    return width * 0.45
   }
 }

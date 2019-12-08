@@ -18,7 +18,7 @@ export default class extends Phaser.State {
   preload () {}
 
   create () {
-    this.game.world.setBounds(-5000, -5000, 10000, 10000)
+    this.game.world.setBounds(-2000, -2000, 4000, 4000)
 
     this.game.physics.startSystem(Phaser.Physics.ARCADE)
 

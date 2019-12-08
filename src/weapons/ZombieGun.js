@@ -1,11 +1,10 @@
 import Phaser from 'phaser'
 
 export default class ZombieGun extends Phaser.Weapon {
-  constructor ({ game, zombie }) {
+  constructor ({ game }) {
     super(game, game.plugins)
 
     this.game = game
-    this.zombie = zombie
 
     if (!ZombieGun.FIRE_SOUND) {
       this.fireSound = game.add.audio('pistol_fire')

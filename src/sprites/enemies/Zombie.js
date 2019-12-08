@@ -1,15 +1,8 @@
 import Phaser from 'phaser'
-import ZombieGun from '../../weapons/ZombieGun'
 import HealthBar from '../HealthBar'
 
-const ZombieMode = {
-  FOLLOW: 'FOLLOW',
-  STRAFE: 'STRAFE',
-  RETREAT: 'RETREAT'
-}
-
 export default class Zombie extends Phaser.Sprite {
-  constructor ({ game, x, y, player, speed, size, healthMultiplier, weapon }) {
+  constructor ({ game, x, y, player, speed, size, healthMultiplier }) {
     const enemyGraphics = game.add.graphics(x, y)
     enemyGraphics.beginFill(0x00ff00, 1)
     enemyGraphics.drawCircle(x, y, size)
@@ -27,7 +20,6 @@ export default class Zombie extends Phaser.Sprite {
     this.attackDamage = 3 * this.damageModifier
     this.maxHealth = 100 * this.sizeModifier * (healthMultiplier || 1)
     this.health = this.maxHealth
-    this.armWeapon(weapon)
     this.healthBar = new HealthBar({
       game,
       x: -0.5 * HealthBar.WIDTH,
@@ -35,63 +27,6 @@ export default class Zombie extends Phaser.Sprite {
       maxHealth: this.maxHealth
     })
     this.addChild(this.healthBar)
-
-    this.mode = ZombieMode.FOLLOW
-    this.strafeRight = true
-  }
-
-  move () {
-    if (this.mode === ZombieMode.FOLLOW) {
-      this.game.physics.arcade.moveToObject(this, this.player, this.speed)
-    } else if (this.mode === ZombieMode.STRAFE) {
-      if (Math.random() > 0.99) {
-        this.strafeRight = !this.strafeRight
-      }
-      this.strafe()
-    } else {
-      this.retreat()
-    }
-  }
-
-  act () {
-    const distanceToPlayer = Math.sqrt(
-      (this.player.x - this.x) ** 2 + (this.player.y - this.y) ** 2
-    )
-    if (distanceToPlayer <= this.weapon.gunRange) {
-      this.weapon.aimAt(this.player.x, this.player.y)
-      this.weapon.fire()
-
-      if (distanceToPlayer <= this.weapon.gunRange * 0.5) {
-        this.mode = ZombieMode.RETREAT
-      } else {
-        this.mode = ZombieMode.STRAFE
-      }
-    } else {
-      this.mode = ZombieMode.FOLLOW
-    }
-  }
-
-  strafe () {
-    const { angleBetween, radToDeg } = this.game.math
-    const aimAngle = angleBetween(this.x, this.y, this.player.world.x, this.player.world.y)
-    const strafeConstant = this.strafeRight ? 90 : -90
-    const strafeAngle = radToDeg(aimAngle) + strafeConstant
-    this.game.physics.arcade.velocityFromAngle(strafeAngle, this.speed * 2, this.body.velocity)
-  }
-
-  retreat () {
-    const { angleBetween, radToDeg } = this.game.math
-    const aimAngle = angleBetween(this.x, this.y, this.player.world.x, this.player.world.y)
-    const strafeAngle = radToDeg(aimAngle) + 180
-    this.game.physics.arcade.velocityFromAngle(strafeAngle, this.speed, this.body.velocity)
-  }
-
-  switchMode () {
-    if (this.mode === ZombieMode.FOLLOW) {
-      this.mode = ZombieMode.STRAFE
-    } else {
-      this.mode = ZombieMode.FOLLOW
-    }
   }
 
   takeDamage (weapon) {
@@ -102,42 +37,6 @@ export default class Zombie extends Phaser.Sprite {
     this.healthBar.setHealth(this.health)
     return false
   }
-
-  armWeapon (weapon) {
-    this.weapon = weapon
-    weapon.arm(this)
-  }
-}
-
-Zombie.createRandom = (
-  game,
-  randomPosition,
-  player,
-  world,
-  maxSpeed,
-  healthMultiplier
-) => {
-  const { x, y } = randomPosition
-  const randomSpeed = Math.random() * (maxSpeed || 200) + 30
-  const zombieSizePicker = Math.random()
-  let zombieSize
-  if (zombieSizePicker < 0.05) {
-    zombieSize = Zombie.XLARGE_SIZE
-  } else if (zombieSizePicker < 0.15) {
-    zombieSize = Zombie.LARGE_SIZE
-  } else {
-    zombieSize = Zombie.NORMAL_SIZE
-  }
-  return new Zombie({
-    game,
-    x,
-    y,
-    player,
-    speed: randomSpeed,
-    size: zombieSize,
-    healthMultiplier,
-    weapon: new ZombieGun({ game, zombie: this })
-  })
 }
 
 Zombie.NORMAL_SIZE = 30

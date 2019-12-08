@@ -1,4 +1,5 @@
 import Zombie from '../sprites/enemies/Zombie'
+import SoldierZombie from '../sprites/enemies/SoldierZombie'
 import { getPositionAtDistanceRangeFromPlayer } from '../utils/world'
 
 export default class Director {
@@ -19,12 +20,10 @@ export default class Director {
         width * 0.45
       )
       this.enemies.add(
-        Zombie.createRandom(
+        this.createRandomZombie(
           this.game,
           randomPosition,
-          this.player,
-          this.game.world,
-          this.getRandomZombieSpeed()
+          this.player
         )
       )
     }
@@ -42,19 +41,13 @@ export default class Director {
       this.getMaxEnemyDistanceFromPlayer()
     )
     this.enemies.add(
-      Zombie.createRandom(
+      this.createRandomZombie(
         this.game,
         randomPosition,
         this.player,
-        this.game.world,
-        this.getRandomZombieSpeed(),
         this.healthMultiplier
       )
     )
-  }
-
-  getRandomZombieSpeed () {
-    return 50 * Math.min(1, Math.random() * 3)
   }
 
   getMinEnemyDistanceFromPlayer () {
@@ -64,5 +57,16 @@ export default class Director {
   getMaxEnemyDistanceFromPlayer () {
     const { width } = this.game.world
     return width * 0.45
+  }
+
+  createRandomZombie (game, randomPosition, player, healthMultiplier) {
+    const { x, y } = randomPosition
+    return new SoldierZombie({
+      game,
+      x,
+      y,
+      player,
+      healthMultiplier
+    })
   }
 }

@@ -22,12 +22,10 @@ export default class Director {
         width * 0.35,
         width * 0.45
       )
-      this.enemies.add(
-        this.createRandomZombie(
-          this.game,
-          randomPosition,
-          this.player
-        )
+      this.addRandomZombie(
+        this.game,
+        randomPosition,
+        this.player
       )
     }
   }
@@ -50,13 +48,11 @@ export default class Director {
       this.getMinEnemyDistanceFromPlayer(),
       this.getMaxEnemyDistanceFromPlayer()
     )
-    this.enemies.add(
-      this.createRandomZombie(
-        this.game,
-        randomPosition,
-        this.player,
-        this.healthMultiplier
-      )
+    this.addRandomZombie(
+      this.game,
+      randomPosition,
+      this.player,
+      this.healthMultiplier
     )
   }
 
@@ -70,34 +66,41 @@ export default class Director {
     return width
   }
 
-  createRandomZombie (game, randomPosition, player, healthMultiplier) {
+  addRandomZombie (game, randomPosition, player, healthMultiplier) {
     const { x, y } = randomPosition
     const randomNumber = Math.random()
+    let randomZombie, immovable
     if (randomNumber > 0.4) {
-      return new SoldierZombie({
+      randomZombie = new SoldierZombie({
         game,
         x,
         y,
         player,
         healthMultiplier
       })
+      immovable = false
     } else if (randomNumber > 0.2) {
-      return new SniperZombie({
+      randomZombie = new SniperZombie({
         game,
         x,
         y,
         player,
         healthMultiplier
       })
+      immovable = true
     } else {
-      return new ChaserZombie({
+      randomZombie = new ChaserZombie({
         game,
         x,
         y,
         player,
         healthMultiplier
       })
+      immovable = false
     }
+    this.enemies.add(randomZombie)
+    randomZombie.body.immovable = immovable
+    randomZombie.body.moves = !immovable
   }
 }
 

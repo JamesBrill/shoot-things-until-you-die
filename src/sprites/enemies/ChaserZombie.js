@@ -34,6 +34,6 @@ export default class ChaserZombie extends Zombie {
   act () { }
 }
 
-ChaserZombie.SPEED = 200
+ChaserZombie.SPEED = 250
 ChaserZombie.SIZE = 20
 ChaserZombie.COLOUR = 0x0000ff

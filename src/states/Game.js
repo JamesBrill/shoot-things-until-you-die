@@ -11,6 +11,7 @@ import Pistol from '../weapons/Pistol'
 import LeverActionShotgun from '../weapons/LeverActionShotgun'
 import SemiAutoShotgun from '../weapons/SemiAutoShotgun'
 import AssaultRifle from '../weapons/AssaultRifle'
+import M16 from '../weapons/M16'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
 
 export default class extends Phaser.State {
@@ -28,7 +29,8 @@ export default class extends Phaser.State {
       pistol: new Pistol({ game: this.game }),
       leverActionShotgun: new LeverActionShotgun({ game: this.game }),
       semiAutoShotgun: new SemiAutoShotgun({ game: this.game }),
-      assaultRifle: new AssaultRifle({ game: this.game })
+      assaultRifle: new AssaultRifle({ game: this.game }),
+      m16: new M16({ game: this.game })
     }
 
     this.player = new Player({
@@ -79,6 +81,7 @@ export default class extends Phaser.State {
       weaponTwo: this.game.input.keyboard.addKey(Phaser.Keyboard.TWO),
       weaponThree: this.game.input.keyboard.addKey(Phaser.Keyboard.THREE),
       weaponFour: this.game.input.keyboard.addKey(Phaser.Keyboard.FOUR),
+      weaponFive: this.game.input.keyboard.addKey(Phaser.Keyboard.FIVE),
       speedUp: this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT)
     }
 
@@ -230,6 +233,8 @@ export default class extends Phaser.State {
         this.player.armWeapon(this.weapons.semiAutoShotgun)
       } else if (this.cursors.weaponFour.isDown) {
         this.player.armWeapon(this.weapons.assaultRifle)
+      } else if (this.cursors.weaponFive.isDown) {
+        this.player.armWeapon(this.weapons.m16)
       }
 
       if (this.cursors.reload.isDown) {

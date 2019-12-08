@@ -14,25 +14,30 @@ AmmoDrop.createRandom = (game, world) => {
   const randomY = Math.random() * height - 0.5 * height
   const ammoTypePicker = Math.random()
   let ammoType, weaponName, bullets, spriteName
-  if (ammoTypePicker < 0.25) {
+  if (ammoTypePicker < 0.2) {
     ammoType = AmmoDrop.PISTOL_AMMO_SPRITE
     weaponName = 'pistol'
     bullets = 64
     spriteName = 'pistol_ammo'
-  } else if (ammoTypePicker < 0.5) {
+  } else if (ammoTypePicker < 0.4) {
     ammoType = AmmoDrop.LEVER_ACTION_SHOTGUN_AMMO_SPRITE
     weaponName = 'leverActionShotgun'
     bullets = 24
     spriteName = 'model_1887_ammo'
-  } else if (ammoTypePicker < 0.75) {
+  } else if (ammoTypePicker < 0.6) {
     ammoType = AmmoDrop.SEMI_AUTO_SHOTGUN_AMMO_SPRITE
     weaponName = 'semiAutoShotgun'
     bullets = 30
     spriteName = 'shotgun_ammo'
-  } else {
+  } else if (ammoTypePicker < 0.8) {
     ammoType = AmmoDrop.ASSAULT_RIFLE_AMMO_SPRITE
     weaponName = 'assaultRifle'
     bullets = 120
+    spriteName = 'assault_rifle_ammo'
+  } else {
+    ammoType = AmmoDrop.ASSAULT_RIFLE_AMMO_SPRITE
+    weaponName = 'm16'
+    bullets = 60
     spriteName = 'assault_rifle_ammo'
   }
   return new AmmoDrop({

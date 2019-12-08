@@ -41,7 +41,14 @@ export default class Player extends Phaser.Sprite {
     this.weapon.fire()
   }
 
-  move (direction, distance) {
+  move (direction, distance, speedUp) {
+    this.removeChild(this.weapon.firingCone)
+    if (speedUp) {
+      this.weapon.dash()
+    } else {
+      this.weapon.walk()
+    }
+    this.addChild(this.weapon.firingCone)
     if (direction === UP) {
       this.body.velocity.add(0, -distance)
     } else if (direction === DOWN) {
@@ -51,6 +58,12 @@ export default class Player extends Phaser.Sprite {
     } else if (direction === RIGHT) {
       this.body.velocity.add(distance, 0)
     }
+  }
+
+  stopMoving () {
+    this.removeChild(this.weapon.firingCone)
+    this.weapon.stand()
+    this.addChild(this.weapon.firingCone)
   }
 
   armWeapon (weapon) {

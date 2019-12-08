@@ -10,6 +10,12 @@ export default class Shotgun extends Weapon {
     this.reloadTimeout = null
   }
 
+  stand () { }
+
+  walk () { }
+
+  dash () { }
+
   loadNewShell () {
     this.loadingShell = false
   }

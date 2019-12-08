@@ -62,13 +62,50 @@ export default class Weapon extends Phaser.Weapon {
       ammoReserves: ammoReserves
     })
 
-    this.firingCone = new FiringCone({
+    this.STANDING_GUN_ANGLE = gunAngle * 0.1
+    this.WALKING_GUN_ANGLE = gunAngle
+    this.DASHING_GUN_ANGLE = gunAngle * 3
+
+    this.standingFiringCone = new FiringCone({
       game,
       x: 0,
       y: 0,
       gunRange,
-      gunAngle
+      gunAngle: this.STANDING_GUN_ANGLE
     })
+
+    this.walkingFiringCone = new FiringCone({
+      game,
+      x: 0,
+      y: 0,
+      gunRange,
+      gunAngle: this.WALKING_GUN_ANGLE
+    })
+
+    this.dashingFiringCone = new FiringCone({
+      game,
+      x: 0,
+      y: 0,
+      gunRange,
+      gunAngle: this.DASHING_GUN_ANGLE
+    })
+
+    this.firingCone = this.walkingFiringCone
+  }
+
+  stand () {
+    this.firingCone = this.standingFiringCone
+    this.bulletAngleVariance = 0.5 * this.STANDING_GUN_ANGLE
+  }
+
+  walk () {
+    this.firingCone = this.walkingFiringCone
+    this.bulletAngleVariance = 0.5 * this.WALKING_GUN_ANGLE
+  }
+
+  dash () {
+    this.firingCone = this.dashingFiringCone
+    this.bulletAngleVariance = 0.5 * this.DASHING_GUN_ANGLE
   }
 
   arm (player) {

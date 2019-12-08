@@ -204,15 +204,22 @@ export default class extends Phaser.State {
       const velocity = speedUp ? 450 : 300
 
       if (this.cursors.up.isDown) {
-        this.player.move(UP, velocity)
+        this.player.move(UP, velocity, speedUp)
       } else if (this.cursors.down.isDown) {
-        this.player.move(DOWN, velocity)
+        this.player.move(DOWN, velocity, speedUp)
       }
 
       if (this.cursors.left.isDown) {
-        this.player.move(LEFT, velocity)
+        this.player.move(LEFT, velocity, speedUp)
       } else if (this.cursors.right.isDown) {
-        this.player.move(RIGHT, velocity)
+        this.player.move(RIGHT, velocity, speedUp)
+      }
+
+      if (!this.cursors.up.isDown &&
+          !this.cursors.down.isDown &&
+          !this.cursors.left.isDown &&
+          !this.cursors.right.isDown) {
+        this.player.stopMoving()
       }
 
       if (this.cursors.weaponOne.isDown) {

@@ -12,10 +12,23 @@ export default class ChaserZombie extends Zombie {
       healthMultiplier,
       colour: ChaserZombie.COLOUR
     })
+
+    this.strafeRight = true
   }
 
   move () {
-    this.game.physics.arcade.moveToObject(this, this.player, this.speed)
+    if (Math.random() > 0.97) {
+      this.strafeRight = !this.strafeRight
+    }
+    this.strafe()
+  }
+
+  strafe () {
+    const { angleBetween, radToDeg } = this.game.math
+    const aimAngle = angleBetween(this.x, this.y, this.player.world.x, this.player.world.y)
+    const strafeConstant = this.strafeRight ? 30 : -30
+    const strafeAngle = radToDeg(aimAngle) + strafeConstant
+    this.game.physics.arcade.velocityFromAngle(strafeAngle, this.speed, this.body.velocity)
   }
 
   act () { }

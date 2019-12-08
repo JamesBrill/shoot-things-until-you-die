@@ -1,8 +1,9 @@
 import Phaser from 'phaser'
+import ZombieGun from '../../weapons/ZombieGun'
 import HealthBar from '../HealthBar'
 
 export default class Zombie extends Phaser.Sprite {
-  constructor ({ game, x, y, player, speed, size, healthMultiplier }) {
+  constructor ({ game, x, y, player, speed, size, healthMultiplier, weapon }) {
     const enemyGraphics = game.add.graphics(x, y)
     enemyGraphics.beginFill(0x00ff00, 1)
     enemyGraphics.drawCircle(x, y, size)
@@ -20,6 +21,7 @@ export default class Zombie extends Phaser.Sprite {
     this.attackDamage = 3 * this.damageModifier
     this.maxHealth = 100 * this.sizeModifier * (healthMultiplier || 1)
     this.health = this.maxHealth
+    this.armWeapon(weapon)
     this.healthBar = new HealthBar({
       game,
       x: -0.5 * HealthBar.WIDTH,
@@ -33,6 +35,18 @@ export default class Zombie extends Phaser.Sprite {
     this.game.physics.arcade.moveToObject(this, this.player, this.speed)
   }
 
+  act () {
+    const distanceToPlayer = Math.sqrt(
+      (this.player.x - this.x) ** 2 + (this.player.y - this.y) ** 2
+    )
+    if (distanceToPlayer <= this.weapon.gunRange) {
+      if (Math.random() > 0.99) {
+        this.weapon.aimAt(this.player.x, this.player.y)
+        this.weapon.fire()
+      }
+    }
+  }
+
   takeDamage (weapon) {
     this.health -= weapon.attackDamage
     if (this.health <= 0) {
@@ -40,6 +54,11 @@ export default class Zombie extends Phaser.Sprite {
     }
     this.healthBar.setHealth(this.health)
     return false
+  }
+
+  armWeapon (weapon) {
+    this.weapon = weapon
+    weapon.arm(this)
   }
 }
 
@@ -69,7 +88,8 @@ Zombie.createRandom = (
     player,
     speed: randomSpeed,
     size: zombieSize,
-    healthMultiplier
+    healthMultiplier,
+    weapon: new ZombieGun({ game, zombie: this })
   })
 }
 

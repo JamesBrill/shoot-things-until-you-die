@@ -125,6 +125,11 @@ export default class extends Phaser.State {
     }
   }
 
+  onPlayerTakeHit (enemy, player, bullet) {
+    enemy.weapon.hitTarget(bullet)
+    this.handlePlayerDamage(player, enemy)
+  }
+
   handlePlayerDamage (player, enemy) {
     const isPlayerKilled = player.takeDamage(enemy)
     if (isPlayerKilled) {
@@ -152,6 +157,17 @@ export default class extends Phaser.State {
       null,
       this
     )
+
+    this.enemies.forEach(enemy => {
+      this.game.physics.arcade.overlap(
+        enemy.weapon.bullets,
+        this.player,
+        (...args) => this.onPlayerTakeHit(enemy, ...args),
+        null,
+        this
+      )
+    })
+
     this.game.physics.arcade.collide(
       this.enemies,
       this.enemies,
@@ -175,6 +191,7 @@ export default class extends Phaser.State {
     )
 
     this.enemies.forEach(enemy => enemy.move())
+    this.enemies.forEach(enemy => enemy.act())
 
     if (!this.player.disabled) {
       this.player.body.velocity.setTo(0, 0)

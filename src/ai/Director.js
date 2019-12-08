@@ -12,11 +12,11 @@ export default class Director {
 
   initialiseZombies () {
     const { width } = this.game.world
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 50; i++) {
       const randomPosition = getPositionAtDistanceRangeFromPlayer(
         this.game.world,
         this.player,
-        1500,
+        width * 0.35,
         width * 0.45
       )
       this.enemies.add(
@@ -51,12 +51,13 @@ export default class Director {
   }
 
   getMinEnemyDistanceFromPlayer () {
-    return 1000
+    const { width } = this.game.world
+    return width * 0.35
   }
 
   getMaxEnemyDistanceFromPlayer () {
     const { width } = this.game.world
-    return width * 0.45
+    return width
   }
 
   createRandomZombie (game, randomPosition, player, healthMultiplier) {

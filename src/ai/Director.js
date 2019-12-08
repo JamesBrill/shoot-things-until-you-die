@@ -7,45 +7,6 @@ export default class Director {
     this.player = player
     this.enemies = enemies
     this.healthMultiplier = 1
-    this.intensityCounter = 49
-    this.intensity = this.getIntensity()
-    setTimeout(this.increaseIntensity.bind(this), 1000)
-    setTimeout(this.moveDistantZombies.bind(this), 1000)
-  }
-
-  increaseIntensity () {
-    this.intensityCounter += 0.3
-    if (this.intensity > 40) {
-      this.intensityCounter += 0.8
-    }
-    this.intensity = this.getIntensity()
-    setTimeout(this.increaseIntensity.bind(this), 1000)
-  }
-
-  getIntensity () {
-    return Math.floor((Math.sin(0.1 * this.intensityCounter) + 1) * 50)
-  }
-
-  moveDistantZombies () {
-    const maxEnemyDistanceFromPlayer = this.getMaxEnemyDistanceFromPlayer()
-    const playerX = this.player.x
-    const playerY = this.player.y
-    const enemiesToKill = []
-    for (let i = 0; i < this.enemies.children.length; i++) {
-      const zombie = this.enemies.children[i]
-      const distanceToPlayer = Math.sqrt(
-        (playerX - zombie.x) ** 2 + (playerY - zombie.y) ** 2
-      )
-      if (distanceToPlayer > maxEnemyDistanceFromPlayer) {
-        enemiesToKill.push(zombie)
-      }
-    }
-    for (let i = 0; i < enemiesToKill.length; i++) {
-      const zombie = enemiesToKill[i]
-      zombie.kill()
-      this.replaceZombie(zombie)
-    }
-    setTimeout(this.moveDistantZombies.bind(this), 1000)
   }
 
   initialiseZombies () {
@@ -93,14 +54,14 @@ export default class Director {
   }
 
   getMaxZombieSpeed () {
-    return Math.max(30, 2.1 * this.intensity)
+    return 15
   }
 
   getMinEnemyDistanceFromPlayer () {
-    return 1000 + (100 - this.intensity) * 15
+    return 3000
   }
 
   getMaxEnemyDistanceFromPlayer () {
-    return this.getMinEnemyDistanceFromPlayer() + (101 - this.intensity) * 30
+    return 6000
   }
 }

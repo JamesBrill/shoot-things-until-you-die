@@ -1,5 +1,5 @@
-import Zombie from '../sprites/enemies/Zombie'
 import SoldierZombie from '../sprites/enemies/SoldierZombie'
+import ChaserZombie from '../sprites/enemies/ChaserZombie'
 import { getPositionAtDistanceRangeFromPlayer } from '../utils/world'
 
 export default class Director {
@@ -61,12 +61,22 @@ export default class Director {
 
   createRandomZombie (game, randomPosition, player, healthMultiplier) {
     const { x, y } = randomPosition
-    return new SoldierZombie({
-      game,
-      x,
-      y,
-      player,
-      healthMultiplier
-    })
+    if (Math.random() > 0.1) {
+      return new SoldierZombie({
+        game,
+        x,
+        y,
+        player,
+        healthMultiplier
+      })
+    } else {
+      return new ChaserZombie({
+        game,
+        x,
+        y,
+        player,
+        healthMultiplier
+      })
+    }
   }
 }

@@ -2,9 +2,9 @@ import Phaser from 'phaser'
 import HealthBar from '../HealthBar'
 
 export default class Zombie extends Phaser.Sprite {
-  constructor ({ game, x, y, player, speed, size, healthMultiplier }) {
+  constructor ({ game, x, y, player, speed, size, healthMultiplier, colour }) {
     const enemyGraphics = game.add.graphics(x, y)
-    enemyGraphics.beginFill(0x00ff00, 1)
+    enemyGraphics.beginFill(colour, 1)
     enemyGraphics.drawCircle(x, y, size)
     enemyGraphics.endFill()
     super(game, x, y, enemyGraphics.generateTexture())

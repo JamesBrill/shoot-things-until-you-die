@@ -160,13 +160,15 @@ export default class extends Phaser.State {
     )
 
     this.enemies.forEach(enemy => {
-      this.game.physics.arcade.overlap(
-        enemy.weapon.bullets,
-        this.player,
-        (...args) => this.onPlayerTakeHit(enemy, ...args),
-        null,
-        this
-      )
+      if (enemy.weapon) {
+        this.game.physics.arcade.overlap(
+          enemy.weapon.bullets,
+          this.player,
+          (...args) => this.onPlayerTakeHit(enemy, ...args),
+          null,
+          this
+        )
+      }
     })
 
     this.game.physics.arcade.collide(

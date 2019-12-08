@@ -80,7 +80,7 @@ export default class Director {
         healthMultiplier
       })
       immovable = false
-    } else if (randomNumber > 0.21) {
+    } else if (randomNumber > 0.31) {
       randomZombie = new SniperZombie({
         game,
         x,

@@ -78,7 +78,8 @@ export default class extends Phaser.State {
       weaponOne: this.game.input.keyboard.addKey(Phaser.Keyboard.ONE),
       weaponTwo: this.game.input.keyboard.addKey(Phaser.Keyboard.TWO),
       weaponThree: this.game.input.keyboard.addKey(Phaser.Keyboard.THREE),
-      weaponFour: this.game.input.keyboard.addKey(Phaser.Keyboard.FOUR)
+      weaponFour: this.game.input.keyboard.addKey(Phaser.Keyboard.FOUR),
+      speedUp: this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT)
     }
 
     //  Notice that the sprite doesn't have any momentum at all,
@@ -197,16 +198,19 @@ export default class extends Phaser.State {
       this.player.body.velocity.setTo(0, 0)
       const { worldX, worldY } = this.game.input.mousePointer
       this.player.aimAt(worldX, worldY)
+      const speedUp = this.cursors.speedUp.isDown
+      const velocity = speedUp ? 450 : 300
+
       if (this.cursors.up.isDown) {
-        this.player.move(UP, 300)
+        this.player.move(UP, velocity)
       } else if (this.cursors.down.isDown) {
-        this.player.move(DOWN, 300)
+        this.player.move(DOWN, velocity)
       }
 
       if (this.cursors.left.isDown) {
-        this.player.move(LEFT, 300)
+        this.player.move(LEFT, velocity)
       } else if (this.cursors.right.isDown) {
-        this.player.move(RIGHT, 300)
+        this.player.move(RIGHT, velocity)
       }
 
       if (this.cursors.weaponOne.isDown) {

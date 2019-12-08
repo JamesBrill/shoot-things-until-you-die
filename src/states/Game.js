@@ -10,7 +10,7 @@ import DeathDisplay from '../ui/DeathDisplay'
 import Pistol from '../weapons/Pistol'
 import LeverActionShotgun from '../weapons/LeverActionShotgun'
 import SemiAutoShotgun from '../weapons/SemiAutoShotgun'
-import AssaultRifle from '../weapons/AssaultRifle'
+import P90 from '../weapons/P90'
 import M16 from '../weapons/M16'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
 
@@ -29,7 +29,7 @@ export default class extends Phaser.State {
       pistol: new Pistol({ game: this.game }),
       leverActionShotgun: new LeverActionShotgun({ game: this.game }),
       semiAutoShotgun: new SemiAutoShotgun({ game: this.game }),
-      assaultRifle: new AssaultRifle({ game: this.game }),
+      p90: new P90({ game: this.game }),
       m16: new M16({ game: this.game })
     }
 
@@ -232,7 +232,7 @@ export default class extends Phaser.State {
       } else if (this.cursors.weaponThree.isDown) {
         this.player.armWeapon(this.weapons.semiAutoShotgun)
       } else if (this.cursors.weaponFour.isDown) {
-        this.player.armWeapon(this.weapons.assaultRifle)
+        this.player.armWeapon(this.weapons.p90)
       } else if (this.cursors.weaponFive.isDown) {
         this.player.armWeapon(this.weapons.m16)
       }

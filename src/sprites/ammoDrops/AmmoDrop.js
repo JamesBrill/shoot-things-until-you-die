@@ -31,8 +31,8 @@ AmmoDrop.createRandom = (game, world) => {
     spriteName = 'shotgun_ammo'
   } else if (ammoTypePicker < 0.8) {
     ammoType = AmmoDrop.ASSAULT_RIFLE_AMMO_SPRITE
-    weaponName = 'assaultRifle'
-    bullets = 120
+    weaponName = 'p90'
+    bullets = 200
     spriteName = 'assault_rifle_ammo'
   } else {
     ammoType = AmmoDrop.ASSAULT_RIFLE_AMMO_SPRITE

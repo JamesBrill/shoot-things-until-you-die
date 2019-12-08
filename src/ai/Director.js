@@ -7,12 +7,14 @@ export default class Director {
     this.game = game
     this.player = player
     this.enemies = enemies
+    this.enemyCount = 5
     this.healthMultiplier = 1
+    setInterval(this.addZombie.bind(this), 20000)
   }
 
   initialiseZombies () {
     const { width } = this.game.world
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < this.enemyCount; i++) {
       const randomPosition = getPositionAtDistanceRangeFromPlayer(
         this.game.world,
         this.player,
@@ -33,6 +35,13 @@ export default class Director {
     this.enemies.remove(enemy, true)
     if (increaseZombieHealth) {
       this.healthMultiplier += 0.001
+    }
+    this.addZombie()
+  }
+
+  addZombie () {
+    if (this.enemies.length >= Director.MAX_ZOMBIES) {
+      return
     }
     const randomPosition = getPositionAtDistanceRangeFromPlayer(
       this.game.world,
@@ -81,3 +90,5 @@ export default class Director {
     }
   }
 }
+
+Director.MAX_ZOMBIES = 100

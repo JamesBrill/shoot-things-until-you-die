@@ -2,6 +2,12 @@ import Phaser from 'phaser'
 import ZombieGun from '../../weapons/ZombieGun'
 import HealthBar from '../HealthBar'
 
+const ZombieMode = {
+  FOLLOW: 'FOLLOW',
+  STRAFE: 'STRAFE',
+  RETREAT: 'RETREAT'
+}
+
 export default class Zombie extends Phaser.Sprite {
   constructor ({ game, x, y, player, speed, size, healthMultiplier, weapon }) {
     const enemyGraphics = game.add.graphics(x, y)
@@ -29,10 +35,22 @@ export default class Zombie extends Phaser.Sprite {
       maxHealth: this.maxHealth
     })
     this.addChild(this.healthBar)
+
+    this.mode = ZombieMode.FOLLOW
+    this.strafeRight = true
   }
 
   move () {
-    this.game.physics.arcade.moveToObject(this, this.player, this.speed)
+    if (this.mode === ZombieMode.FOLLOW) {
+      this.game.physics.arcade.moveToObject(this, this.player, this.speed)
+    } else if (this.mode === ZombieMode.STRAFE) {
+      if (Math.random() > 0.99) {
+        this.strafeRight = !this.strafeRight
+      }
+      this.strafe()
+    } else {
+      this.retreat()
+    }
   }
 
   act () {
@@ -42,6 +60,37 @@ export default class Zombie extends Phaser.Sprite {
     if (distanceToPlayer <= this.weapon.gunRange) {
       this.weapon.aimAt(this.player.x, this.player.y)
       this.weapon.fire()
+
+      if (distanceToPlayer <= this.weapon.gunRange * 0.5) {
+        this.mode = ZombieMode.RETREAT
+      } else {
+        this.mode = ZombieMode.STRAFE
+      }
+    } else {
+      this.mode = ZombieMode.FOLLOW
+    }
+  }
+
+  strafe () {
+    const { angleBetween, radToDeg } = this.game.math
+    const aimAngle = angleBetween(this.x, this.y, this.player.world.x, this.player.world.y)
+    const strafeConstant = this.strafeRight ? 90 : -90
+    const strafeAngle = radToDeg(aimAngle) + strafeConstant
+    this.game.physics.arcade.velocityFromAngle(strafeAngle, this.speed * 2, this.body.velocity)
+  }
+
+  retreat () {
+    const { angleBetween, radToDeg } = this.game.math
+    const aimAngle = angleBetween(this.x, this.y, this.player.world.x, this.player.world.y)
+    const strafeAngle = radToDeg(aimAngle) + 180
+    this.game.physics.arcade.velocityFromAngle(strafeAngle, this.speed, this.body.velocity)
+  }
+
+  switchMode () {
+    if (this.mode === ZombieMode.FOLLOW) {
+      this.mode = ZombieMode.STRAFE
+    } else {
+      this.mode = ZombieMode.FOLLOW
     }
   }
 

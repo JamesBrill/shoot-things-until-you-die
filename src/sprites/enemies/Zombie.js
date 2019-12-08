@@ -40,10 +40,8 @@ export default class Zombie extends Phaser.Sprite {
       (this.player.x - this.x) ** 2 + (this.player.y - this.y) ** 2
     )
     if (distanceToPlayer <= this.weapon.gunRange) {
-      if (Math.random() > 0.99) {
-        this.weapon.aimAt(this.player.x, this.player.y)
-        this.weapon.fire()
-      }
+      this.weapon.aimAt(this.player.x, this.player.y)
+      this.weapon.fire()
     }
   }
 

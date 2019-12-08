@@ -128,7 +128,7 @@ export default class extends Phaser.State {
 
   onPlayerTakeHit (enemy, player, bullet) {
     enemy.weapon.hitTarget(bullet)
-    this.handlePlayerDamage(player, enemy)
+    this.handlePlayerDamage(player, enemy.weapon)
   }
 
   handlePlayerDamage (player, enemy) {

@@ -88,4 +88,4 @@ export default class SoldierZombie extends Zombie {
 
 SoldierZombie.SPEED = 100
 SoldierZombie.SIZE = 45
-SoldierZombie.COLOUR = 0x00ff00
+SoldierZombie.COLOUR = 0x006400

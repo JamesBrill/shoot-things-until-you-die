@@ -31,6 +31,7 @@ export default class ZombieGun extends Phaser.Weapon {
 
   arm (zombie) {
     this.trackSprite(zombie, 0, 0)
+    this.zombie = zombie
   }
 
   disarm () {
@@ -57,7 +58,7 @@ export default class ZombieGun extends Phaser.Weapon {
 
   updateFireAngle (x, y) {
     const { angleBetween, radToDeg } = this.game.math
-    const aimAngle = angleBetween(this.x, this.y, x, y)
+    const aimAngle = angleBetween(this.zombie.x, this.zombie.y, x, y)
     return radToDeg(aimAngle)
   }
 

@@ -80,7 +80,7 @@ export default class ZombieGun extends Phaser.Weapon {
 
 ZombieGun.GUN_RANGE = 500
 ZombieGun.GUN_ANGLE = 15
-ZombieGun.FIRE_RATE = 1000
+ZombieGun.FIRE_RATE = 500
 ZombieGun.BULLET_LENGTH = 30
 ZombieGun.BULLET_SPEED = 200
 ZombieGun.ATTACK_DAMAGE = 10

@@ -62,7 +62,7 @@ export default class Director {
 
   createRandomZombie (game, randomPosition, player, healthMultiplier) {
     const { x, y } = randomPosition
-    if (Math.random() > 0.1) {
+    if (Math.random() > 0.2) {
       return new SoldierZombie({
         game,
         x,

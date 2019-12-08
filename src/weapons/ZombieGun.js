@@ -6,18 +6,30 @@ export default class ZombieGun extends Phaser.Weapon {
 
     this.game = game
     this.zombie = zombie
-    this.fireSound = game.add.audio('pistol_fire') // TODO: dedupe
+
+    if (!ZombieGun.FIRE_SOUND) {
+      this.fireSound = game.add.audio('pistol_fire')
+      ZombieGun.FIRE_SOUND = this.fireSound
+    } else {
+      this.fireSound = ZombieGun.FIRE_SOUND
+    }
+
     this.attackDamage = ZombieGun.ATTACK_DAMAGE
     this.gunRange = ZombieGun.GUN_RANGE
 
-    // TODO: dedupe
-    const bulletGraphics = game.add.graphics(0, 0)
-    bulletGraphics.lineStyle(5, 0x000000)
-    bulletGraphics.moveTo(0, 0)
-    bulletGraphics.lineTo(0, ZombieGun.BULLET_LENGTH)
-    bulletGraphics.endFill()
-    const bulletTexture = bulletGraphics.generateTexture()
-    bulletGraphics.destroy()
+    let bulletTexture
+    if (!ZombieGun.BULLET_TEXTURE) {
+      const bulletGraphics = game.add.graphics(0, 0)
+      bulletGraphics.lineStyle(5, 0x000000)
+      bulletGraphics.moveTo(0, 0)
+      bulletGraphics.lineTo(0, ZombieGun.BULLET_LENGTH)
+      bulletGraphics.endFill()
+      bulletTexture = bulletGraphics.generateTexture()
+      ZombieGun.BULLET_TEXTURE = bulletTexture
+      bulletGraphics.destroy()
+    } else {
+      bulletTexture = ZombieGun.BULLET_TEXTURE
+    }
 
     this.createBullets(10, bulletTexture)
     this.bulletKillType = Phaser.Weapon.KILL_DISTANCE
@@ -73,3 +85,5 @@ ZombieGun.FIRE_RATE = 1000
 ZombieGun.BULLET_LENGTH = 30
 ZombieGun.BULLET_SPEED = 200
 ZombieGun.ATTACK_DAMAGE = 10
+ZombieGun.BULLET_TEXTURE = null
+ZombieGun.FIRE_SOUND = null

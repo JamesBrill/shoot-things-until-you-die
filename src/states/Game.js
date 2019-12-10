@@ -21,6 +21,16 @@ export default class extends Phaser.State {
   create () {
     this.game.world.setBounds(-2000, -2000, 4000, 4000)
 
+    const map = this.game.add.tilemap('map', 32, 32)
+    map.addTilesetImage('tiles')
+    // These are the indices of the tiles to have collision physics applied.
+    // They are determined by their position in the tilemap image with indices
+    // running from left to right, top to bottom. The size of each tile in the
+    // tilemap is determined above when the map is created
+    map.setCollision(0)
+    this.layer = map.createLayer(0)
+    this.layer.resizeWorld()
+
     this.game.physics.startSystem(Phaser.Physics.ARCADE)
 
     this.bloodSplatters = this.game.add.group()
@@ -153,7 +163,20 @@ export default class extends Phaser.State {
     this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.world))
   }
 
+  hitWallCallback (bullet) {
+    bullet.kill()
+  }
+
   update () {
+    this.game.physics.arcade.collide(this.player, this.layer)
+    this.game.physics.arcade.collide(
+      this.player.weapon.bullets,
+      this.layer,
+      this.hitWallCallback,
+      null,
+      this
+    )
+
     this.game.physics.arcade.overlap(
       this.player.weapon.bullets,
       this.enemies,
@@ -171,12 +194,26 @@ export default class extends Phaser.State {
           null,
           this
         )
+        this.game.physics.arcade.collide(
+          enemy.weapon.bullets,
+          this.layer,
+          this.hitWallCallback,
+          null,
+          this
+        )
       }
     })
 
     this.game.physics.arcade.collide(
       this.enemies,
       this.enemies,
+      null,
+      null,
+      this
+    )
+    this.game.physics.arcade.collide(
+      this.enemies,
+      this.layer,
       null,
       null,
       this

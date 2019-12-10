@@ -77,6 +77,10 @@ export default class extends Phaser.State {
     this.load.image('pistol_ammo', 'assets/images/pistol_ammo.png')
     this.load.image('shotgun_ammo', 'assets/images/shotgun_ammo.png')
 
+    // LOAD MAP
+    this.load.tilemap('map', 'assets/maps/shootmap.csv', null, Phaser.Tilemap.CSV)
+    this.load.image('tiles', 'assets/maps/square.png')
+
     if (window.localStorage.getItem(config.localStorageName) === null) {
       const nameForm = document.getElementById('nameForm')
       const nameInput = document.getElementById('nameInput')

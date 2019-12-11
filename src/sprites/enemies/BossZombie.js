@@ -1,9 +1,10 @@
 import throttle from 'lodash.throttle'
 import ZombieBossGun from '../../weapons/ZombieBossGun'
+import ZombieNavigation from '../../ai/ZombieNavigation'
 import Zombie from './Zombie'
 
 export default class BossZombie extends Zombie {
-  constructor ({ game, x, y, player, healthMultiplier }) {
+  constructor ({ game, x, y, player, healthMultiplier, pathfinder }) {
     super({
       game,
       x,
@@ -14,6 +15,8 @@ export default class BossZombie extends Zombie {
       healthMultiplier: (healthMultiplier || 1) * 50,
       colour: BossZombie.COLOUR
     })
+
+    this.zombieNavigation = new ZombieNavigation({ zombie: this, player, pathfinder, game })
     this.weapon = new ZombieBossGun({ game })
     this.armWeapon(this.weapon)
 
@@ -21,7 +24,7 @@ export default class BossZombie extends Zombie {
   }
 
   move () {
-    this.game.physics.arcade.moveToObject(this, this.player, this.speed)
+    this.zombieNavigation.followPlayer()
   }
 
   act () {

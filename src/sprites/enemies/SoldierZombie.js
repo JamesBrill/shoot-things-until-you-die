@@ -1,4 +1,6 @@
 import ZombieGun from '../../weapons/ZombieGun'
+import ZombieNavigation from '../../ai/ZombieNavigation'
+
 import Zombie from './Zombie'
 
 const ZombieMode = {
@@ -8,7 +10,7 @@ const ZombieMode = {
 }
 
 export default class SoldierZombie extends Zombie {
-  constructor ({ game, x, y, player, healthMultiplier }) {
+  constructor ({ game, x, y, player, healthMultiplier, pathfinder }) {
     super({
       game,
       x,
@@ -19,6 +21,7 @@ export default class SoldierZombie extends Zombie {
       healthMultiplier,
       colour: SoldierZombie.COLOUR
     })
+    this.zombieNavigation = new ZombieNavigation({ zombie: this, player, pathfinder, game })
     this.weapon = new ZombieGun({ game })
     this.armWeapon(this.weapon)
 
@@ -28,7 +31,7 @@ export default class SoldierZombie extends Zombie {
 
   move () {
     if (this.mode === ZombieMode.FOLLOW) {
-      this.game.physics.arcade.moveToObject(this, this.player, this.speed)
+      this.zombieNavigation.followPlayer()
     } else if (this.mode === ZombieMode.STRAFE) {
       if (Math.random() > 0.99) {
         this.strafeRight = !this.strafeRight

@@ -60,7 +60,8 @@ export default class Director {
         x,
         y,
         player,
-        healthMultiplier
+        healthMultiplier,
+        pathfinder: this.pathfinder
       })
       immovable = false
     } else if (randomNumber > 0.31) {
@@ -88,7 +89,8 @@ export default class Director {
         x,
         y,
         player,
-        healthMultiplier
+        healthMultiplier,
+        pathfinder: this.pathfinder
       })
       immovable = false
     }

@@ -1,57 +1,23 @@
-export function getPositionAtDistanceRangeFromPlayer (
-  world,
-  player,
-  minDistanceFromPlayer,
-  maxDistanceFromPlayer
-) {
-  const { left, right, top, bottom } = world.bounds
-  const playerX = player.x
-  const playerY = player.y
-  let randomX = generateRandomInteger(left, right)
-  let randomY = generateRandomInteger(top, bottom)
+export function getSpawnPointFurthestFromPlayer ({ game, player }) {
+  const pixelWidth = game.map.layers[0].widthInPixels
+  const pixelHeight = game.map.layers[0].heightInPixels
+  const mapWidth = game.map.width
+  const mapHeight = game.map.height
+  const tileSize = game.world.width / mapWidth
+  const edgeOffset = 1.5 * tileSize
 
-  const xDistance = Math.abs(playerX - randomX)
-  const yDistance = Math.abs(playerY - randomY)
-  if (xDistance > maxDistanceFromPlayer) {
-    if (randomX > playerX) {
-      randomX = playerX + maxDistanceFromPlayer
-    } else {
-      randomX = playerX - maxDistanceFromPlayer
-    }
+  const playerX = Math.floor(player.world.x / tileSize)
+  const playerY = Math.floor(player.world.y / tileSize)
+
+  const randomXOffset = Math.random() * tileSize - 0.5 * tileSize
+  const randomYOffset = Math.random() * tileSize - 0.5 * tileSize
+  if (playerX <= mapWidth * 0.5 && playerY <= mapHeight * 0.5) {
+    return { x: (pixelWidth - edgeOffset) + randomXOffset, y: (pixelHeight - edgeOffset) + randomYOffset }
+  } else if (playerX > mapWidth * 0.5 && playerY <= mapHeight * 0.5) {
+    return { x: edgeOffset + randomXOffset, y: (pixelHeight - edgeOffset) + randomYOffset }
+  } else if (playerX > mapWidth * 0.5 && playerY > mapHeight * 0.5) {
+    return { x: edgeOffset + randomXOffset, y: edgeOffset + randomYOffset }
+  } else {
+    return { x: (pixelWidth - edgeOffset) + randomXOffset, y: edgeOffset + randomYOffset }
   }
-  if (yDistance > maxDistanceFromPlayer) {
-    if (randomY > playerY) {
-      randomY = playerY + maxDistanceFromPlayer
-    } else {
-      randomY = playerY - maxDistanceFromPlayer
-    }
-  }
-
-  if (xDistance < minDistanceFromPlayer && yDistance < minDistanceFromPlayer) {
-    if (xDistance > yDistance) {
-      if (
-        (randomX > playerX && playerX + minDistanceFromPlayer > right) ||
-        (randomX <= playerX && playerX - minDistanceFromPlayer >= left)
-      ) {
-        randomX = playerX - minDistanceFromPlayer
-      } else {
-        randomX = playerX + minDistanceFromPlayer
-      }
-    } else {
-      if (
-        (randomY > playerY && playerY + minDistanceFromPlayer > bottom) ||
-        (randomY <= playerY && playerY - minDistanceFromPlayer >= top)
-      ) {
-        randomY = playerY - minDistanceFromPlayer
-      } else {
-        randomY = playerY + minDistanceFromPlayer
-      }
-    }
-  }
-
-  return { x: randomX, y: randomY }
-}
-
-function generateRandomInteger (min, max) {
-  return Math.floor(min + Math.random() * (max + 1 - min))
 }

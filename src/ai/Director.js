@@ -2,6 +2,7 @@ import SoldierZombie from '../sprites/enemies/SoldierZombie'
 import ChaserZombie from '../sprites/enemies/ChaserZombie'
 import SniperZombie from '../sprites/enemies/SniperZombie'
 import BossZombie from '../sprites/enemies/BossZombie'
+import { getSpawnPointFurthestFromPlayer } from '../utils/world'
 
 export default class Director {
   constructor ({ game, player, enemies, pathfinder }) {
@@ -16,12 +17,10 @@ export default class Director {
 
   initialiseZombies () {
     for (let i = 0; i < this.enemyCount; i++) {
-      const randomX = Math.random() * 400 - 100
-      const randomY = Math.random() * 400 - 100
-      const randomPosition = { x: 200 + randomX, y: 200 + randomY }
+      const spawnPoint = getSpawnPointFurthestFromPlayer({ game: this.game, player: this.player })
       this.addRandomZombie(
         this.game,
-        randomPosition,
+        spawnPoint,
         this.player
       )
     }
@@ -39,12 +38,10 @@ export default class Director {
     if (this.enemies.length >= Director.MAX_ZOMBIES) {
       return
     }
-    const randomX = Math.random() * 400 - 100
-    const randomY = Math.random() * 400 - 100
-    const randomPosition = { x: 200 + randomX, y: 200 + randomY }
+    const spawnPoint = getSpawnPointFurthestFromPlayer({ game: this.game, player: this.player })
     this.addRandomZombie(
       this.game,
-      randomPosition,
+      spawnPoint,
       this.player,
       this.healthMultiplier
     )

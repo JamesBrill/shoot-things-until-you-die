@@ -29,6 +29,7 @@ export default class extends Phaser.State {
     // running from left to right, top to bottom. The size of each tile in the
     // tilemap is determined above when the map is created
     map.setCollision(0)
+    this.game.map = map
     this.layer = map.createLayer(0)
     this.layer.resizeWorld()
 

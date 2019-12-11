@@ -13,6 +13,7 @@ import SemiAutoShotgun from '../weapons/SemiAutoShotgun'
 import P90 from '../weapons/P90'
 import M16 from '../weapons/M16'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
+import { createPathfinder } from '../utils/pathfinder'
 
 export default class extends Phaser.State {
   init () {}
@@ -21,7 +22,7 @@ export default class extends Phaser.State {
   create () {
     this.game.world.setBounds(-2000, -2000, 4000, 4000)
 
-    const map = this.game.add.tilemap('map', 32, 32)
+    const map = this.game.add.tilemap('map', 100, 100)
     map.addTilesetImage('tiles')
     // These are the indices of the tiles to have collision physics applied.
     // They are determined by their position in the tilemap image with indices
@@ -30,6 +31,8 @@ export default class extends Phaser.State {
     map.setCollision(0)
     this.layer = map.createLayer(0)
     this.layer.resizeWorld()
+
+    this.pathfinder = createPathfinder(map)
 
     this.game.physics.startSystem(Phaser.Physics.ARCADE)
 
@@ -57,7 +60,8 @@ export default class extends Phaser.State {
     this.director = new Director({
       game: this.game,
       player: this.player,
-      enemies: this.enemies
+      enemies: this.enemies,
+      pathfinder: this.pathfinder
     })
     this.director.initialiseZombies()
 
@@ -168,6 +172,7 @@ export default class extends Phaser.State {
   }
 
   update () {
+    this.pathfinder.calculate()
     this.game.physics.arcade.collide(this.player, this.layer)
     this.game.physics.arcade.collide(
       this.player.weapon.bullets,

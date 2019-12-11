@@ -2,27 +2,23 @@ import SoldierZombie from '../sprites/enemies/SoldierZombie'
 import ChaserZombie from '../sprites/enemies/ChaserZombie'
 import SniperZombie from '../sprites/enemies/SniperZombie'
 import BossZombie from '../sprites/enemies/BossZombie'
-import { getPositionAtDistanceRangeFromPlayer } from '../utils/world'
 
 export default class Director {
-  constructor ({ game, player, enemies }) {
+  constructor ({ game, player, enemies, pathfinder }) {
     this.game = game
     this.player = player
     this.enemies = enemies
+    this.pathfinder = pathfinder
     this.enemyCount = 5
     this.healthMultiplier = 1
     setInterval(this.addZombie.bind(this), 20000)
   }
 
   initialiseZombies () {
-    const { width } = this.game.world
     for (let i = 0; i < this.enemyCount; i++) {
-      const randomPosition = getPositionAtDistanceRangeFromPlayer(
-        this.game.world,
-        this.player,
-        width * 0.35,
-        width * 0.45
-      )
+      const randomX = Math.random() * 400 - 100
+      const randomY = Math.random() * 400 - 100
+      const randomPosition = { x: 200 + randomX, y: 200 + randomY }
       this.addRandomZombie(
         this.game,
         randomPosition,
@@ -43,28 +39,15 @@ export default class Director {
     if (this.enemies.length >= Director.MAX_ZOMBIES) {
       return
     }
-    const randomPosition = getPositionAtDistanceRangeFromPlayer(
-      this.game.world,
-      this.player,
-      this.getMinEnemyDistanceFromPlayer(),
-      this.getMaxEnemyDistanceFromPlayer()
-    )
+    const randomX = Math.random() * 400 - 100
+    const randomY = Math.random() * 400 - 100
+    const randomPosition = { x: 200 + randomX, y: 200 + randomY }
     this.addRandomZombie(
       this.game,
       randomPosition,
       this.player,
       this.healthMultiplier
     )
-  }
-
-  getMinEnemyDistanceFromPlayer () {
-    const { width } = this.game.world
-    return width * 0.35
-  }
-
-  getMaxEnemyDistanceFromPlayer () {
-    const { width } = this.game.world
-    return width
   }
 
   addRandomZombie (game, randomPosition, player, healthMultiplier) {
@@ -95,7 +78,8 @@ export default class Director {
         x,
         y,
         player,
-        healthMultiplier
+        healthMultiplier,
+        pathfinder: this.pathfinder
       })
       immovable = false
     } else {

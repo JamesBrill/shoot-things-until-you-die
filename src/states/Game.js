@@ -78,6 +78,7 @@ export default class extends Phaser.State {
     this.game.add.existing(this.player)
     this.game.physics.arcade.enable(this.player)
     this.player.body.collideWorldBounds = true
+    this.player.body.immovable = true
     this.player.disabled = false
 
     this.audioManager = new AudioManager({ game: this.game })

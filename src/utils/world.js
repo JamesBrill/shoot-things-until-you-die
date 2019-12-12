@@ -21,3 +21,35 @@ export function getSpawnPointFurthestFromPlayer ({ game, player }) {
     return { x: (pixelWidth - edgeOffset) + randomXOffset, y: edgeOffset + randomYOffset }
   }
 }
+
+export function getTopLeftSpawnPoint ({ game }) {
+  const mapWidth = game.map.width
+  const tileSize = game.world.width / mapWidth
+  const edgeOffset = 1.5 * tileSize
+  return { x: edgeOffset, y: edgeOffset }
+}
+
+export function getTopRightSpawnPoint ({ game }) {
+  const pixelWidth = game.map.layers[0].widthInPixels
+  const mapWidth = game.map.width
+  const tileSize = game.world.width / mapWidth
+  const edgeOffset = 1.5 * tileSize
+  return { x: pixelWidth - edgeOffset, y: edgeOffset }
+}
+
+export function getBottomLeftSpawnPoint ({ game }) {
+  const pixelHeight = game.map.layers[0].heightInPixels
+  const mapWidth = game.map.width
+  const tileSize = game.world.width / mapWidth
+  const edgeOffset = 1.5 * tileSize
+  return { x: edgeOffset, y: pixelHeight - edgeOffset }
+}
+
+export function getBottomRightSpawnPoint ({ game }) {
+  const pixelWidth = game.map.layers[0].widthInPixels
+  const pixelHeight = game.map.layers[0].heightInPixels
+  const mapWidth = game.map.width
+  const tileSize = game.world.width / mapWidth
+  const edgeOffset = 1.5 * tileSize
+  return { x: pixelWidth - edgeOffset, y: pixelHeight - edgeOffset }
+}

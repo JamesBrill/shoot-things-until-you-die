@@ -1,8 +1,14 @@
 import SoldierZombie from '../sprites/enemies/SoldierZombie'
 import ChaserZombie from '../sprites/enemies/ChaserZombie'
-import SniperZombie from '../sprites/enemies/SniperZombie'
 import BossZombie from '../sprites/enemies/BossZombie'
-import { getSpawnPointFurthestFromPlayer } from '../utils/world'
+import FodderZombie from '../sprites/enemies/FodderZombie'
+import {
+  getSpawnPointFurthestFromPlayer,
+  getTopLeftSpawnPoint,
+  getTopRightSpawnPoint,
+  getBottomLeftSpawnPoint,
+  getBottomRightSpawnPoint
+} from '../utils/world'
 
 export default class Director {
   constructor ({ game, player, enemies, pathfinder }) {
@@ -10,20 +16,15 @@ export default class Director {
     this.player = player
     this.enemies = enemies
     this.pathfinder = pathfinder
-    this.enemyCount = 5
     this.healthMultiplier = 1
     setInterval(this.addZombie.bind(this), 20000)
   }
 
   initialiseZombies () {
-    for (let i = 0; i < this.enemyCount; i++) {
-      const spawnPoint = getSpawnPointFurthestFromPlayer({ game: this.game, player: this.player })
-      this.addRandomZombie(
-        this.game,
-        spawnPoint,
-        this.player
-      )
-    }
+    this.addRandomZombie(this.game, getTopLeftSpawnPoint({ game: this.game }), this.player)
+    this.addRandomZombie(this.game, getTopRightSpawnPoint({ game: this.game }), this.player)
+    this.addRandomZombie(this.game, getBottomLeftSpawnPoint({ game: this.game }), this.player)
+    this.addRandomZombie(this.game, getBottomRightSpawnPoint({ game: this.game }), this.player)
   }
 
   replaceZombie (enemy, increaseZombieHealth) {
@@ -51,32 +52,33 @@ export default class Director {
     const { x, y } = randomPosition
     const randomNumber = Math.random()
     let randomZombie, immovable
-    if (randomNumber > 0.41) {
+    if (randomNumber > 0.81) {
       randomZombie = new SoldierZombie({
         game,
         x,
         y,
         player,
-        healthMultiplier,
+        healthMultiplier: this.healthMultiplier,
         pathfinder: this.pathfinder
       })
       immovable = false
-    } else if (randomNumber > 0.31) {
-      randomZombie = new SniperZombie({
+    } else if (randomNumber > 0.21) {
+      randomZombie = new FodderZombie({
         game,
         x,
         y,
         player,
-        healthMultiplier
+        healthMultiplier: this.healthMultiplier,
+        pathfinder: this.pathfinder
       })
-      immovable = true
+      immovable = false
     } else if (randomNumber > 0.01) {
       randomZombie = new ChaserZombie({
         game,
         x,
         y,
         player,
-        healthMultiplier,
+        healthMultiplier: this.healthMultiplier,
         pathfinder: this.pathfinder
       })
       immovable = false
@@ -86,7 +88,7 @@ export default class Director {
         x,
         y,
         player,
-        healthMultiplier,
+        healthMultiplier: this.healthMultiplier,
         pathfinder: this.pathfinder
       })
       immovable = false

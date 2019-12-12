@@ -23,6 +23,7 @@ export default class LeverActionShotgun extends Shotgun {
 
   hitTarget () {
     // Lever action shotgun bullets cut through everything
+    // Note that because of this, they hit larger enemies multiple times
   }
 }
 
@@ -32,7 +33,7 @@ LeverActionShotgun.BULLET_LENGTH = 20
 LeverActionShotgun.NUMBER_OF_BULLETS = 10
 LeverActionShotgun.FIRE_RATE = 1250
 LeverActionShotgun.BULLET_SPEED = 1000
-LeverActionShotgun.ATTACK_DAMAGE = 100
+LeverActionShotgun.ATTACK_DAMAGE = 50
 LeverActionShotgun.RELOAD_TIME = 600
 LeverActionShotgun.MAX_BULLETS = 8
 LeverActionShotgun.AMMO_RESERVES = 32

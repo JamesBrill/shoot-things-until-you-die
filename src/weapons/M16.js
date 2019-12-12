@@ -23,6 +23,7 @@ export default class M16 extends BurstFireWeapon {
 
   hitTarget () {
     // M16 bullets cut through everything
+    // Note that because of this, they hit larger enemies multiple times
   }
 }
 
@@ -32,7 +33,7 @@ M16.BULLET_LENGTH = 30
 M16.NUMBER_OF_BULLETS = 30
 M16.FIRE_RATE = 500
 M16.BULLET_SPEED = 1000
-M16.ATTACK_DAMAGE = 200
+M16.ATTACK_DAMAGE = 50
 M16.RELOAD_TIME = 1830
 M16.MAX_BULLETS = 30
 M16.AMMO_RESERVES = 120

@@ -18,7 +18,7 @@ export default class SoldierZombie extends Zombie {
       player,
       speed: SoldierZombie.SPEED,
       size: SoldierZombie.SIZE,
-      healthMultiplier,
+      health: SoldierZombie.HEALTH * healthMultiplier,
       colour: SoldierZombie.COLOUR
     })
     this.zombieNavigation = new ZombieNavigation({ zombie: this, player, pathfinder, game })
@@ -89,6 +89,7 @@ export default class SoldierZombie extends Zombie {
   }
 }
 
+SoldierZombie.HEALTH = 200
 SoldierZombie.SPEED = 100
 SoldierZombie.SIZE = 45
 SoldierZombie.COLOUR = 0x006400

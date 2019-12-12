@@ -10,7 +10,7 @@ export default class ChaserZombie extends Zombie {
       player,
       speed: ChaserZombie.SPEED,
       size: ChaserZombie.SIZE,
-      healthMultiplier,
+      health: ChaserZombie.HEALTH * healthMultiplier,
       colour: ChaserZombie.COLOUR
     })
 
@@ -24,6 +24,7 @@ export default class ChaserZombie extends Zombie {
   act () { }
 }
 
+ChaserZombie.HEALTH = 50
 ChaserZombie.SPEED = 250
 ChaserZombie.SIZE = 20
 ChaserZombie.COLOUR = 0x0000ff

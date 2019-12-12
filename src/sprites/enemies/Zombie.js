@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 import HealthBar from '../HealthBar'
 
 export default class Zombie extends Phaser.Sprite {
-  constructor ({ game, x, y, player, speed, size, healthMultiplier, colour }) {
+  constructor ({ game, x, y, player, speed, size, health, colour }) {
     const enemyGraphics = game.add.graphics(x, y)
     enemyGraphics.beginFill(colour, 1)
     enemyGraphics.drawCircle(x, y, size)
@@ -18,7 +18,7 @@ export default class Zombie extends Phaser.Sprite {
       this.damageModifier + (size - Zombie.NORMAL_SIZE) / Zombie.NORMAL_SIZE
     this.speed = speed
     this.attackDamage = 3 * this.damageModifier
-    this.maxHealth = 100 * this.sizeModifier * (healthMultiplier || 1)
+    this.maxHealth = health
     this.health = this.maxHealth
     this.healthBar = new HealthBar({
       game,

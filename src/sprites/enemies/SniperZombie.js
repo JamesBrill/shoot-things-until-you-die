@@ -10,7 +10,7 @@ export default class SniperZombie extends Zombie {
       player,
       speed: SniperZombie.SPEED,
       size: SniperZombie.SIZE,
-      healthMultiplier,
+      health: SniperZombie.HEALTH * healthMultiplier,
       colour: SniperZombie.COLOUR
     })
     this.weapon = new ZombieSniper({ game })
@@ -35,6 +35,7 @@ export default class SniperZombie extends Zombie {
   }
 }
 
+SniperZombie.HEALTH = 200
 SniperZombie.SPEED = 0
 SniperZombie.SIZE = 45
 SniperZombie.COLOUR = 0xff0000

@@ -12,7 +12,7 @@ export default class BossZombie extends Zombie {
       player,
       speed: BossZombie.SPEED,
       size: BossZombie.SIZE,
-      healthMultiplier: (healthMultiplier || 1) * 100,
+      health: BossZombie.HEALTH * healthMultiplier,
       colour: BossZombie.COLOUR
     })
 
@@ -47,6 +47,7 @@ export default class BossZombie extends Zombie {
   }
 }
 
+BossZombie.HEALTH = 25000
 BossZombie.SPEED = 75
 BossZombie.SIZE = 150
 BossZombie.COLOUR = 0x800080

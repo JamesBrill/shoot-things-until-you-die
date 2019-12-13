@@ -14,6 +14,7 @@ export default class Player extends Phaser.Sprite {
     this.game = game
     this.armWeapon(weapon)
     this.health = 250
+    this.maxHealth = this.health
     this.healthBar = new HealthBar({
       game,
       x: -0.5 * HealthBar.WIDTH,
@@ -31,6 +32,11 @@ export default class Player extends Phaser.Sprite {
     }
     this.healthBar.setHealth(this.health)
     return false
+  }
+
+  receiveHealth (health) {
+    this.health = Math.min(this.maxHealth, this.health + health)
+    this.healthBar.setHealth(this.health)
   }
 
   aimAt (x, y) {

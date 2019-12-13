@@ -17,6 +17,7 @@ export default class Director {
     this.enemies = enemies
     this.pathfinder = pathfinder
     this.healthMultiplier = 1
+    this.speedMultiplier = 1
     setInterval(this.addZombie.bind(this), 20000)
   }
 
@@ -31,6 +32,7 @@ export default class Director {
     this.enemies.remove(enemy, true)
     if (increaseZombieHealth) {
       this.healthMultiplier += 0.001
+      this.speedMultiplier += 0.001
     }
     this.addZombie()
   }
@@ -68,6 +70,7 @@ export default class Director {
         x,
         y,
         player,
+        speedMultiplier: this.speedMultiplier,
         healthMultiplier: this.healthMultiplier,
         pathfinder: this.pathfinder
       })

@@ -78,7 +78,6 @@ export default class extends Phaser.State {
     this.game.add.existing(this.player)
     this.game.physics.arcade.enable(this.player)
     this.player.body.collideWorldBounds = true
-    this.player.body.immovable = true
     this.player.body.friction = new Phaser.Point(0, 0)
     this.player.disabled = false
 
@@ -176,70 +175,6 @@ export default class extends Phaser.State {
 
   update () {
     this.pathfinder.calculate()
-    this.game.physics.arcade.collide(this.player, this.layer)
-    this.game.physics.arcade.collide(
-      this.player.weapon.bullets,
-      this.layer,
-      this.hitWallCallback,
-      null,
-      this
-    )
-
-    this.game.physics.arcade.overlap(
-      this.player.weapon.bullets,
-      this.enemies,
-      this.hitCallback,
-      null,
-      this
-    )
-
-    this.enemies.forEach(enemy => {
-      if (enemy.weapon) {
-        this.game.physics.arcade.overlap(
-          enemy.weapon.bullets,
-          this.player,
-          (...args) => this.onPlayerTakeHit(enemy, ...args),
-          null,
-          this
-        )
-        this.game.physics.arcade.collide(
-          enemy.weapon.bullets,
-          this.layer,
-          this.hitWallCallback,
-          null,
-          this
-        )
-      }
-    })
-
-    this.game.physics.arcade.collide(
-      this.enemies,
-      this.enemies,
-      null,
-      null,
-      this
-    )
-    this.game.physics.arcade.collide(
-      this.enemies,
-      this.layer,
-      null,
-      null,
-      this
-    )
-    this.game.physics.arcade.collide(
-      this.player,
-      this.enemies,
-      this.handlePlayerDamage,
-      null,
-      this
-    )
-    this.game.physics.arcade.overlap(
-      this.player,
-      this.ammoDrops,
-      this.handleAmmoPickUp,
-      null,
-      this
-    )
 
     this.enemies.forEach(enemy => enemy.move())
     this.enemies.forEach(enemy => enemy.act())
@@ -292,6 +227,71 @@ export default class extends Phaser.State {
       } else {
         Pistol.enableFiring()
       }
+
+      this.game.physics.arcade.collide(this.player, this.layer)
+      this.game.physics.arcade.collide(
+        this.player.weapon.bullets,
+        this.layer,
+        this.hitWallCallback,
+        null,
+        this
+      )
+
+      this.game.physics.arcade.overlap(
+        this.player.weapon.bullets,
+        this.enemies,
+        this.hitCallback,
+        null,
+        this
+      )
+
+      this.enemies.forEach(enemy => {
+        if (enemy.weapon) {
+          this.game.physics.arcade.overlap(
+            enemy.weapon.bullets,
+            this.player,
+            (...args) => this.onPlayerTakeHit(enemy, ...args),
+            null,
+            this
+          )
+          this.game.physics.arcade.collide(
+            enemy.weapon.bullets,
+            this.layer,
+            this.hitWallCallback,
+            null,
+            this
+          )
+        }
+      })
+
+      this.game.physics.arcade.collide(
+        this.enemies,
+        this.enemies,
+        null,
+        null,
+        this
+      )
+      this.game.physics.arcade.collide(
+        this.enemies,
+        this.layer,
+        null,
+        null,
+        this
+      )
+      this.game.physics.arcade.collide(
+        this.player,
+        this.enemies,
+        this.handlePlayerDamage,
+        null,
+        this
+      )
+      this.game.physics.arcade.overlap(
+        this.player,
+        this.ammoDrops,
+        this.handleAmmoPickUp,
+        null,
+        this
+      )
     }
   }
 

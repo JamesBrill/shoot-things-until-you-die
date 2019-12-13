@@ -68,13 +68,15 @@ export default class extends Phaser.State {
     })
     this.director.initialiseZombies()
 
+    this.mapPositionGenerator = new MapPositionGenerator({ map, game: this.game })
+
     this.ammoDrops = this.game.add.group()
     this.ammoDrops.enableBody = true
     this.ammoDrops.physicsBodyType = Phaser.Physics.ARCADE
     this.pickUpAmmoSound = this.game.add.audio('pick_up_ammo')
 
     for (let i = 0; i < 10; i++) {
-      this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.world))
+      this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.mapPositionGenerator, this.player))
     }
 
     this.game.add.existing(this.player)
@@ -87,7 +89,6 @@ export default class extends Phaser.State {
     this.healthPacks.enableBody = true
     this.healthPacks.physicsBodyType = Phaser.Physics.ARCADE
 
-    this.mapPositionGenerator = new MapPositionGenerator({ map, game: this.game })
     this.healthPacks.add(HealthPack.createRandom({
       game: this.game,
       player: this.player,
@@ -179,7 +180,7 @@ export default class extends Phaser.State {
     this.pickUpAmmoSound.play()
     ammoDrop.kill()
     this.ammoDrops.removeChild(ammoDrop)
-    this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.world))
+    this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.mapPositionGenerator, this.player))
   }
 
   handleHealthPackPickUp (player, healthPack) {

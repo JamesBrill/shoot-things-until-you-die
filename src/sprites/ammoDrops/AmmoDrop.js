@@ -1,17 +1,15 @@
 import Phaser from 'phaser'
 
 export default class AmmoDrop extends Phaser.Sprite {
-  constructor ({ game, x, y, ammoType, weaponName, bullets, spriteName }) {
+  constructor ({ game, x, y, weaponName, bullets, spriteName }) {
     super(game, x, y, spriteName)
     this.weaponName = weaponName
     this.bullets = bullets
   }
 }
 
-AmmoDrop.createRandom = (game, world) => {
-  const { width, height } = world
-  const randomX = Math.random() * width - 0.5 * width
-  const randomY = Math.random() * height - 0.5 * height
+AmmoDrop.createRandom = (game, mapPositionGenerator, player) => {
+  const { x, y } = mapPositionGenerator.getRandomPositionAwayFromPlayer({ player })
   const ammoTypePicker = Math.random()
   let ammoType, weaponName, bullets, spriteName
   if (ammoTypePicker < 0.2) {
@@ -42,8 +40,8 @@ AmmoDrop.createRandom = (game, world) => {
   }
   return new AmmoDrop({
     game,
-    x: world.centerX + randomX,
-    y: world.centerY + randomY,
+    x,
+    y,
     ammoType,
     weaponName,
     bullets,

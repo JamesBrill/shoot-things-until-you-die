@@ -18,7 +18,7 @@ export default class FodderZombie extends Zombie {
   }
 
   move () {
-    this.zombieNavigation.followPlayer()
+    this.zombieNavigation.followPlayer(0.9)
   }
 
   act () { }

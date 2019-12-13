@@ -11,7 +11,7 @@ export default class ZombieNavigation {
     this.processingPath = false
   }
 
-  followPlayer () {
+  followPlayer (strafeChangeChance = 0.99) {
     const zombieX = Math.floor(this.zombie.x / this.TILE_SIZE)
     const zombieY = Math.floor(this.zombie.y / this.TILE_SIZE)
     const playerX = Math.floor(this.player.world.x / this.TILE_SIZE)
@@ -25,7 +25,7 @@ export default class ZombieNavigation {
       return
     }
 
-    if (Math.random() > 0.99) {
+    if (Math.random() > strafeChangeChance) {
       this.strafeRight = !this.strafeRight
     }
     this.pathfinder.findPath(zombieX, zombieY, playerX, playerY, (path) => {

@@ -118,6 +118,7 @@ export default class extends Phaser.State {
     if (isEnemyKilled) {
       const { angleBetween, radToDeg } = this.game.math
       this.scoreManager.registerKill()
+      this.itemManager.addAmmoDrop(enemy)
       this.director.replaceZombie(enemy, true)
       this.audioManager.playBloodSpatterSound(enemy)
       const bloodSplatter = new BloodSplatter({

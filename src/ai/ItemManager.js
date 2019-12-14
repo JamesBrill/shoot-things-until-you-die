@@ -19,10 +19,6 @@ export default class ItemManager {
     this.ammoDrops = this.game.add.group()
     this.ammoDrops.enableBody = true
     this.ammoDrops.physicsBodyType = Phaser.Physics.ARCADE
-
-    for (let i = 0; i < 3; i++) {
-      this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.mapPositionGenerator, this.player))
-    }
   }
 
   initialiseHealthPacks () {
@@ -42,7 +38,6 @@ export default class ItemManager {
     this.pickUpItemSound.play()
     ammoDrop.kill()
     this.ammoDrops.removeChild(ammoDrop)
-    this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.mapPositionGenerator, player))
   }
 
   handleHealthPackPickUp (player, healthPack) {
@@ -55,6 +50,15 @@ export default class ItemManager {
       player,
       mapPositionGenerator: this.mapPositionGenerator
     }))
+  }
+
+  addAmmoDrop (enemy) {
+    if (Math.random() > 0.8) {
+      const { centerX, centerY } = enemy
+      const x = centerX - 16
+      const y = centerY - 16
+      this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.mapPositionGenerator, x, y))
+    }
   }
 
   update () {

@@ -8,8 +8,7 @@ export default class AmmoDrop extends Phaser.Sprite {
   }
 }
 
-AmmoDrop.createRandom = (game, mapPositionGenerator, player) => {
-  const { x, y } = mapPositionGenerator.getRandomPositionAwayFromPlayer({ player })
+AmmoDrop.createRandom = (game, mapPositionGenerator, x, y) => {
   const ammoTypePicker = Math.random()
   let ammoType, weaponName, bullets, spriteName
   if (ammoTypePicker < 0.2) {

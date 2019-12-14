@@ -3,7 +3,7 @@ import ChaserZombie from '../sprites/enemies/ChaserZombie'
 import BossZombie from '../sprites/enemies/BossZombie'
 import FodderZombie from '../sprites/enemies/FodderZombie'
 import {
-  getSpawnPointFurthestFromPlayer,
+  getRandomSpawnPointAwayFromPlayer,
   getTopLeftSpawnPoint,
   getTopRightSpawnPoint,
   getBottomLeftSpawnPoint,
@@ -69,7 +69,7 @@ export default class Director {
     if (this.enemies.length >= Director.MAX_ZOMBIES) {
       return
     }
-    const spawnPoint = getSpawnPointFurthestFromPlayer({ game: this.game, player: this.player })
+    const spawnPoint = getRandomSpawnPointAwayFromPlayer({ game: this.game, player: this.player })
     this.addRandomZombie(spawnPoint)
   }
 

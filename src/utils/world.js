@@ -1,4 +1,4 @@
-export function getSpawnPointFurthestFromPlayer ({ game, player }) {
+export function getRandomSpawnPointAwayFromPlayer ({ game, player }) {
   const pixelWidth = game.map.layers[0].widthInPixels
   const pixelHeight = game.map.layers[0].heightInPixels
   const mapWidth = game.map.width
@@ -11,14 +11,22 @@ export function getSpawnPointFurthestFromPlayer ({ game, player }) {
 
   const randomXOffset = Math.random() * tileSize - 0.5 * tileSize
   const randomYOffset = Math.random() * tileSize - 0.5 * tileSize
+  const spawnPoints = {
+    bottomRight: { x: (pixelWidth - edgeOffset) + randomXOffset, y: (pixelHeight - edgeOffset) + randomYOffset },
+    bottomLeft: { x: edgeOffset + randomXOffset, y: (pixelHeight - edgeOffset) + randomYOffset },
+    topLeft: { x: edgeOffset + randomXOffset, y: edgeOffset + randomYOffset },
+    topRight: { x: (pixelWidth - edgeOffset) + randomXOffset, y: edgeOffset + randomYOffset }
+  }
+  const { bottomRight, bottomLeft, topLeft, topRight } = spawnPoints
+  const randomIndex = Math.floor(Math.random() * 3)
   if (playerX <= mapWidth * 0.5 && playerY <= mapHeight * 0.5) {
-    return { x: (pixelWidth - edgeOffset) + randomXOffset, y: (pixelHeight - edgeOffset) + randomYOffset }
+    return [bottomRight, bottomLeft, topRight][randomIndex]
   } else if (playerX > mapWidth * 0.5 && playerY <= mapHeight * 0.5) {
-    return { x: edgeOffset + randomXOffset, y: (pixelHeight - edgeOffset) + randomYOffset }
+    return [bottomRight, bottomLeft, topLeft][randomIndex]
   } else if (playerX > mapWidth * 0.5 && playerY > mapHeight * 0.5) {
-    return { x: edgeOffset + randomXOffset, y: edgeOffset + randomYOffset }
+    return [topLeft, bottomLeft, topRight][randomIndex]
   } else {
-    return { x: (pixelWidth - edgeOffset) + randomXOffset, y: edgeOffset + randomYOffset }
+    return [bottomRight, topLeft, topRight][randomIndex]
   }
 }
 

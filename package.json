@@ -1,8 +1,8 @@
 {
-    "name": "PhaserES6Webpack",
+    "name": "battle-priest",
     "version": "1.2.1",
     "description": "",
-    "author": "leandro cabrera <leandcabrera@gmail.com>",
+    "author": "James Brill <contact@jamesbrill.co.uk>",
     "main": "index.js",
     "scripts": {
         "dev": "webpack",

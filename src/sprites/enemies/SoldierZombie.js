@@ -31,7 +31,7 @@ export default class SoldierZombie extends Zombie {
 
   move () {
     if (this.mode === ZombieMode.FOLLOW) {
-      this.zombieNavigation.followPlayer()
+      this.zombieNavigation.followPlayer({})
     } else if (this.mode === ZombieMode.STRAFE) {
       if (Math.random() > 0.99) {
         this.strafeRight = !this.strafeRight

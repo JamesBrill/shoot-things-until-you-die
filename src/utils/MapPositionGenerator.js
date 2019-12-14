@@ -11,6 +11,16 @@ export default class MapPositionGenerator {
     }
   }
 
+  getRandomPosition () {
+    const mapWidth = this.game.map.width
+    const tileSize = this.game.world.width / mapWidth
+    const randomIndex = Math.floor(Math.random() * this.availablePositions.length)
+    return {
+      x: (this.availablePositions[randomIndex].x + 0.5) * tileSize,
+      y: (this.availablePositions[randomIndex].y + 0.5) * tileSize
+    }
+  }
+
   getRandomPositionAwayFromPlayer ({ player }) {
     const mapWidth = this.game.map.width
     const tileSize = this.game.world.width / mapWidth

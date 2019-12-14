@@ -24,7 +24,7 @@ export default class BossZombie extends Zombie {
   }
 
   move () {
-    this.zombieNavigation.followPlayer()
+    this.zombieNavigation.followPlayer({})
   }
 
   act () {

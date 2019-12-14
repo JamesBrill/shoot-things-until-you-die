@@ -5,7 +5,9 @@ export default class BloodManager {
   constructor ({ game }) {
     this.game = game
     this.bloodSplatters = this.game.add.group()
+    this.bloodSplatters.enableBody = true
     this.bloodDrips = this.game.add.group()
+    this.bloodDrips.enableBody = true
     this.bloodDripInterval = null
   }
 
@@ -48,5 +50,9 @@ export default class BloodManager {
       clearInterval(this.bloodDripInterval)
       this.bloodDripInterval = null
     }
+  }
+
+  reset () {
+    this.stopPlayerBloodDrip()
   }
 }

@@ -25,6 +25,9 @@ export default class BloodSplatter extends Phaser.Sprite {
 
   update () {
     this.alpha = Math.max(0, this.alpha - 0.0005)
+    if (this.alpha < 0.1) {
+      this.destroy()
+    }
   }
 }
 

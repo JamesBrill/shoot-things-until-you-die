@@ -2,6 +2,7 @@ import SoldierZombie from '../sprites/enemies/SoldierZombie'
 import ChaserZombie from '../sprites/enemies/ChaserZombie'
 import BossZombie from '../sprites/enemies/BossZombie'
 import FodderZombie from '../sprites/enemies/FodderZombie'
+import BloodZombie from '../sprites/enemies/BloodZombie'
 import {
   getRandomSpawnPointAwayFromPlayer,
   getTopLeftSpawnPoint,
@@ -11,11 +12,12 @@ import {
 } from '../utils/world'
 
 export default class Director {
-  constructor ({ game, player, enemies, pathfinder }) {
+  constructor ({ game, player, enemies, pathfinder, bloodManager }) {
     this.game = game
     this.player = player
     this.enemies = enemies
     this.pathfinder = pathfinder
+    this.bloodManager = bloodManager
     this.healthMultiplier = 1
     this.speedMultiplier = 1
     this.difficulty = 1
@@ -34,8 +36,9 @@ export default class Director {
 
   adjustZombieProbabilities () {
     this.zombieProbabilities.fodder = Math.max(100 - this.difficulty * 0.05, 10)
-    this.zombieProbabilities.chaser = Math.min(this.difficulty * 0.05, 44)
-    this.zombieProbabilities.soldier = Math.min(this.difficulty * 0.025, 44)
+    this.zombieProbabilities.chaser = Math.min(this.difficulty * 0.05, 34)
+    this.zombieProbabilities.soldier = Math.min(this.difficulty * 0.025, 34)
+    this.zombieProbabilities.blood = Math.min(this.difficulty * 0.025, 20)
     this.zombieProbabilities.boss = Math.min(this.difficulty * 0.001, 2)
     const totalProbability = Object.values(this.zombieProbabilities).reduce((x, y) => x + y)
     const probabilityDrift = 100 - totalProbability
@@ -114,6 +117,17 @@ export default class Director {
         player: this.player,
         healthMultiplier: this.healthMultiplier,
         pathfinder: this.pathfinder
+      })
+      immovable = false
+    } else if (zombieName === 'blood') {
+      zombie = new BloodZombie({
+        game: this.game,
+        x,
+        y,
+        player: this.player,
+        healthMultiplier: this.healthMultiplier,
+        pathfinder: this.pathfinder,
+        bloodManager: this.bloodManager
       })
       immovable = false
     }

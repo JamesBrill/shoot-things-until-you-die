@@ -18,7 +18,7 @@ export default class ChaserZombie extends Zombie {
   }
 
   move () {
-    this.zombieNavigation.followPlayer()
+    this.zombieNavigation.followPlayer({})
   }
 
   act () { }

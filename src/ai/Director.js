@@ -45,12 +45,11 @@ export default class Director {
     this.addRandomZombie(
       this.game,
       spawnPoint,
-      this.player,
-      this.healthMultiplier
+      this.player
     )
   }
 
-  addRandomZombie (game, randomPosition, player, healthMultiplier) {
+  addRandomZombie (game, randomPosition, player) {
     const { x, y } = randomPosition
     const randomNumber = Math.random()
     let randomZombie, immovable

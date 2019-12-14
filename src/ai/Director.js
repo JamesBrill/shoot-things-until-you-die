@@ -24,7 +24,7 @@ export default class Director {
     this.zombieProbabilities = {}
     this.adjustZombieProbabilities()
     this.calculateZombieProbabilityThresholds()
-    this.addZombieInterval = setInterval(this.addZombie.bind(this), 2000)
+    this.addZombieInterval = setInterval(this.addZombie.bind(this), 20000)
   }
 
   initialiseZombies () {

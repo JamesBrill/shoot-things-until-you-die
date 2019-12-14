@@ -1,11 +1,11 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
 import Player from '../sprites/Player'
-import BloodSplatter from '../sprites/BloodSplatter'
 import Director from '../ai/Director'
 import ScoreManager from '../ai/ScoreManager'
 import AudioManager from '../ai/AudioManager'
 import ItemManager from '../ai/ItemManager'
+import BloodManager from '../ai/BloodManager'
 import DeathDisplay from '../ui/DeathDisplay'
 import Pistol from '../weapons/Pistol'
 import LeverActionShotgun from '../weapons/LeverActionShotgun'
@@ -36,8 +36,6 @@ export default class extends Phaser.State {
     this.pathfinder = createPathfinder(map)
 
     this.game.physics.startSystem(Phaser.Physics.ARCADE)
-
-    this.bloodSplatters = this.game.add.group()
 
     this.weapons = {
       pistol: new Pistol({ game: this.game }),
@@ -78,6 +76,7 @@ export default class extends Phaser.State {
       game: this.game,
       scores: this.scores
     })
+    this.bloodManager = new BloodManager({ game: this.game, player: this.player })
 
     this.cursors = {
       up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
@@ -116,25 +115,11 @@ export default class extends Phaser.State {
     this.scoreManager.registerHit()
     const isEnemyKilled = enemy.takeDamage(this.player.weapon)
     if (isEnemyKilled) {
-      const { angleBetween, radToDeg } = this.game.math
       this.scoreManager.registerKill()
       this.itemManager.addAmmoDrop(enemy)
       this.director.replaceZombie(enemy, true)
       this.audioManager.playBloodSpatterSound(enemy)
-      const bloodSplatter = new BloodSplatter({
-        game: this.game,
-        enemy,
-        size: enemy.size,
-        angle:
-          radToDeg(
-            angleBetween(this.player.x, this.player.y, enemy.x, enemy.y)
-          ) - 45
-      })
-      this.bloodSplatters.add(bloodSplatter)
-      if (this.bloodSplatters.children.length > 100) {
-        const firstBloodSplatter = this.bloodSplatters.children[0]
-        this.bloodSplatters.remove(firstBloodSplatter)
-      }
+      this.bloodManager.createBloodSplatter(enemy)
     }
   }
 

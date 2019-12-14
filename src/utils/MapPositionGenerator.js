@@ -21,7 +21,7 @@ export default class MapPositionGenerator {
     const potentialPositions = []
     for (let i = 0; i < this.availablePositions.length; i++) {
       const { x, y } = this.availablePositions[i]
-      if ((Math.abs(x - playerX) + Math.abs(y - playerY)) > 20) {
+      if ((Math.abs(x - playerX) + Math.abs(y - playerY)) > 10) {
         potentialPositions.push({ x, y })
       }
     }

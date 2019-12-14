@@ -3,7 +3,7 @@ import HealthBar from './HealthBar'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
 
 export default class Player extends Phaser.Sprite {
-  constructor ({ game, x, y, weapon }) {
+  constructor ({ game, x, y, weapon, bloodManager }) {
     const playerGraphics = game.add.graphics(x, y)
     playerGraphics.beginFill(0x000000, 1)
     playerGraphics.drawCircle(x, y, Player.PLAYER_SIZE)
@@ -12,6 +12,7 @@ export default class Player extends Phaser.Sprite {
     playerGraphics.destroy()
     this.anchor.setTo(0.5)
     this.game = game
+    this.bloodManager = bloodManager
     this.armWeapon(weapon)
     this.health = 250
     this.maxHealth = this.health
@@ -21,6 +22,7 @@ export default class Player extends Phaser.Sprite {
       y: -Player.PLAYER_SIZE,
       maxHealth: this.health
     })
+    this.size = Player.PLAYER_SIZE
     this.addChild(this.healthBar)
   }
 
@@ -30,6 +32,10 @@ export default class Player extends Phaser.Sprite {
       this.kill()
       return true
     }
+    if (this.health <= this.maxHealth * 0.5) {
+      const intensity = (0.5 - (this.health / this.maxHealth)) * 1800
+      this.bloodManager.updatePlayerBloodDrip(this, intensity)
+    }
     this.healthBar.setHealth(this.health)
     return false
   }
@@ -37,6 +43,12 @@ export default class Player extends Phaser.Sprite {
   receiveHealth (health) {
     this.health = Math.min(this.maxHealth, this.health + health)
     this.healthBar.setHealth(this.health)
+    if (this.health > this.maxHealth * 0.5) {
+      this.bloodManager.stopPlayerBloodDrip()
+    } else {
+      const intensity = (0.5 - (this.health / this.maxHealth)) * 1800
+      this.bloodManager.updatePlayerBloodDrip(this, intensity)
+    }
   }
 
   aimAt (x, y) {

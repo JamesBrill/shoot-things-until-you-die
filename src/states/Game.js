@@ -45,11 +45,13 @@ export default class extends Phaser.State {
       m16: new M16({ game: this.game })
     }
 
+    this.bloodManager = new BloodManager({ game: this.game })
     this.player = new Player({
       game: this.game,
       x: this.world.centerX,
       y: this.world.centerY,
-      weapon: this.weapons.pistol
+      weapon: this.weapons.pistol,
+      bloodManager: this.bloodManager
     })
 
     this.enemies = this.game.add.group()
@@ -76,7 +78,6 @@ export default class extends Phaser.State {
       game: this.game,
       scores: this.scores
     })
-    this.bloodManager = new BloodManager({ game: this.game, player: this.player })
 
     this.cursors = {
       up: this.game.input.keyboard.addKey(Phaser.Keyboard.W),
@@ -119,7 +120,7 @@ export default class extends Phaser.State {
       this.itemManager.addAmmoDrop(enemy)
       this.director.replaceZombie(enemy, true)
       this.audioManager.playBloodSpatterSound(enemy)
-      this.bloodManager.createBloodSplatter(enemy)
+      this.bloodManager.createBloodSplatter(enemy, this.player)
     }
   }
 

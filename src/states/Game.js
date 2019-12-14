@@ -108,6 +108,7 @@ export default class extends Phaser.State {
   }
 
   restartGame () {
+    this.director.reset()
     this.bloodManager.reset()
     this.deathDisplay.hideDeathScreen()
     this.state.start('Game')

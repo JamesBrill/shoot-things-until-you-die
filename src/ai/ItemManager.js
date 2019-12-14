@@ -53,7 +53,7 @@ export default class ItemManager {
   }
 
   addAmmoDrop (enemy) {
-    if (Math.random() > 0.8) {
+    if (Math.random() > 0.9) {
       const { centerX, centerY } = enemy
       const x = centerX - 16
       const y = centerY - 16

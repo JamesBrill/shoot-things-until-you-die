@@ -28,7 +28,7 @@ export default class BloodZombie extends Zombie {
 
   move () {
     if (this.mode === ZombieMode.CHASE) {
-      this.zombieNavigation.followPlayer({ speed: 400 })
+      this.zombieNavigation.followPlayer({ speed: 500 })
     } else if (this.mode === ZombieMode.WANDER) {
       if (this.bloodManager.bloodSplatters.length === 0) {
         this.zombieNavigation.wander()

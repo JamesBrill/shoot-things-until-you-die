@@ -30,7 +30,7 @@ export default class Pistol extends AutomaticWeapon {
 
 Pistol.GUN_RANGE = 500
 Pistol.GUN_ANGLE = 10
-Pistol.BULLET_LENGTH = 10
+Pistol.BULLET_LENGTH = 5
 Pistol.NUMBER_OF_BULLETS = 30
 Pistol.FIRE_RATE = 0
 Pistol.BULLET_SPEED = 1000

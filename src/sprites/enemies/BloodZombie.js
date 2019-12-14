@@ -65,4 +65,4 @@ export default class BloodZombie extends Zombie {
 BloodZombie.HEALTH = 50
 BloodZombie.SPEED = 150
 BloodZombie.SIZE = 45
-BloodZombie.COLOUR = 0xff69b4
+BloodZombie.COLOUR = 0xcc0022

@@ -2,11 +2,10 @@
 import Phaser from 'phaser'
 import Player from '../sprites/Player'
 import BloodSplatter from '../sprites/BloodSplatter'
-import AmmoDrop from '../sprites/ammoDrops/AmmoDrop'
-import HealthPack from '../sprites/ammoDrops/HealthPack'
 import Director from '../ai/Director'
 import ScoreManager from '../ai/ScoreManager'
 import AudioManager from '../ai/AudioManager'
+import ItemManager from '../ai/ItemManager'
 import DeathDisplay from '../ui/DeathDisplay'
 import Pistol from '../weapons/Pistol'
 import LeverActionShotgun from '../weapons/LeverActionShotgun'
@@ -15,7 +14,6 @@ import P90 from '../weapons/P90'
 import M16 from '../weapons/M16'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
 import { createPathfinder } from '../utils/pathfinder'
-import MapPositionGenerator from '../utils/MapPositionGenerator'
 
 export default class extends Phaser.State {
   init () {}
@@ -68,33 +66,13 @@ export default class extends Phaser.State {
     })
     this.director.initialiseZombies()
 
-    this.mapPositionGenerator = new MapPositionGenerator({ map, game: this.game })
-
-    this.ammoDrops = this.game.add.group()
-    this.ammoDrops.enableBody = true
-    this.ammoDrops.physicsBodyType = Phaser.Physics.ARCADE
-    this.pickUpAmmoSound = this.game.add.audio('pick_up_ammo')
-
-    for (let i = 0; i < 3; i++) {
-      this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.mapPositionGenerator, this.player))
-    }
-
     this.game.add.existing(this.player)
     this.game.physics.arcade.enable(this.player)
     this.player.body.collideWorldBounds = true
     this.player.body.friction = new Phaser.Point(0, 0)
     this.player.disabled = false
 
-    this.healthPacks = this.game.add.group()
-    this.healthPacks.enableBody = true
-    this.healthPacks.physicsBodyType = Phaser.Physics.ARCADE
-
-    this.healthPacks.add(HealthPack.createRandom({
-      game: this.game,
-      player: this.player,
-      mapPositionGenerator: this.mapPositionGenerator
-    }))
-
+    this.itemManager = new ItemManager({ game: this.game, player: this.player, weapons: this.weapons })
     this.audioManager = new AudioManager({ game: this.game })
     this.scoreManager = new ScoreManager({
       game: this.game,
@@ -173,26 +151,6 @@ export default class extends Phaser.State {
       this.deathDisplay.showDeathScreen()
       setTimeout(this.restartGame.bind(this), 7000)
     }
-  }
-
-  handleAmmoPickUp (player, ammoDrop) {
-    AmmoDrop.addAmmo(this.weapons, ammoDrop)
-    this.pickUpAmmoSound.play()
-    ammoDrop.kill()
-    this.ammoDrops.removeChild(ammoDrop)
-    this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.mapPositionGenerator, this.player))
-  }
-
-  handleHealthPackPickUp (player, healthPack) {
-    player.receiveHealth(healthPack.health)
-    this.pickUpAmmoSound.play()
-    healthPack.kill()
-    this.healthPacks.removeChild(healthPack)
-    this.healthPacks.add(HealthPack.createRandom({
-      game: this.game,
-      player: this.player,
-      mapPositionGenerator: this.mapPositionGenerator
-    }))
   }
 
   hitWallCallback (bullet) {
@@ -311,20 +269,7 @@ export default class extends Phaser.State {
         null,
         this
       )
-      this.game.physics.arcade.overlap(
-        this.player,
-        this.ammoDrops,
-        this.handleAmmoPickUp,
-        null,
-        this
-      )
-      this.game.physics.arcade.overlap(
-        this.player,
-        this.healthPacks,
-        this.handleHealthPackPickUp,
-        null,
-        this
-      )
+      this.itemManager.update()
     }
   }
 

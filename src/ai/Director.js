@@ -18,14 +18,33 @@ export default class Director {
     this.pathfinder = pathfinder
     this.healthMultiplier = 1
     this.speedMultiplier = 1
+    this.initialiseZombieProbabilities()
     setInterval(this.addZombie.bind(this), 20000)
   }
 
   initialiseZombies () {
-    this.addRandomZombie(this.game, getTopLeftSpawnPoint({ game: this.game }), this.player)
-    this.addRandomZombie(this.game, getTopRightSpawnPoint({ game: this.game }), this.player)
-    this.addRandomZombie(this.game, getBottomLeftSpawnPoint({ game: this.game }), this.player)
-    this.addRandomZombie(this.game, getBottomRightSpawnPoint({ game: this.game }), this.player)
+    this.addRandomZombie(getTopLeftSpawnPoint({ game: this.game }))
+    this.addRandomZombie(getTopRightSpawnPoint({ game: this.game }))
+    this.addRandomZombie(getBottomLeftSpawnPoint({ game: this.game }))
+    this.addRandomZombie(getBottomRightSpawnPoint({ game: this.game }))
+  }
+
+  initialiseZombieProbabilities () {
+    this.zombieProbabilities = {
+      fodder: 80,
+      chaser: 15,
+      soldier: 5,
+      boss: 0
+    }
+
+    this.zombiesProbabilityThresholds = []
+    let threshold = 0
+    const zombieNames = Object.keys(this.zombieProbabilities)
+    for (let i = 0; i < zombieNames.length; i++) {
+      const zombieName = zombieNames[i]
+      threshold += this.zombieProbabilities[zombieName]
+      this.zombiesProbabilityThresholds.push({ threshold, zombieName })
+    }
   }
 
   replaceZombie (enemy, increaseZombieHealth) {
@@ -42,62 +61,71 @@ export default class Director {
       return
     }
     const spawnPoint = getSpawnPointFurthestFromPlayer({ game: this.game, player: this.player })
-    this.addRandomZombie(
-      this.game,
-      spawnPoint,
-      this.player
-    )
+    this.addRandomZombie(spawnPoint)
   }
 
-  addRandomZombie (game, randomPosition, player) {
-    const { x, y } = randomPosition
-    const randomNumber = Math.random()
-    let randomZombie, immovable
-    if (randomNumber > 0.81) {
-      randomZombie = new SoldierZombie({
-        game,
+  addZombieByName (zombieName, x, y) {
+    let zombie, immovable
+    if (zombieName === 'soldier') {
+      zombie = new SoldierZombie({
+        game: this.game,
         x,
         y,
-        player,
+        player: this.player,
         healthMultiplier: this.healthMultiplier,
         pathfinder: this.pathfinder
       })
       immovable = false
-    } else if (randomNumber > 0.21) {
-      randomZombie = new FodderZombie({
-        game,
+    } else if (zombieName === 'fodder') {
+      zombie = new FodderZombie({
+        game: this.game,
         x,
         y,
-        player,
+        player: this.player,
         speedMultiplier: this.speedMultiplier,
         healthMultiplier: this.healthMultiplier,
         pathfinder: this.pathfinder
       })
       immovable = false
-    } else if (randomNumber > 0.01) {
-      randomZombie = new ChaserZombie({
-        game,
+    } else if (zombieName === 'chaser') {
+      zombie = new ChaserZombie({
+        game: this.game,
         x,
         y,
-        player,
+        player: this.player,
         healthMultiplier: this.healthMultiplier,
         pathfinder: this.pathfinder
       })
       immovable = false
-    } else {
-      randomZombie = new BossZombie({
-        game,
+    } else if (zombieName === 'boss') {
+      zombie = new BossZombie({
+        game: this.game,
         x,
         y,
-        player,
+        player: this.player,
         healthMultiplier: this.healthMultiplier,
         pathfinder: this.pathfinder
       })
       immovable = false
     }
-    this.enemies.add(randomZombie)
-    randomZombie.body.immovable = immovable
-    randomZombie.body.moves = !immovable
+    if (zombie) {
+      console.log('made a', zombieName)
+      this.enemies.add(zombie)
+      zombie.body.immovable = immovable
+      zombie.body.moves = !immovable
+    }
+  }
+
+  addRandomZombie (randomPosition) {
+    const { x, y } = randomPosition
+    const randomNumber = Math.random() * 100
+    for (let i = 0; i < this.zombiesProbabilityThresholds.length; i++) {
+      const { threshold, zombieName } = this.zombiesProbabilityThresholds[i]
+      if (randomNumber <= threshold) {
+        this.addZombieByName(zombieName, x, y)
+        return
+      }
+    }
   }
 }
 

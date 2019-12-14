@@ -273,5 +273,11 @@ export default class extends Phaser.State {
     }
   }
 
-  render () {}
+  render () {
+    const { fodder, chaser, soldier, boss } = this.director.zombieProbabilities
+    this.game.debug.text('fodder: ' + fodder + '%', 20, 500, 'blue', 'Segoe UI')
+    this.game.debug.text('chaser: ' + chaser + '%', 20, 515, 'blue', 'Segoe UI')
+    this.game.debug.text('soldier: ' + soldier + '%', 20, 530, 'blue', 'Segoe UI')
+    this.game.debug.text('boss: ' + boss + '%', 20, 545, 'blue', 'Segoe UI')
+  }
 }

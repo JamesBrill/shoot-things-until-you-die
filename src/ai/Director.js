@@ -18,7 +18,10 @@ export default class Director {
     this.pathfinder = pathfinder
     this.healthMultiplier = 1
     this.speedMultiplier = 1
-    this.initialiseZombieProbabilities()
+    this.difficulty = 1
+    this.zombieProbabilities = {}
+    this.adjustZombieProbabilities()
+    this.calculateZombieProbabilityThresholds()
     setInterval(this.addZombie.bind(this), 20000)
   }
 
@@ -29,14 +32,17 @@ export default class Director {
     this.addRandomZombie(getBottomRightSpawnPoint({ game: this.game }))
   }
 
-  initialiseZombieProbabilities () {
-    this.zombieProbabilities = {
-      fodder: 80,
-      chaser: 15,
-      soldier: 5,
-      boss: 0
-    }
+  adjustZombieProbabilities () {
+    this.zombieProbabilities.fodder = Math.max(100 - this.difficulty * 0.05, 10)
+    this.zombieProbabilities.chaser = Math.min(this.difficulty * 0.05, 44)
+    this.zombieProbabilities.soldier = Math.min(this.difficulty * 0.025, 44)
+    this.zombieProbabilities.boss = Math.min(this.difficulty * 0.001, 2)
+    const totalProbability = Object.values(this.zombieProbabilities).reduce((x, y) => x + y)
+    const probabilityDrift = 100 - totalProbability
+    this.zombieProbabilities.fodder += probabilityDrift
+  }
 
+  calculateZombieProbabilityThresholds () {
     this.zombiesProbabilityThresholds = []
     let threshold = 0
     const zombieNames = Object.keys(this.zombieProbabilities)
@@ -52,6 +58,9 @@ export default class Director {
     if (increaseZombieHealth) {
       this.healthMultiplier += 0.001
       this.speedMultiplier += 0.001
+      this.difficulty += 1
+      this.adjustZombieProbabilities()
+      this.calculateZombieProbabilityThresholds()
     }
     this.addZombie()
   }
@@ -109,7 +118,6 @@ export default class Director {
       immovable = false
     }
     if (zombie) {
-      console.log('made a', zombieName)
       this.enemies.add(zombie)
       zombie.body.immovable = immovable
       zombie.body.moves = !immovable

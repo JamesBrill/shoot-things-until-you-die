@@ -52,6 +52,22 @@ export default class BloodManager {
     }
   }
 
+  getNearestBloodSplatter (x, y) {
+    let shortestDistance = Infinity
+    let nearestBloodSplatter
+    for (let i = 0; i < this.bloodSplatters.children.length; i++) {
+      const bloodSplatter = this.bloodSplatters.children[i]
+      const distanceToBloodSplatter = Math.sqrt(
+        (bloodSplatter.centerX - x) ** 2 + (bloodSplatter.centerY - y) ** 2
+      )
+      if (distanceToBloodSplatter < shortestDistance) {
+        nearestBloodSplatter = bloodSplatter
+        shortestDistance = distanceToBloodSplatter
+      }
+    }
+    return nearestBloodSplatter
+  }
+
   reset () {
     this.stopPlayerBloodDrip()
   }

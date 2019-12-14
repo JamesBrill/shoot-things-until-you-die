@@ -23,6 +23,7 @@ export default class BloodZombie extends Zombie {
     this.bloodManager = bloodManager
     this.mode = ZombieMode.WANDER
     this.timeout = null
+    this.bloodTarget = null
   }
 
   move () {
@@ -32,7 +33,10 @@ export default class BloodZombie extends Zombie {
       if (this.bloodManager.bloodSplatters.length === 0) {
         this.zombieNavigation.wander()
       } else {
-        const { centerX, centerY } = this.bloodManager.bloodSplatters.children[0]
+        if (!this.bloodTarget || !this.bloodTarget.alive) {
+          this.bloodTarget = this.bloodManager.getNearestBloodSplatter(this.x, this.y)
+        }
+        const { centerX, centerY } = this.bloodTarget
         this.zombieNavigation.goTo({ x: centerX, y: centerY, strafeChangeChance: 0.9 })
       }
     }

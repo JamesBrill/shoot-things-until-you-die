@@ -46,18 +46,20 @@ export default class extends Phaser.State {
       m16: new M16({ game: this.game })
     }
 
+    this.enemies = this.game.add.group()
+    this.enemies.enableBody = true
+    this.enemies.physicsBodyType = Phaser.Physics.ARCADE
+
     this.bloodManager = new BloodManager({ game: this.game })
     this.player = new Player({
       game: this.game,
       x: this.world.centerX,
       y: this.world.centerY,
       weapon: this.weapons.pistol,
-      bloodManager: this.bloodManager
+      bloodManager: this.bloodManager,
+      onHitEnemy: this.hitCallback.bind(this),
+      enemies: this.enemies
     })
-
-    this.enemies = this.game.add.group()
-    this.enemies.enableBody = true
-    this.enemies.physicsBodyType = Phaser.Physics.ARCADE
 
     this.director = new Director({
       game: this.game,
@@ -128,10 +130,6 @@ export default class extends Phaser.State {
     }
   }
 
-  hitWallCallback (bullet) {
-    bullet.kill()
-  }
-
   update () {
     this.pathfinder.calculate()
 
@@ -186,23 +184,6 @@ export default class extends Phaser.State {
       } else {
         Pistol.enableFiring()
       }
-
-      this.game.physics.arcade.collide(this.player, this.layer)
-      this.game.physics.arcade.collide(
-        this.player.weapon.bullets,
-        this.layer,
-        this.hitWallCallback,
-        null,
-        this
-      )
-
-      this.game.physics.arcade.overlap(
-        this.player.weapon.bullets,
-        this.enemies,
-        this.hitCallback,
-        null,
-        this
-      )
 
       this.game.physics.arcade.collide(
         this.enemies,

@@ -3,7 +3,7 @@ import HealthBar from './HealthBar'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
 
 export default class Player extends Phaser.Sprite {
-  constructor ({ game, x, y, weapon, bloodManager }) {
+  constructor ({ game, x, y, weapon, bloodManager, onHitEnemy, enemies }) {
     const playerGraphics = game.add.graphics(x, y)
     playerGraphics.beginFill(0x000000, 1)
     playerGraphics.drawCircle(x, y, Player.PLAYER_SIZE)
@@ -12,7 +12,10 @@ export default class Player extends Phaser.Sprite {
     playerGraphics.destroy()
     this.anchor.setTo(0.5)
     this.game = game
+    this.layer = this.game.layer
     this.bloodManager = bloodManager
+    this.onHitEnemy = onHitEnemy
+    this.enemies = enemies
     this.armWeapon(weapon)
     this.health = 250
     this.maxHealth = this.health
@@ -96,6 +99,30 @@ export default class Player extends Phaser.Sprite {
 
   isDead () {
     return this.health <= 0
+  }
+
+  hitWallCallback (bullet) {
+    bullet.kill()
+  }
+
+  update () {
+    this.game.physics.arcade.collide(this, this.layer)
+
+    this.game.physics.arcade.collide(
+      this.weapon.bullets,
+      this.layer,
+      this.hitWallCallback,
+      null,
+      this
+    )
+
+    this.game.physics.arcade.overlap(
+      this.weapon.bullets,
+      this.enemies,
+      this.onHitEnemy,
+      null,
+      this
+    )
   }
 }
 

@@ -11,6 +11,7 @@ export default class Zombie extends Phaser.Sprite {
     enemyGraphics.destroy()
     this.anchor.setTo(0.5)
     this.game = game
+    this.layer = this.game.layer
     this.size = size
     this.player = player
     this.damageModifier = size / Zombie.NORMAL_SIZE
@@ -36,6 +37,46 @@ export default class Zombie extends Phaser.Sprite {
     }
     this.healthBar.setHealth(this.health)
     return false
+  }
+
+  hitWallCallback (bullet) {
+    bullet.kill()
+  }
+
+  handlePlayerShot (player, bullet) {
+    this.weapon.hitTarget(bullet)
+    this.handlePlayerDamage(player, this.weapon)
+  }
+
+  handlePlayerDamage (player, damageSource) {
+    player.takeDamage(damageSource)
+  }
+
+  update () {
+    if (this.weapon) {
+      this.game.physics.arcade.collide(
+        this.weapon.bullets,
+        this.layer,
+        this.hitWallCallback,
+        null,
+        this
+      )
+
+      this.game.physics.arcade.overlap(
+        this.weapon.bullets,
+        this.player,
+        this.handlePlayerShot,
+        null,
+        this
+      )
+    }
+    this.game.physics.arcade.collide(
+      this.player,
+      this,
+      this.handlePlayerDamage,
+      null,
+      this
+    )
   }
 }
 

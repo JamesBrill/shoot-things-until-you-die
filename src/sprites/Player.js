@@ -93,6 +93,10 @@ export default class Player extends Phaser.Sprite {
     weapon.arm(this)
     this.addChild(this.weapon.firingCone)
   }
+
+  isDead () {
+    return this.health <= 0
+  }
 }
 
 Player.PLAYER_SIZE = 30

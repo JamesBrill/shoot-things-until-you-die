@@ -32,6 +32,7 @@ export default class extends Phaser.State {
     this.game.map = map
     this.layer = map.createLayer(0)
     this.layer.resizeWorld()
+    this.game.layer = this.layer
 
     this.pathfinder = createPathfinder(map)
 
@@ -127,22 +128,6 @@ export default class extends Phaser.State {
     }
   }
 
-  onPlayerTakeHit (enemy, player, bullet) {
-    enemy.weapon.hitTarget(bullet)
-    this.handlePlayerDamage(player, enemy.weapon)
-  }
-
-  handlePlayerDamage (player, enemy) {
-    const isPlayerKilled = player.takeDamage(enemy)
-    if (isPlayerKilled) {
-      this.player.disabled = true
-      this.scoreManager.submitScore()
-      this.audioManager.playDeathSound()
-      this.deathDisplay.showDeathScreen()
-      setTimeout(this.restartGame.bind(this), 7000)
-    }
-  }
-
   hitWallCallback (bullet) {
     bullet.kill()
   }
@@ -219,25 +204,6 @@ export default class extends Phaser.State {
         this
       )
 
-      this.enemies.forEach(enemy => {
-        if (enemy.weapon) {
-          this.game.physics.arcade.overlap(
-            enemy.weapon.bullets,
-            this.player,
-            (...args) => this.onPlayerTakeHit(enemy, ...args),
-            null,
-            this
-          )
-          this.game.physics.arcade.collide(
-            enemy.weapon.bullets,
-            this.layer,
-            this.hitWallCallback,
-            null,
-            this
-          )
-        }
-      })
-
       this.game.physics.arcade.collide(
         this.enemies,
         this.enemies,
@@ -252,14 +218,15 @@ export default class extends Phaser.State {
         null,
         this
       )
-      this.game.physics.arcade.collide(
-        this.player,
-        this.enemies,
-        this.handlePlayerDamage,
-        null,
-        this
-      )
       this.itemManager.update()
+
+      if (this.player.isDead()) {
+        this.player.disabled = true
+        this.scoreManager.submitScore()
+        this.audioManager.playDeathSound()
+        this.deathDisplay.showDeathScreen()
+        setTimeout(this.restartGame.bind(this), 7000)
+      }
     }
   }
 

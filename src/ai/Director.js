@@ -85,7 +85,8 @@ export default class Director {
         y,
         player: this.player,
         healthMultiplier: this.healthMultiplier,
-        pathfinder: this.pathfinder
+        pathfinder: this.pathfinder,
+        enemies: this.enemies
       })
       immovable = false
     } else if (zombieName === 'fodder') {
@@ -96,7 +97,8 @@ export default class Director {
         player: this.player,
         speedMultiplier: this.speedMultiplier,
         healthMultiplier: this.healthMultiplier,
-        pathfinder: this.pathfinder
+        pathfinder: this.pathfinder,
+        enemies: this.enemies
       })
       immovable = false
     } else if (zombieName === 'chaser') {
@@ -106,7 +108,8 @@ export default class Director {
         y,
         player: this.player,
         healthMultiplier: this.healthMultiplier,
-        pathfinder: this.pathfinder
+        pathfinder: this.pathfinder,
+        enemies: this.enemies
       })
       immovable = false
     } else if (zombieName === 'boss') {
@@ -116,7 +119,8 @@ export default class Director {
         y,
         player: this.player,
         healthMultiplier: this.healthMultiplier,
-        pathfinder: this.pathfinder
+        pathfinder: this.pathfinder,
+        enemies: this.enemies
       })
       immovable = false
     } else if (zombieName === 'blood') {
@@ -127,7 +131,8 @@ export default class Director {
         player: this.player,
         healthMultiplier: this.healthMultiplier,
         pathfinder: this.pathfinder,
-        bloodManager: this.bloodManager
+        bloodManager: this.bloodManager,
+        enemies: this.enemies
       })
       immovable = false
     }

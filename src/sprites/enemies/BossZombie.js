@@ -4,7 +4,7 @@ import ZombieNavigation from '../../ai/ZombieNavigation'
 import Zombie from './Zombie'
 
 export default class BossZombie extends Zombie {
-  constructor ({ game, x, y, player, healthMultiplier, pathfinder }) {
+  constructor ({ game, x, y, player, healthMultiplier, pathfinder, enemies }) {
     super({
       game,
       x,
@@ -13,7 +13,8 @@ export default class BossZombie extends Zombie {
       speed: BossZombie.SPEED,
       size: BossZombie.SIZE,
       health: BossZombie.HEALTH * healthMultiplier,
-      colour: BossZombie.COLOUR
+      colour: BossZombie.COLOUR,
+      enemies
     })
 
     this.zombieNavigation = new ZombieNavigation({ zombie: this, player, pathfinder, game })

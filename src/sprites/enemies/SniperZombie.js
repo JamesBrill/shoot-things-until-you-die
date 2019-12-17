@@ -2,7 +2,7 @@ import ZombieSniper from '../../weapons/ZombieSniper'
 import Zombie from './Zombie'
 
 export default class SniperZombie extends Zombie {
-  constructor ({ game, x, y, player, healthMultiplier }) {
+  constructor ({ game, x, y, player, healthMultiplier, enemies }) {
     super({
       game,
       x,
@@ -11,7 +11,8 @@ export default class SniperZombie extends Zombie {
       speed: SniperZombie.SPEED,
       size: SniperZombie.SIZE,
       health: SniperZombie.HEALTH * healthMultiplier,
-      colour: SniperZombie.COLOUR
+      colour: SniperZombie.COLOUR,
+      enemies
     })
     this.weapon = new ZombieSniper({ game })
     this.armWeapon(this.weapon)

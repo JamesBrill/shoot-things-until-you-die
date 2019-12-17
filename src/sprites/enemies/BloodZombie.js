@@ -7,7 +7,7 @@ const ZombieMode = {
 }
 
 export default class BloodZombie extends Zombie {
-  constructor ({ game, x, y, player, healthMultiplier, pathfinder, bloodManager }) {
+  constructor ({ game, x, y, player, healthMultiplier, pathfinder, bloodManager, enemies }) {
     super({
       game,
       x,
@@ -16,7 +16,8 @@ export default class BloodZombie extends Zombie {
       speed: BloodZombie.SPEED,
       size: BloodZombie.SIZE,
       health: BloodZombie.HEALTH * healthMultiplier,
-      colour: BloodZombie.COLOUR
+      colour: BloodZombie.COLOUR,
+      enemies
     })
 
     this.zombieNavigation = new ZombieNavigation({ zombie: this, player, pathfinder, game })

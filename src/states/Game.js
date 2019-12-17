@@ -184,21 +184,6 @@ export default class extends Phaser.State {
       } else {
         Pistol.enableFiring()
       }
-
-      this.game.physics.arcade.collide(
-        this.enemies,
-        this.enemies,
-        null,
-        null,
-        this
-      )
-      this.game.physics.arcade.collide(
-        this.enemies,
-        this.layer,
-        null,
-        null,
-        this
-      )
       this.itemManager.update()
 
       if (this.player.isDead()) {

@@ -46,11 +46,12 @@ export default class extends Phaser.State {
       m16: new M16({ game: this.game })
     }
 
+    this.bloodManager = new BloodManager({ game: this.game })
+
     this.enemies = this.game.add.group()
     this.enemies.enableBody = true
     this.enemies.physicsBodyType = Phaser.Physics.ARCADE
 
-    this.bloodManager = new BloodManager({ game: this.game })
     this.player = new Player({
       game: this.game,
       x: this.world.centerX,

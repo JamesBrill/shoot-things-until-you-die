@@ -29,6 +29,7 @@ export default class Weapon extends Phaser.Weapon {
 
     this.game = game
     this.fireSound = fireSound
+    this.fireSound.allowMultiple = true
     this.bulletLength = bulletLength
     this.numberOfBullets = numberOfBullets
     this.gunRange = gunRange

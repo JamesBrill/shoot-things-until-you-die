@@ -35,6 +35,7 @@ export default class extends Phaser.State {
       'assets/audio/sound_effects/assault_rifle_reload.wav'
     )
     this.load.audio('pistol_fire', 'assets/audio/sound_effects/pistol_fire.wav')
+    this.load.audio('ghost_pistol_fire', 'assets/audio/sound_effects/ghost_pistol_fire.wav')
     this.load.audio(
       'pistol_reload',
       'assets/audio/sound_effects/pistol_reload.wav'
@@ -77,6 +78,7 @@ export default class extends Phaser.State {
     this.load.image('pistol_ammo', 'assets/images/pistol_ammo.png')
     this.load.image('shotgun_ammo', 'assets/images/shotgun_ammo.png')
     this.load.image('health_pack', 'assets/images/health_pack.png')
+    this.load.image('ghost_pistol_ammo', 'assets/images/ghost_pistol_ammo.png')
 
     // LOAD MAP
     this.load.tilemap('map', 'assets/maps/shootmap.csv', null, Phaser.Tilemap.CSV)

@@ -53,6 +53,10 @@ export default class Zombie extends Phaser.Sprite {
     player.takeDamage(damageSource)
   }
 
+  canCollide (_, enemy) {
+    return !enemy.isGhost
+  }
+
   update () {
     if (this.weapon) {
       this.game.physics.arcade.collide(
@@ -72,7 +76,12 @@ export default class Zombie extends Phaser.Sprite {
       )
     }
     this.game.physics.arcade.collide(this, this.layer)
-    this.game.physics.arcade.collide(this, this.enemies)
+    this.game.physics.arcade.collide(
+      this,
+      this.enemies,
+      null,
+      this.canCollide
+    )
     this.game.physics.arcade.collide(
       this.player,
       this,

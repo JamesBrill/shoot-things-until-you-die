@@ -12,6 +12,7 @@ import LeverActionShotgun from '../weapons/LeverActionShotgun'
 import SemiAutoShotgun from '../weapons/SemiAutoShotgun'
 import P90 from '../weapons/P90'
 import M16 from '../weapons/M16'
+import GhostPistol from '../weapons/GhostPistol'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
 import { createPathfinder } from '../utils/pathfinder'
 
@@ -43,7 +44,8 @@ export default class extends Phaser.State {
       leverActionShotgun: new LeverActionShotgun({ game: this.game }),
       semiAutoShotgun: new SemiAutoShotgun({ game: this.game }),
       p90: new P90({ game: this.game }),
-      m16: new M16({ game: this.game })
+      m16: new M16({ game: this.game }),
+      ghostPistol: new GhostPistol({ game: this.game })
     }
 
     this.bloodManager = new BloodManager({ game: this.game })
@@ -95,6 +97,7 @@ export default class extends Phaser.State {
       weaponThree: this.game.input.keyboard.addKey(Phaser.Keyboard.THREE),
       weaponFour: this.game.input.keyboard.addKey(Phaser.Keyboard.FOUR),
       weaponFive: this.game.input.keyboard.addKey(Phaser.Keyboard.FIVE),
+      weaponSix: this.game.input.keyboard.addKey(Phaser.Keyboard.SIX),
       speedUp: this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT)
     }
 
@@ -119,15 +122,20 @@ export default class extends Phaser.State {
   }
 
   hitCallback (bullet, enemy) {
-    this.player.weapon.hitTarget(bullet)
-    this.scoreManager.registerHit()
-    const isEnemyKilled = enemy.takeDamage(this.player.weapon)
-    if (isEnemyKilled) {
-      this.scoreManager.registerKill()
-      this.itemManager.addAmmoDrop(enemy)
-      this.director.replaceZombie(enemy, true)
-      this.audioManager.playBloodSpatterSound(enemy)
-      this.bloodManager.createBloodSplatter(enemy, this.player)
+    if ((!enemy.isGhost && !this.player.weapon.isGhost) ||
+        (enemy.isGhost && this.player.weapon.isGhost)) {
+      this.player.weapon.hitTarget(bullet)
+      this.scoreManager.registerHit()
+      const isEnemyKilled = enemy.takeDamage(this.player.weapon)
+      if (isEnemyKilled) {
+        this.scoreManager.registerKill()
+        this.director.replaceZombie(enemy, true)
+        if (!enemy.isGhost) {
+          this.itemManager.addAmmoDrop(enemy)
+          this.audioManager.playBloodSpatterSound(enemy)
+          this.bloodManager.createBloodSplatter(enemy, this.player)
+        }
+      }
     }
   }
 
@@ -173,6 +181,8 @@ export default class extends Phaser.State {
         this.player.armWeapon(this.weapons.p90)
       } else if (this.cursors.weaponFive.isDown) {
         this.player.armWeapon(this.weapons.m16)
+      } else if (this.cursors.weaponSix.isDown) {
+        this.player.armWeapon(this.weapons.ghostPistol)
       }
 
       if (this.cursors.reload.isDown) {
@@ -198,11 +208,12 @@ export default class extends Phaser.State {
   }
 
   render () {
-    const { fodder, chaser, soldier, blood, boss } = this.director.zombieProbabilities
+    const { fodder, chaser, soldier, blood, boss, ghost } = this.director.zombieProbabilities
     this.game.debug.text('fodder: ' + fodder + '%', 20, 500, 'blue', 'Segoe UI')
     this.game.debug.text('chaser: ' + chaser + '%', 20, 515, 'blue', 'Segoe UI')
     this.game.debug.text('soldier: ' + soldier + '%', 20, 530, 'blue', 'Segoe UI')
     this.game.debug.text('blood: ' + blood + '%', 20, 545, 'blue', 'Segoe UI')
     this.game.debug.text('boss: ' + boss + '%', 20, 560, 'blue', 'Segoe UI')
+    this.game.debug.text('ghost: ' + ghost + '%', 20, 575, 'blue', 'Segoe UI')
   }
 }

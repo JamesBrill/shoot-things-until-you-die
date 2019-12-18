@@ -108,13 +108,15 @@ export default class Player extends Phaser.Sprite {
   update () {
     this.game.physics.arcade.collide(this, this.layer)
 
-    this.game.physics.arcade.collide(
-      this.weapon.bullets,
-      this.layer,
-      this.hitWallCallback,
-      null,
-      this
-    )
+    if (!this.weapon.isGhost) {
+      this.game.physics.arcade.collide(
+        this.weapon.bullets,
+        this.layer,
+        this.hitWallCallback,
+        null,
+        this
+      )
+    }
 
     this.game.physics.arcade.overlap(
       this.weapon.bullets,

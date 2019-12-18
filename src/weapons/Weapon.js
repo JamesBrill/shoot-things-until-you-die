@@ -17,7 +17,10 @@ export default class Weapon extends Phaser.Weapon {
     maxBullets,
     ammoReserves,
     displayName,
-    displayY
+    displayY,
+    bulletColour,
+    firingConeColour,
+    weaponDisplay
   }) {
     super(game, game.plugins)
 
@@ -38,7 +41,7 @@ export default class Weapon extends Phaser.Weapon {
     this.ammoReserves = ammoReserves
 
     const bulletGraphics = game.add.graphics(0, 0)
-    bulletGraphics.lineStyle(3, 0x000000)
+    bulletGraphics.lineStyle(3, bulletColour || 0x000000)
     bulletGraphics.moveTo(0, 0)
     bulletGraphics.lineTo(0, bulletLength)
     bulletGraphics.endFill()
@@ -53,13 +56,13 @@ export default class Weapon extends Phaser.Weapon {
     this.bulletSpeed = bulletSpeed
     this.fireRate = 0
     this.currentAmmo = this.maxBullets
-    this.weaponDisplay = new WeaponDisplay({
+    this.weaponDisplay = weaponDisplay || new WeaponDisplay({
       game,
       x: 8,
       y: displayY + 8,
       displayName,
       currentAmmo: this.currentAmmo,
-      ammoReserves: ammoReserves
+      ammoReserves
     })
 
     this.STANDING_GUN_ANGLE = gunAngle * 0.1
@@ -71,7 +74,8 @@ export default class Weapon extends Phaser.Weapon {
       x: 0,
       y: 0,
       gunRange,
-      gunAngle: this.STANDING_GUN_ANGLE
+      gunAngle: this.STANDING_GUN_ANGLE,
+      firingConeColour
     })
 
     this.walkingFiringCone = new FiringCone({
@@ -79,7 +83,8 @@ export default class Weapon extends Phaser.Weapon {
       x: 0,
       y: 0,
       gunRange,
-      gunAngle: this.WALKING_GUN_ANGLE
+      gunAngle: this.WALKING_GUN_ANGLE,
+      firingConeColour
     })
 
     this.dashingFiringCone = new FiringCone({
@@ -87,7 +92,8 @@ export default class Weapon extends Phaser.Weapon {
       x: 0,
       y: 0,
       gunRange,
-      gunAngle: this.DASHING_GUN_ANGLE
+      gunAngle: this.DASHING_GUN_ANGLE,
+      firingConeColour
     })
 
     this.firingCone = this.walkingFiringCone

@@ -1,10 +1,10 @@
 import Phaser from 'phaser'
 
 export default class extends Phaser.Sprite {
-  constructor ({ game, x, y, gunRange, gunAngle }) {
+  constructor ({ game, x, y, gunRange, gunAngle, firingConeColour }) {
     const gunAngleRadians = game.math.degToRad(gunAngle)
     const firingCone = game.add.graphics(x, y)
-    firingCone.lineStyle(1, 0x000000)
+    firingCone.lineStyle(1, firingConeColour || 0x000000)
     firingCone.moveTo(x, y)
     firingCone.lineTo(x, y - gunRange)
     firingCone.moveTo(x, y)

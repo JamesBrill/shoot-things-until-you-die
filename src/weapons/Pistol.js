@@ -1,10 +1,10 @@
 import AutomaticWeapon from './AutomaticWeapon'
 
 export default class Pistol extends AutomaticWeapon {
-  constructor ({ game }) {
+  constructor ({ game, bulletColour, firingConeColour, weaponDisplay, fireSound }) {
     super({
       game,
-      fireSound: game.add.audio('pistol_fire'),
+      fireSound: fireSound || game.add.audio('pistol_fire'),
       reloadSound: game.add.audio('pistol_reload'),
       bulletLength: Pistol.BULLET_LENGTH,
       numberOfBullets: Pistol.NUMBER_OF_BULLETS,
@@ -17,7 +17,10 @@ export default class Pistol extends AutomaticWeapon {
       maxBullets: Pistol.MAX_BULLETS,
       ammoReserves: Pistol.AMMO_RESERVES,
       displayName: Pistol.DISPLAY_NAME,
-      displayY: Pistol.DISPLAY_Y
+      displayY: Pistol.DISPLAY_Y,
+      bulletColour,
+      firingConeColour,
+      weaponDisplay
     })
   }
 

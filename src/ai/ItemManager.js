@@ -57,7 +57,7 @@ export default class ItemManager {
       const { centerX, centerY } = enemy
       const x = centerX - 16
       const y = centerY - 16
-      this.ammoDrops.add(AmmoDrop.createRandom(this.game, this.mapPositionGenerator, x, y))
+      this.ammoDrops.add(AmmoDrop.createRandom(this.game, x, y))
     }
   }
 

@@ -3,6 +3,7 @@ import ChaserZombie from '../sprites/enemies/ChaserZombie'
 import BossZombie from '../sprites/enemies/BossZombie'
 import FodderZombie from '../sprites/enemies/FodderZombie'
 import BloodZombie from '../sprites/enemies/BloodZombie'
+import Ghost from '../sprites/enemies/Ghost'
 import {
   getRandomSpawnPointAwayFromPlayer,
   getTopLeftSpawnPoint,
@@ -36,10 +37,11 @@ export default class Director {
 
   adjustZombieProbabilities () {
     this.zombieProbabilities.fodder = Math.max(100 - this.difficulty * 0.05, 10)
-    this.zombieProbabilities.chaser = Math.min(this.difficulty * 0.05, 34)
-    this.zombieProbabilities.soldier = Math.min(this.difficulty * 0.025, 34)
+    this.zombieProbabilities.chaser = Math.min(this.difficulty * 0.05, 30)
+    this.zombieProbabilities.soldier = Math.min(this.difficulty * 0.025, 30)
     this.zombieProbabilities.blood = Math.min(this.difficulty * 0.025, 20)
     this.zombieProbabilities.boss = Math.min(this.difficulty * 0.001, 2)
+    this.zombieProbabilities.ghost = Math.min(this.difficulty * 0.025, 8)
     const totalProbability = Object.values(this.zombieProbabilities).reduce((x, y) => x + y)
     const probabilityDrift = 100 - totalProbability
     this.zombieProbabilities.fodder += probabilityDrift
@@ -133,6 +135,15 @@ export default class Director {
         pathfinder: this.pathfinder,
         bloodManager: this.bloodManager,
         enemies: this.enemies
+      })
+      immovable = false
+    } else if (zombieName === 'ghost') {
+      zombie = new Ghost({
+        game: this.game,
+        x,
+        y,
+        player: this.player,
+        healthMultiplier: this.healthMultiplier
       })
       immovable = false
     }

@@ -60,6 +60,7 @@ export default class BloodZombie extends Zombie {
       null,
       this
     )
+    super.update()
   }
 }
 

@@ -45,11 +45,13 @@ export default class BloodZombie extends Zombie {
 
   act () { }
 
-  chasePlayer () {
-    if (this.timeout) {
-      clearTimeout(this.timeout)
+  chasePlayer (_, bloodDrip) {
+    if (bloodDrip.alpha > 0) {
+      if (this.timeout) {
+        clearTimeout(this.timeout)
+      }
+      this.mode = ZombieMode.CHASE
     }
-    this.mode = ZombieMode.CHASE
   }
 
   update () {

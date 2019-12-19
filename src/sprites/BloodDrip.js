@@ -25,7 +25,7 @@ export default class BloodDrip extends Phaser.Sprite {
   }
 
   update () {
-    this.alpha = Math.max(0, this.alpha - 0.005)
+    this.alpha = Math.max(0, this.alpha - 0.0025)
   }
 }
 

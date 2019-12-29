@@ -6,9 +6,11 @@ export default class BloodManager {
     this.game = game
     this.bloodSplatters = this.game.add.group()
     this.bloodSplatters.enableBody = true
+    this.game.world.sendToBack(this.bloodSplatters)
     this.bloodDrips = this.game.add.group()
     this.bloodDrips.enableBody = true
     this.bloodDripInterval = null
+    this.game.world.sendToBack(this.bloodDrips)
   }
 
   createBloodSplatter (enemy, player) {

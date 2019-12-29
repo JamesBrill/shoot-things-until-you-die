@@ -34,7 +34,7 @@ AmmoDrop.createRandom = (game, x, y) => {
   } else {
     weaponName = 'm16'
     bullets = 60
-    spriteName = 'assault_rifle_ammo'
+    spriteName = 'm16'
   }
   return new AmmoDrop({
     game,

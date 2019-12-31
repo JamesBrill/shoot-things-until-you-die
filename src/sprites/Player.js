@@ -128,4 +128,4 @@ export default class Player extends Phaser.Sprite {
   }
 }
 
-Player.PLAYER_SIZE = 30
+Player.PLAYER_SIZE = 45

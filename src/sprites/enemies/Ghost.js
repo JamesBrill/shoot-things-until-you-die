@@ -36,5 +36,5 @@ export default class Ghost extends Zombie {
 
 Ghost.HEALTH = 50
 Ghost.SPEED = 100
-Ghost.SIZE = 30
+Ghost.SIZE = 45
 Ghost.COLOUR = 0xffffff

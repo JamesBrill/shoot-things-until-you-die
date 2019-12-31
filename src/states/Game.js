@@ -21,10 +21,8 @@ export default class extends Phaser.State {
   preload () {}
 
   create () {
-    this.game.world.setBounds(-2000, -2000, 4000, 4000)
-
-    const map = this.game.add.tilemap('map', 100, 100)
-    map.addTilesetImage('tiles')
+    const map = this.game.add.tilemap('map2', 100, 100)
+    map.addTilesetImage('tileset')
     // These are the indices of the tiles to have collision physics applied.
     // They are determined by their position in the tilemap image with indices
     // running from left to right, top to bottom. The size of each tile in the

@@ -85,7 +85,8 @@ export default class extends Phaser.State {
 
     // LOAD MAP
     this.load.tilemap('map', 'assets/maps/shootmap.csv', null, Phaser.Tilemap.CSV)
-    this.load.image('tiles', 'assets/maps/square.png')
+    this.load.tilemap('map2', 'assets/maps/shootmap2.csv', null, Phaser.Tilemap.CSV)
+    this.load.image('tileset', 'assets/maps/tileset.png')
 
     if (window.localStorage.getItem(config.localStorageName) === null) {
       const nameForm = document.getElementById('nameForm')

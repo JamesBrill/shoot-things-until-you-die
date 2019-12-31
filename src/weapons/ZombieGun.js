@@ -16,23 +16,9 @@ export default class ZombieGun extends Phaser.Weapon {
     this.attackDamage = ZombieGun.ATTACK_DAMAGE
     this.gunRange = ZombieGun.GUN_RANGE
 
-    let bulletTexture
-    if (!ZombieGun.BULLET_TEXTURE) {
-      const bulletGraphics = game.add.graphics(0, 0)
-      bulletGraphics.lineStyle(5, 0x006400)
-      bulletGraphics.moveTo(0, 0)
-      bulletGraphics.lineTo(0, ZombieGun.BULLET_LENGTH)
-      bulletGraphics.endFill()
-      bulletTexture = bulletGraphics.generateTexture()
-      ZombieGun.BULLET_TEXTURE = bulletTexture
-      bulletGraphics.destroy()
-    } else {
-      bulletTexture = ZombieGun.BULLET_TEXTURE
-    }
-
-    this.createBullets(10, bulletTexture)
+    this.createBullets(10, 'enemy_bullet')
     this.bulletKillType = Phaser.Weapon.KILL_DISTANCE
-    this.bulletKillDistance = ZombieGun.GUN_RANGE - ZombieGun.BULLET_LENGTH
+    this.bulletKillDistance = ZombieGun.GUN_RANGE
     this.bulletAngleOffset = 90
     this.bulletAngleVariance = 0.5 * ZombieGun.GUN_ANGLE
     this.bulletSpeed = ZombieGun.BULLET_SPEED
@@ -53,7 +39,10 @@ export default class ZombieGun extends Phaser.Weapon {
     if (!this.loadingBullet) {
       this.loadingBullet = true
       this.fireSound.play()
-      super.fire()
+      const bullet = super.fire()
+      if (bullet) {
+        bullet.angle += Math.random() * 180
+      }
       setTimeout(this.loadNewBullet.bind(this), ZombieGun.FIRE_RATE)
     }
   }
@@ -81,8 +70,6 @@ export default class ZombieGun extends Phaser.Weapon {
 ZombieGun.GUN_RANGE = 500
 ZombieGun.GUN_ANGLE = 15
 ZombieGun.FIRE_RATE = 750
-ZombieGun.BULLET_LENGTH = 30
 ZombieGun.BULLET_SPEED = 200
 ZombieGun.ATTACK_DAMAGE = 10
-ZombieGun.BULLET_TEXTURE = null
 ZombieGun.FIRE_SOUND = null

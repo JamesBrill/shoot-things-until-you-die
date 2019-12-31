@@ -27,5 +27,5 @@ export default class ChaserZombie extends Zombie {
 
 ChaserZombie.HEALTH = 50
 ChaserZombie.SPEED = 250
-ChaserZombie.SIZE = 20
+ChaserZombie.SIZE = 30
 ChaserZombie.COLOUR = 0x0000ff

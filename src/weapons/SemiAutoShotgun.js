@@ -7,7 +7,6 @@ export default class SemiAutoShotgun extends Shotgun {
       fireSound: game.add.audio('semi_auto_shotgun_fire'),
       loadSound: game.add.audio('semi_auto_shotgun_load'),
       cockSound: game.add.audio('semi_auto_shotgun_cock'),
-      bulletLength: SemiAutoShotgun.BULLET_LENGTH,
       numberOfBullets: SemiAutoShotgun.NUMBER_OF_BULLETS,
       gunRange: SemiAutoShotgun.GUN_RANGE,
       gunAngle: SemiAutoShotgun.GUN_ANGLE,
@@ -25,7 +24,6 @@ export default class SemiAutoShotgun extends Shotgun {
 
 SemiAutoShotgun.GUN_RANGE = 250
 SemiAutoShotgun.GUN_ANGLE = 45
-SemiAutoShotgun.BULLET_LENGTH = 10
 SemiAutoShotgun.NUMBER_OF_BULLETS = 12
 SemiAutoShotgun.FIRE_RATE = 600
 SemiAutoShotgun.BULLET_SPEED = 1000

@@ -6,7 +6,6 @@ export default class M16 extends BurstFireWeapon {
       game,
       fireSound: game.add.audio('assault_rifle_fire'),
       reloadSound: game.add.audio('assault_rifle_reload'),
-      bulletLength: M16.BULLET_LENGTH,
       numberOfBullets: M16.NUMBER_OF_BULLETS,
       gunRange: M16.GUN_RANGE,
       gunAngle: M16.GUN_ANGLE,
@@ -29,7 +28,6 @@ export default class M16 extends BurstFireWeapon {
 
 M16.GUN_RANGE = 1000
 M16.GUN_ANGLE = 1
-M16.BULLET_LENGTH = 5
 M16.NUMBER_OF_BULLETS = 30
 M16.FIRE_RATE = 500
 M16.BULLET_SPEED = 1000

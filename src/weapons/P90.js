@@ -6,7 +6,6 @@ export default class P90 extends AutomaticWeapon {
       game,
       fireSound: game.add.audio('assault_rifle_fire'),
       reloadSound: game.add.audio('assault_rifle_reload'),
-      bulletLength: P90.BULLET_LENGTH,
       numberOfBullets: P90.NUMBER_OF_BULLETS,
       gunRange: P90.GUN_RANGE,
       gunAngle: P90.GUN_ANGLE,
@@ -24,7 +23,6 @@ export default class P90 extends AutomaticWeapon {
 
 P90.GUN_RANGE = 750
 P90.GUN_ANGLE = 10
-P90.BULLET_LENGTH = 5
 P90.NUMBER_OF_BULLETS = 30
 P90.FIRE_RATE = 40
 P90.BULLET_SPEED = 1000

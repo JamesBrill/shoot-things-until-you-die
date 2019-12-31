@@ -6,7 +6,6 @@ export default class LeverActionShotgun extends Shotgun {
       fireSound: game.add.audio('lever_action_shotgun_fire'),
       loadSound: game.add.audio('lever_action_shotgun_load'),
       cockSound: game.add.audio('lever_action_shotgun_cock'),
-      bulletLength: LeverActionShotgun.BULLET_LENGTH,
       numberOfBullets: LeverActionShotgun.NUMBER_OF_BULLETS,
       gunRange: LeverActionShotgun.GUN_RANGE,
       gunAngle: LeverActionShotgun.GUN_ANGLE,
@@ -29,7 +28,6 @@ export default class LeverActionShotgun extends Shotgun {
 
 LeverActionShotgun.GUN_RANGE = 300
 LeverActionShotgun.GUN_ANGLE = 15
-LeverActionShotgun.BULLET_LENGTH = 20
 LeverActionShotgun.NUMBER_OF_BULLETS = 10
 LeverActionShotgun.FIRE_RATE = 1250
 LeverActionShotgun.BULLET_SPEED = 1000

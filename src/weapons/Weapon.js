@@ -6,7 +6,6 @@ export default class Weapon extends Phaser.Weapon {
   constructor ({
     game,
     fireSound,
-    bulletLength,
     numberOfBullets,
     gunRange,
     gunAngle,
@@ -18,7 +17,6 @@ export default class Weapon extends Phaser.Weapon {
     ammoReserves,
     displayName,
     displayY,
-    bulletColour,
     firingConeColour,
     weaponDisplay
   }) {
@@ -30,7 +28,6 @@ export default class Weapon extends Phaser.Weapon {
     this.game = game
     this.fireSound = fireSound
     this.fireSound.allowMultiple = true
-    this.bulletLength = bulletLength
     this.numberOfBullets = numberOfBullets
     this.gunRange = gunRange
     this.gunAngle = gunAngle
@@ -41,17 +38,9 @@ export default class Weapon extends Phaser.Weapon {
     this.maxBullets = maxBullets
     this.ammoReserves = ammoReserves
 
-    const bulletGraphics = game.add.graphics(0, 0)
-    bulletGraphics.lineStyle(3, bulletColour || 0x000000)
-    bulletGraphics.moveTo(0, 0)
-    bulletGraphics.lineTo(0, bulletLength)
-    bulletGraphics.endFill()
-    const bulletTexture = bulletGraphics.generateTexture()
-    bulletGraphics.destroy()
-
-    this.createBullets(numberOfBullets, bulletTexture)
+    this.createBullets(numberOfBullets, 'player_bullet')
     this.bulletKillType = Phaser.Weapon.KILL_DISTANCE
-    this.bulletKillDistance = gunRange - bulletLength
+    this.bulletKillDistance = gunRange
     this.bulletAngleOffset = 90
     this.bulletAngleVariance = 0.5 * gunAngle
     this.bulletSpeed = bulletSpeed
@@ -124,7 +113,10 @@ export default class Weapon extends Phaser.Weapon {
   }
 
   fire () {
-    super.fire()
+    const bullet = super.fire()
+    if (bullet) {
+      bullet.angle += Math.random() * 180
+    }
   }
 
   aimAt (x, y) {

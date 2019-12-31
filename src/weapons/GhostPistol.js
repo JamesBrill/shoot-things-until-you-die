@@ -5,7 +5,6 @@ export default class GhostPistol extends Pistol {
   constructor ({ game }) {
     super({
       game,
-      bulletColour: 0xffffff,
       firingConeColour: 0xffffff,
       weaponDisplay: new WeaponDisplay({
         game,

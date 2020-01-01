@@ -9,7 +9,7 @@ import BloodManager from '../ai/BloodManager'
 import DeathDisplay from '../ui/DeathDisplay'
 import Pistol from '../weapons/Pistol'
 import LeverActionShotgun from '../weapons/LeverActionShotgun'
-import SemiAutoShotgun from '../weapons/SemiAutoShotgun'
+import SawnOffShotgun from '../weapons/SawnOffShotgun'
 import P90 from '../weapons/P90'
 import M16 from '../weapons/M16'
 import GhostPistol from '../weapons/GhostPistol'
@@ -40,7 +40,7 @@ export default class extends Phaser.State {
     this.weapons = {
       pistol: new Pistol({ game: this.game }),
       leverActionShotgun: new LeverActionShotgun({ game: this.game }),
-      semiAutoShotgun: new SemiAutoShotgun({ game: this.game }),
+      sawnOffShotgun: new SawnOffShotgun({ game: this.game }),
       p90: new P90({ game: this.game }),
       m16: new M16({ game: this.game }),
       ghostPistol: new GhostPistol({ game: this.game })
@@ -174,7 +174,7 @@ export default class extends Phaser.State {
       } else if (this.cursors.weaponTwo.isDown) {
         this.player.armWeapon(this.weapons.leverActionShotgun)
       } else if (this.cursors.weaponThree.isDown) {
-        this.player.armWeapon(this.weapons.semiAutoShotgun)
+        this.player.armWeapon(this.weapons.sawnOffShotgun)
       } else if (this.cursors.weaponFour.isDown) {
         this.player.armWeapon(this.weapons.p90)
       } else if (this.cursors.weaponFive.isDown) {

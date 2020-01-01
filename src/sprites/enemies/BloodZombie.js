@@ -32,13 +32,13 @@ export default class BloodZombie extends Zombie {
       this.zombieNavigation.followPlayer({ speed: 500 })
     } else if (this.mode === ZombieMode.WANDER) {
       if (this.bloodManager.bloodSplatters.length === 0) {
-        this.zombieNavigation.wander()
+        this.zombieNavigation.wander({ strafeChangeChance: 1 })
       } else {
         if (!this.bloodTarget || !this.bloodTarget.alive) {
           this.bloodTarget = this.bloodManager.getNearestBloodSplatter(this.x, this.y)
         }
         const { centerX, centerY } = this.bloodTarget
-        this.zombieNavigation.goTo({ x: centerX, y: centerY, strafeChangeChance: 0.9 })
+        this.zombieNavigation.goTo({ x: centerX, y: centerY, strafeChangeChance: 1 })
       }
     }
   }

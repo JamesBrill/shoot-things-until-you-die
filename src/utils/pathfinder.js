@@ -18,6 +18,5 @@ export function createPathfinder (map) {
   }
   pathfinder.setGrid(grid)
   pathfinder.setAcceptableTiles([-1])
-  pathfinder.enableDiagonals()
   return pathfinder
 }

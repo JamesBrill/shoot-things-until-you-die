@@ -38,7 +38,7 @@ export default class Weapon extends Phaser.Weapon {
     this.maxBullets = maxBullets
     this.ammoReserves = ammoReserves
 
-    this.createBullets(numberOfBullets, 'player_bullet')
+    this.createBullets(2 * numberOfBullets, 'player_bullet')
     this.bulletKillType = Phaser.Weapon.KILL_DISTANCE
     this.bulletKillDistance = gunRange
     this.bulletAngleOffset = 90

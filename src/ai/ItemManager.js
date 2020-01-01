@@ -4,10 +4,9 @@ import AmmoDrop from '../sprites/ammoDrops/AmmoDrop'
 import HealthPack from '../sprites/ammoDrops/HealthPack'
 
 export default class ItemManager {
-  constructor ({ game, player, weapons }) {
+  constructor ({ game, player }) {
     this.game = game
     this.player = player
-    this.weapons = weapons
     this.mapPositionGenerator = new MapPositionGenerator({ map: game.map, game })
     this.pickUpItemSound = this.game.add.audio('pick_up_ammo')
 

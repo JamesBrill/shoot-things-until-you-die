@@ -77,7 +77,7 @@ export default class extends Phaser.State {
     this.player.body.friction = new Phaser.Point(0, 0)
     this.player.disabled = false
 
-    this.itemManager = new ItemManager({ game: this.game, player: this.player, weapons: this.weapons })
+    this.itemManager = new ItemManager({ game: this.game, player: this.player })
     this.audioManager = new AudioManager({ game: this.game })
     this.scoreManager = new ScoreManager({
       game: this.game,

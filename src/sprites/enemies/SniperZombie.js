@@ -1,8 +1,9 @@
 import ZombieSniper from '../../weapons/ZombieSniper'
+import ZombieNavigation from '../../ai/ZombieNavigation'
 import Zombie from './Zombie'
 
 export default class SniperZombie extends Zombie {
-  constructor ({ game, x, y, player, healthMultiplier, enemies }) {
+  constructor ({ game, x, y, player, healthMultiplier, pathfinder, enemies }) {
     super({
       game,
       x,
@@ -14,6 +15,7 @@ export default class SniperZombie extends Zombie {
       colour: SniperZombie.COLOUR,
       enemies
     })
+    this.zombieNavigation = new ZombieNavigation({ zombie: this, player, pathfinder, game })
     this.weapon = new ZombieSniper({ game })
     this.armWeapon(this.weapon)
   }
@@ -24,7 +26,7 @@ export default class SniperZombie extends Zombie {
     const distanceToPlayer = Math.sqrt(
       (this.player.x - this.x) ** 2 + (this.player.y - this.y) ** 2
     )
-    if (distanceToPlayer <= this.weapon.gunRange) {
+    if (distanceToPlayer <= this.weapon.gunRange && this.zombieNavigation.canZombieSeePlayer()) {
       this.weapon.aimAt(this.player.x, this.player.y)
       this.weapon.fire()
     }

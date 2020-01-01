@@ -32,7 +32,7 @@ export default class BossZombie extends Zombie {
     const distanceToPlayer = Math.sqrt(
       (this.player.x - this.x) ** 2 + (this.player.y - this.y) ** 2
     )
-    if (distanceToPlayer <= this.weapon.gunRange) {
+    if (distanceToPlayer <= this.weapon.gunRange && this.zombieNavigation.canZombieSeePlayer()) {
       this.fire()
     }
   }

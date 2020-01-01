@@ -30,6 +30,17 @@ export default class ZombieNavigation {
     })
   }
 
+  canZombieSeePlayer () {
+    return this.canZombieSeeTarget(
+      this.player.world.x,
+      this.player.world.y,
+      this.player.top,
+      this.player.bottom,
+      this.player.left,
+      this.player.right
+    )
+  }
+
   canZombieSeeTarget (x, y, top, bottom, left, right) {
     const targetTop = top || y
     const targetBottom = bottom || y

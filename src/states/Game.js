@@ -189,9 +189,9 @@ export default class extends Phaser.State {
 
       if (this.game.input.mousePointer.isDown) {
         this.player.fire()
-        Pistol.disableFiring()
+        this.player.weapon.disableFiring()
       } else {
-        Pistol.enableFiring()
+        this.player.weapon.enableFiring()
       }
       this.itemManager.update()
 

@@ -47,6 +47,9 @@ export default class Shotgun extends Weapon {
   }
 
   fire () {
+    if (!this.canFire) {
+      return
+    }
     if (this.currentAmmo > 0 && this.reloading && this.reloadTimeout !== null) {
       clearTimeout(this.reloadTimeout)
       this.reloading = false

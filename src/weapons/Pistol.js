@@ -18,14 +18,9 @@ export default class Pistol extends AutomaticWeapon {
       displayName: Pistol.DISPLAY_NAME,
       displayY: Pistol.DISPLAY_Y,
       firingConeColour,
-      weaponDisplay
+      weaponDisplay,
+      singleFire: true
     })
-  }
-
-  fire () {
-    if (Pistol.canFire) {
-      super.fire()
-    }
   }
 }
 
@@ -40,11 +35,3 @@ Pistol.MAX_BULLETS = 12
 Pistol.AMMO_RESERVES = 128
 Pistol.DISPLAY_NAME = 'Pistol'
 Pistol.DISPLAY_Y = 0
-
-Pistol.canFire = true
-Pistol.enableFiring = () => {
-  Pistol.canFire = true
-}
-Pistol.disableFiring = () => {
-  Pistol.canFire = false
-}

@@ -36,6 +36,9 @@ export default class BurstFireWeapon extends Weapon {
   }
 
   fire () {
+    if (!this.canFire) {
+      return
+    }
     if (this.currentAmmo === 0 && !this.reloading) {
       if (this.ammoReserves === 0) {
         this.playDryFireSound()

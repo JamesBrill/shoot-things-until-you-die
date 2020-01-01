@@ -1,11 +1,12 @@
 import Weapon from './Weapon'
 
 export default class AutomaticWeapon extends Weapon {
-  constructor ({ game, reloadSound, ...others }) {
+  constructor ({ game, reloadSound, singleFire, ...others }) {
     super({ game, ...others })
     this.reloadSound = reloadSound
     this.loadingBullet = false
     this.reloading = false
+    this.singleFire = singleFire
   }
 
   loadNewBullet () {
@@ -36,6 +37,10 @@ export default class AutomaticWeapon extends Weapon {
   }
 
   fire () {
+    if (this.singleFire && !this.canFire) {
+      return
+    }
+
     if (this.currentAmmo === 0 && !this.reloading) {
       if (this.ammoReserves === 0) {
         this.playDryFireSound()

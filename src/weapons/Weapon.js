@@ -24,6 +24,7 @@ export default class Weapon extends Phaser.Weapon {
 
     this.dryFireSound = game.add.audio('dry_fire')
     this.canPlayDryFireSound = true
+    this.canFire = true
 
     this.game = game
     this.fireSound = fireSound
@@ -142,5 +143,13 @@ export default class Weapon extends Phaser.Weapon {
   pickUpAmmo () {
     this.ammoReserves += Math.max(this.maxBullets * 3, 30)
     this.weaponDisplay.setAmmoReserves(this.ammoReserves)
+  }
+
+  disableFiring () {
+    this.canFire = false
+  }
+
+  enableFiring () {
+    this.canFire = true
   }
 }

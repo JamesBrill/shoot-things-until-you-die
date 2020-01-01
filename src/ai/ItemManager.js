@@ -34,7 +34,7 @@ export default class ItemManager {
   }
 
   handleAmmoPickUp (player, ammoDrop) {
-    AmmoDrop.addAmmo(this.weapons, ammoDrop)
+    player.weapon.pickUpAmmo()
     this.pickUpItemSound.play()
     ammoDrop.kill()
     this.ammoDrops.removeChild(ammoDrop)
@@ -53,11 +53,11 @@ export default class ItemManager {
   }
 
   addAmmoDrop (enemy) {
-    if (Math.random() > 0.9) {
+    if (Math.random() > 0.99) {
       const { centerX, centerY } = enemy
       const x = centerX - 16
       const y = centerY - 16
-      this.ammoDrops.add(AmmoDrop.createRandom(this.game, x, y))
+      this.ammoDrops.add(new AmmoDrop({ game: this.game, x, y }))
     }
   }
 

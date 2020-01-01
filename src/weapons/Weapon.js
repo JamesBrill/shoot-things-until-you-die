@@ -139,8 +139,8 @@ export default class Weapon extends Phaser.Weapon {
     }
   }
 
-  pickUpAmmo (bullets) {
-    this.ammoReserves += bullets
+  pickUpAmmo () {
+    this.ammoReserves += this.maxBullets * 3
     this.weaponDisplay.setAmmoReserves(this.ammoReserves)
   }
 }

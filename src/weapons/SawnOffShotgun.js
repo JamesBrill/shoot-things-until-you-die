@@ -6,7 +6,7 @@ export default class SawnOffShotgun extends Shotgun {
       game,
       fireSound: game.add.audio('semi_auto_shotgun_fire'),
       loadSound: game.add.audio('semi_auto_shotgun_load'),
-      cockSound: game.add.audio('semi_auto_shotgun_cock'),
+      cockSound: game.add.audio('sawn_off_shotgun_cock'),
       numberOfBullets: SawnOffShotgun.NUMBER_OF_BULLETS,
       gunRange: SawnOffShotgun.GUN_RANGE,
       gunAngle: SawnOffShotgun.GUN_ANGLE,

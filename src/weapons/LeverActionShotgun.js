@@ -35,5 +35,5 @@ LeverActionShotgun.ATTACK_DAMAGE = 50
 LeverActionShotgun.RELOAD_TIME = 600
 LeverActionShotgun.MAX_BULLETS = 8
 LeverActionShotgun.AMMO_RESERVES = 32
-LeverActionShotgun.DISPLAY_NAME = 'Model 1887'
+LeverActionShotgun.DISPLAY_NAME = 'SPAS-12'
 LeverActionShotgun.DISPLAY_Y = 50

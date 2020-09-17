@@ -86,7 +86,8 @@ export default class extends Phaser.State {
     this.load.image('p90', 'assets/images/p90_large.png')
     this.load.image('m16', 'assets/images/m16_large.png')
     this.load.image('player_bullet', 'assets/images/blue_ball.png')
-    this.load.image('enemy_bullet', 'assets/images/red_ball.png')
+    this.load.image('red_bullet', 'assets/images/red_bullet.png')
+    this.load.image('blue_bullet', 'assets/images/blue_bullet.png')
 
     // LOAD MAP
     this.load.tilemap('map', 'assets/maps/shootmap.csv', null, Phaser.Tilemap.CSV)

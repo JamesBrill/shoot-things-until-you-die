@@ -18,7 +18,9 @@ export default class Weapon extends Phaser.Weapon {
     displayName,
     displayY,
     firingConeColour,
-    weaponDisplay
+    weaponDisplay,
+    bulletTexture,
+    colour
   }) {
     super(game, game.plugins)
 
@@ -38,8 +40,9 @@ export default class Weapon extends Phaser.Weapon {
     this.actualFireRate = fireRate
     this.maxBullets = maxBullets
     this.ammoReserves = ammoReserves
+    this.colour = colour
 
-    this.createBullets(2 * numberOfBullets, 'player_bullet')
+    this.createBullets(2 * numberOfBullets, bulletTexture || 'player_bullet')
     this.bulletKillType = Phaser.Weapon.KILL_DISTANCE
     this.bulletKillDistance = gunRange
     this.bulletAngleOffset = 90

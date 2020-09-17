@@ -7,12 +7,8 @@ import AudioManager from '../ai/AudioManager'
 import ItemManager from '../ai/ItemManager'
 import BloodManager from '../ai/BloodManager'
 import DeathDisplay from '../ui/DeathDisplay'
-import Pistol from '../weapons/Pistol'
-import LeverActionShotgun from '../weapons/LeverActionShotgun'
-import SawnOffShotgun from '../weapons/SawnOffShotgun'
-import P90 from '../weapons/P90'
-import M16 from '../weapons/M16'
-import GhostPistol from '../weapons/GhostPistol'
+import RedGun from '../weapons/RedGun'
+import BlueGun from '../weapons/BlueGun'
 import { UP, DOWN, LEFT, RIGHT } from '../constants/directions'
 import { createPathfinder } from '../utils/pathfinder'
 
@@ -38,12 +34,8 @@ export default class extends Phaser.State {
     this.game.physics.startSystem(Phaser.Physics.ARCADE)
 
     this.weapons = {
-      pistol: new Pistol({ game: this.game }),
-      leverActionShotgun: new LeverActionShotgun({ game: this.game }),
-      sawnOffShotgun: new SawnOffShotgun({ game: this.game }),
-      p90: new P90({ game: this.game }),
-      m16: new M16({ game: this.game }),
-      ghostPistol: new GhostPistol({ game: this.game })
+      redGun: new RedGun({ game: this.game }),
+      blueGun: new BlueGun({ game: this.game })
     }
 
     this.bloodManager = new BloodManager({ game: this.game })
@@ -56,7 +48,7 @@ export default class extends Phaser.State {
       game: this.game,
       x: this.world.centerX,
       y: this.world.centerY,
-      weapon: this.weapons.pistol,
+      weapon: this.weapons.redGun,
       bloodManager: this.bloodManager,
       onHitEnemy: this.hitCallback.bind(this),
       enemies: this.enemies
@@ -92,10 +84,6 @@ export default class extends Phaser.State {
       reload: this.game.input.keyboard.addKey(Phaser.Keyboard.R),
       weaponOne: this.game.input.keyboard.addKey(Phaser.Keyboard.ONE),
       weaponTwo: this.game.input.keyboard.addKey(Phaser.Keyboard.TWO),
-      weaponThree: this.game.input.keyboard.addKey(Phaser.Keyboard.THREE),
-      weaponFour: this.game.input.keyboard.addKey(Phaser.Keyboard.FOUR),
-      weaponFive: this.game.input.keyboard.addKey(Phaser.Keyboard.FIVE),
-      weaponSix: this.game.input.keyboard.addKey(Phaser.Keyboard.SIX),
       speedUp: this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT)
     }
 
@@ -123,6 +111,9 @@ export default class extends Phaser.State {
     if ((!enemy.isGhost && !this.player.weapon.isGhost) ||
         (enemy.isGhost && this.player.weapon.isGhost)) {
       this.player.weapon.hitTarget(bullet)
+      if (this.player.weapon.colour !== enemy.colour) {
+        return
+      }
       this.scoreManager.registerHit()
       const isEnemyKilled = enemy.takeDamage(this.player.weapon)
       if (isEnemyKilled) {
@@ -170,17 +161,9 @@ export default class extends Phaser.State {
       }
 
       if (this.cursors.weaponOne.isDown) {
-        this.player.armWeapon(this.weapons.pistol)
+        this.player.armWeapon(this.weapons.redGun)
       } else if (this.cursors.weaponTwo.isDown) {
-        this.player.armWeapon(this.weapons.leverActionShotgun)
-      } else if (this.cursors.weaponThree.isDown) {
-        this.player.armWeapon(this.weapons.sawnOffShotgun)
-      } else if (this.cursors.weaponFour.isDown) {
-        this.player.armWeapon(this.weapons.p90)
-      } else if (this.cursors.weaponFive.isDown) {
-        this.player.armWeapon(this.weapons.m16)
-      } else if (this.cursors.weaponSix.isDown) {
-        this.player.armWeapon(this.weapons.ghostPistol)
+        this.player.armWeapon(this.weapons.blueGun)
       }
 
       if (this.cursors.reload.isDown) {
@@ -203,15 +186,5 @@ export default class extends Phaser.State {
         setTimeout(this.restartGame.bind(this), 7000)
       }
     }
-  }
-
-  render () {
-    const { fodder, chaser, soldier, blood, boss, ghost } = this.director.zombieProbabilities
-    this.game.debug.text('fodder: ' + fodder + '%', 20, 500, 'blue', 'Segoe UI')
-    this.game.debug.text('chaser: ' + chaser + '%', 20, 515, 'blue', 'Segoe UI')
-    this.game.debug.text('soldier: ' + soldier + '%', 20, 530, 'blue', 'Segoe UI')
-    this.game.debug.text('blood: ' + blood + '%', 20, 545, 'blue', 'Segoe UI')
-    this.game.debug.text('boss: ' + boss + '%', 20, 560, 'blue', 'Segoe UI')
-    this.game.debug.text('ghost: ' + ghost + '%', 20, 575, 'blue', 'Segoe UI')
   }
 }
